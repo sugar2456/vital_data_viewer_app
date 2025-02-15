@@ -1,23 +1,20 @@
-import '../user.dart';
-import '../auth_token.dart';
-
 class LoginResponse {
-  final User user;
-  final AuthToken authToken;
+  final String token;
+  final String tokenType;
 
-  LoginResponse({required this.user, required this.authToken});
+  LoginResponse({required this.token, required this.tokenType});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      user: User.fromJson(json['user']),
-      authToken: AuthToken.fromJson(json['authToken']),
+      token: json['access_token'],
+      tokenType: json['token_type'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'user': user.toJson(),
-      'authToken': authToken.toJson(),
+      'access_token': token,
+      'token_type': tokenType,
     };
   }
 }
