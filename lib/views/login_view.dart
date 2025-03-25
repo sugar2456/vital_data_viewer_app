@@ -3,8 +3,7 @@ import 'package:provider/provider.dart';
 import '../view_models/login_view_model.dart';
 
 class LoginView extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController fitbitIdController = TextEditingController();
 
   LoginView({super.key});
 
@@ -21,25 +20,36 @@ class LoginView extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              controller: emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(labelText: 'Password'),
-              obscureText: true,
+              controller: fitbitIdController,
+              decoration: const InputDecoration(labelText: 'fitbit ID'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 try {
                   await loginViewModel.login(
-                    emailController.text,
-                    passwordController.text,
+                    fitbitIdController.text
                   );
-                  // Navigate to home screen or show success message
                 } catch (e) {
-                  // Show error message
+                  // 警告ダイアログを表示
+                  showDialog(
+                    // ignore: use_build_context_synchronously
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Error'),
+                        content: Text(e.toString()),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 }
               },
               child: const Text('Login'),

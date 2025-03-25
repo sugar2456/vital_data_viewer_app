@@ -9,8 +9,8 @@ class LoginViewModel extends ChangeNotifier {
 
   LoginResponse? get getAuthToken => authToken;
 
-  Future<void> login(String email, String password) async {
-    authToken = await _loginRepository.login(email, password);
+  Future<void> login(String clientId) async {
+    authToken = await _loginRepository.login(clientId);
     notifyListeners();
   }
 }
