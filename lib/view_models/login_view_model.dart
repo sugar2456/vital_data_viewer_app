@@ -5,17 +5,13 @@ import 'package:vital_data_viewer_app/repositories/interfaces/login_repository_i
 
 class LoginViewModel extends ChangeNotifier {
   final LoginRepositoryInterface _loginRepository;
-  String? authToken;
-  LoginViewModel(this._loginRepository) {
-    authToken = TokenManager().getToken();
-  }
+  LoginViewModel(this._loginRepository);
 
-  String? get getAuthToken => authToken;
+  String? get getAuthToken => TokenManager().getToken();
 
   Future<void> login(String clientId) async {
     LoginResponse? response = await _loginRepository.login(clientId);
     TokenManager().setToken(response.token);
-    authToken = response.token;
     notifyListeners();
   }
 }

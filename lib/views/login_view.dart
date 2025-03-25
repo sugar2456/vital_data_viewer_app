@@ -12,9 +12,7 @@ class LoginView extends StatelessWidget {
     final loginViewModel = Provider.of<LoginViewModel>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
+      appBar: null,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -58,7 +56,7 @@ class LoginView extends StatelessWidget {
               child: const Text('Login'),
             ),
             const SizedBox(height: 20),
-            Text('Auth Token: ${context.watch<LoginViewModel>().authToken ?? "ログインしていません"}'),
+            Text('Auth Token: ${context.watch<LoginViewModel>().getAuthToken ?? "ログインしていません"}'),
           ],
         ),
       ),
