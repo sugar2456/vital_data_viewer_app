@@ -55,7 +55,7 @@ class LoginView extends StatelessWidget {
               child: const Text('Login'),
             ),
             const SizedBox(height: 20),
-            Text('Auth Token: ${context.watch<LoginViewModel>().authToken?.token ?? "Not logged in"}'),
+            Text('Auth Token: ${context.watch<LoginViewModel>().authToken ?? "ログインしていません"}'),
           ],
         ),
       ),
