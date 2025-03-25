@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vital_data_viewer_app/providers/providers.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:provider/provider.dart';
 import 'view_models/login_view_model.dart';
@@ -21,11 +22,7 @@ void main() async {
   });
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => LoginViewModel(LoginRepositoryImpl()),
-        ),
-      ],
+      providers: getProviders(),
       child: const MyApp(),
     ),
   );
