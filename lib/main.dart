@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vital_data_viewer_app/providers/providers.dart';
+import 'package:vital_data_viewer_app/views/home_view.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:provider/provider.dart';
 import 'views/login_view.dart';
@@ -38,6 +39,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: LoginView(),
+      routes: <String, WidgetBuilder>{
+        '/login': (BuildContext context) => LoginView(),
+        '/home': (BuildContext context) => HomeView(),
+      },
     );
   }
 }

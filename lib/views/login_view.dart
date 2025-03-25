@@ -30,6 +30,9 @@ class LoginView extends StatelessWidget {
                   await loginViewModel.login(
                     fitbitIdController.text
                   );
+
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushNamed('/home');
                 } catch (e) {
                   // 警告ダイアログを表示
                   showDialog(
