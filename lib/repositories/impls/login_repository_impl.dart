@@ -2,25 +2,23 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:vital_data_viewer_app/models/response/login_response.dart';
 import '../interfaces/login_repository_interface.dart';
+import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 
 class LoginRepositoryImpl implements LoginRepositoryInterface {
+  String CALLBACK_URL = 'myapp://callback';
   @override
-  Future<LoginResponse> login(String email, String password) async {
-    final response = await http.post(
-      Uri.parse('http://localhost:8000/api/login'),
-      headers: <String, String>{
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: {
-        'username': email,
-        'password': password,
-      },
-    );
+  Future<LoginResponse> login(String clientId) async {
+    final url = Uri.https('www.fitbit.com', '/oauth2/authorize', {
+      'response_type': 'token',
+      'client_id': clientId,
+      'redirect_uri': CALLBACK_URL,
+      'scope': 'activity heartrate location nutrition profile settings sleep weight',
+    });
+    final result = await FlutterWebAuth2.authenticate(url: url.toString(), callbackUrlScheme: 'myapp');
+    final fragment = Uri.parse(result).fragment;
+    final fragmentParams = Uri.splitQueryString(fragment);
+    final token = fragmentParams['access_token'];
 
-    if (response.statusCode == 200) {
-      return LoginResponse.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to login');
-    }
+    return LoginResponse(token: token ?? "" , tokenType: 'Bearer');
   }
 }
