@@ -13,51 +13,70 @@ class LoginView extends StatelessWidget {
 
     return Scaffold(
       appBar: null,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: fitbitIdController,
-              decoration: const InputDecoration(labelText: 'fitbit ID'),
+      body: Center(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.25,
+          child: Card(
+            elevation: 4, // カードの影の強さ
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16), // カードの角を丸くする
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  await loginViewModel.login(
-                    fitbitIdController.text
-                  );
+            child: Padding(
+              padding: const EdgeInsets.all(16.0), // カード内の余白
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // 子ウィジェットの高さに合わせる
+                children: [
+                  const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: fitbitIdController,
+                    decoration: const InputDecoration(
+                      labelText: 'Fitbit ID',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        await loginViewModel.login(fitbitIdController.text);
 
-                  // ignore: use_build_context_synchronously
-                  Navigator.of(context).pushNamed('/home');
-                } catch (e) {
-                  // 警告ダイアログを表示
-                  showDialog(
-                    // ignore: use_build_context_synchronously
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('Error'),
-                        content: Text(e.toString()),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
+                        // ignore: use_build_context_synchronously
+                        Navigator.of(context).pushNamed('/home');
+                      } catch (e) {
+                        // 警告ダイアログを表示
+                        showDialog(
+                          // ignore: use_build_context_synchronously
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Error'),
+                              content: Text(e.toString()),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
-                  );
-                }
-              },
-              child: const Text('Login'),
+                    child: const Text('Login'),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
-            Text('Auth Token: ${context.watch<LoginViewModel>().getAuthToken ?? "ログインしていません"}'),
-          ],
+          ),
         ),
       ),
     );
