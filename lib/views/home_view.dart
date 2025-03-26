@@ -19,7 +19,8 @@ class HomeView extends StatelessWidget {
       body: Center(
         child: homeViewModel.isLoading
             ? const CircularProgressIndicator() // ローディング中
-            : homeViewModel.activityGoalResponse == null
+            : homeViewModel.activityGoalResponse == null &&
+                    homeViewModel.bodyGoalResponse == null
                 ? const Text('データなし') // データがない場合
                 : Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -90,7 +91,7 @@ class HomeView extends StatelessWidget {
                               const Text('体重'),
                               const Icon(Icons.monitor_weight),
                               Text(
-                                  '${homeViewModel.activityGoalResponse!.distance} 分'),
+                                  '${homeViewModel.bodyGoalResponse!.weight} kg'),
                             ],
                           ),
                         ),
