@@ -20,7 +20,8 @@ class HomeView extends StatelessWidget {
         child: homeViewModel.isLoading
             ? const CircularProgressIndicator() // ローディング中
             : homeViewModel.activityGoalResponse == null &&
-                    homeViewModel.bodyGoalResponse == null
+                    homeViewModel.bodyGoalResponse == null &&
+                    homeViewModel.deviceResponse == null
                 ? const Text('データなし') // データがない場合
                 : Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -113,7 +114,7 @@ class HomeView extends StatelessWidget {
                               const Text('デバイス情報'),
                               const Icon(Icons.watch),
                               Text(
-                                  '${homeViewModel.activityGoalResponse!.distance} 分'),
+                                  '${homeViewModel.deviceResponse!.batteryLevel} %'),
                             ],
                           ),
                         ),
