@@ -1,0 +1,55 @@
+name: Flutter Desktop Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Flutter Desktop Apps
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        platform: [windows, linux, macos]
+
+    steps:
+      # 1. リポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Flutterをセットアップ
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+
+      # 3. Flutterの依存関係を取得
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 4. 各プラットフォーム向けにビルド
+      - name: Build for ${{ matrix.platform }}
+        run: |
+          if [ "${{ matrix.platform }}" == "windows" ]; then
+            flutter build windows --release
+          elif [ "${{ matrix.platform }}" == "linux" ]; then
+            flutter build linux --release
+          elif [ "${{ matrix.platform }}" == "macos" ]; then
+            flutter build macos --release
+          fi
+
+      # 5. ビルド成果物を保存
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.platform }}-build
+          path: |
+            build/windows/runner/Release/*.exe
+            build/linux/runner/release/*.AppImage
+            build/macos/Build/Products/Release/*.app
