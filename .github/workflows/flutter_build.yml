@@ -9,14 +9,10 @@ on:
       - main
 
 jobs:
-  build:
-    name: Build Flutter Desktop Apps
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-        platform: [windows, linux, macos]
-    runs-on: ${{ matrix.os }}
-
+  # Windows向けのビルドジョブ
+  build-windows:
+    name: Build Windows App
+    runs-on: windows-latest
     steps:
       # 1. リポジトリをチェックアウト
       - name: Checkout repository
@@ -31,14 +27,7 @@ jobs:
 
       # 3. デスクトップサポートを有効化
       - name: Enable desktop support
-        run: |
-          if [ "${{ matrix.platform }}" == "windows" ]; then
-            flutter config --enable-windows-desktop
-          elif [ "${{ matrix.platform }}" == "linux" ]; then
-            flutter config --enable-linux-desktop
-          elif [ "${{ matrix.platform }}" == "macos" ]; then
-            flutter config --enable-macos-desktop
-          fi
+        run: flutter config --enable-windows-desktop
 
       # 4. 環境を確認
       - name: Verify Flutter environment
@@ -48,23 +37,91 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # 6. 各プラットフォーム向けにビルド
-      - name: Build for ${{ matrix.platform }}
-        run: |
-          if [ "${{ matrix.platform }}" == "windows" ]; then
-            flutter build windows
-          elif [ "${{ matrix.platform }}" == "linux" ]; then
-            flutter build linux
-          elif [ "${{ matrix.platform }}" == "macos" ]; then
-            flutter build macos --release
-          fi
+      # 6. Windows向けにビルド
+      - name: Build Windows App
+        run: flutter build windows --release
 
       # 7. ビルド成果物を保存
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.platform }}-build
-          path: |
-            build/windows/runner/Release/*.exe
-            build/linux/runner/release/*.AppImage
-            build/macos/Build/Products/Release/*.app
+          name: windows-build
+          path: build/windows/runner/Release/*.exe
+
+  # Linux向けのビルドジョブ
+  build-linux:
+    name: Build Linux App
+    runs-on: ubuntu-latest
+    steps:
+      # 1. リポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Flutterをセットアップ
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.4'
+          channel: 'stable'
+
+      # 3. デスクトップサポートを有効化
+      - name: Enable desktop support
+        run: flutter config --enable-linux-desktop
+
+      # 4. 環境を確認
+      - name: Verify Flutter environment
+        run: flutter doctor -v
+
+      # 5. Flutterの依存関係を取得
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 6. Linux向けにビルド
+      - name: Build Linux App
+        run: flutter build linux --release
+
+      # 7. ビルド成果物を保存
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-build
+          path: build/linux/runner/release/*.AppImage
+
+  # macOS向けのビルドジョブ
+  build-macos:
+    name: Build macOS App
+    runs-on: macos-latest
+    steps:
+      # 1. リポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Flutterをセットアップ
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.4'
+          channel: 'stable'
+
+      # 3. デスクトップサポートを有効化
+      - name: Enable desktop support
+        run: flutter config --enable-macos-desktop
+
+      # 4. 環境を確認
+      - name: Verify Flutter environment
+        run: flutter doctor -v
+
+      # 5. Flutterの依存関係を取得
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 6. macOS向けにビルド
+      - name: Build macOS App
+        run: flutter build macos --release
+
+      # 7. ビルド成果物を保存
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-build
+          path: build/macos/Build/Products/Release/*.app
