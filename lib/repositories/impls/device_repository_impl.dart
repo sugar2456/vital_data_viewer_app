@@ -14,7 +14,7 @@ class DeviceRepositoryImpl extends DeviceRepositoryInterface {
       final response = await http.get(uri, headers: HeaderUtil.createAuthHeaders());
       if (response.statusCode == 200) {
         final responseBody = json.decode(response.body);
-        return DeviceResponse.fromJson(responseBody[0]);
+        return DeviceResponse.fromJson(responseBody[1]);
       } else {
         log(response.statusCode.toString());
         throw Exception('Failed to load device');

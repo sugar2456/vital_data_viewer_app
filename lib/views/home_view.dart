@@ -2,124 +2,77 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vital_data_viewer_app/view_models/home_view_model.dart';
 import 'package:vital_data_viewer_app/views/component/custom_drawer.dart';
-import 'package:vital_data_viewer_app/views/component/info_card.dart';
+import 'package:vital_data_viewer_app/views/component/donut_chart.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<HomeViewModel>(context);
+    final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('ホーム画面'),
       ),
-      drawer: const CustomDrawer(), // カスタムドロワー
-      body: Center(
-        child: homeViewModel.isLoading
-            ? const CircularProgressIndicator() // ローディング中
-            : homeViewModel.activityGoalResponse == null &&
-                    homeViewModel.bodyGoalResponse == null &&
-                    homeViewModel.deviceResponse == null
-                ? const Text('データなし') // データがない場合
-                : Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: GridView.count(
-                      crossAxisCount: 4,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
-                      children: [
-                        InfoCard(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('歩数'),
-                              const Icon(Icons.directions_walk),
-                              Text(
-                                  '${homeViewModel.activityGoalResponse!.steps} 歩'),
-                            ],
-                          ),
-                        ),
-                        InfoCard(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('アクティブ時間'),
-                              const Icon(Icons.directions_run),
-                              Text(
-                                  '${homeViewModel.activityGoalResponse!.activeMinutes} 分'),
-                            ],
-                          ),
-                        ),
-                        InfoCard(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('消費カロリー'),
-                              const Icon(Icons.local_fire_department),
-                              Text(
-                                  '${homeViewModel.activityGoalResponse!.caloriesOut} kcal'),
-                            ],
-                          ),
-                        ),
-                        InfoCard(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('移動距離'),
-                              const Icon(Icons.directions_bike),
-                              Text(
-                                  '${homeViewModel.activityGoalResponse!.distance} km'),
-                            ],
-                          ),
-                        ),
-                        InfoCard(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('睡眠時間'),
-                              const Icon(Icons.bed),
-                              Text(
-                                  '${homeViewModel.activityGoalResponse!.distance} 分'),
-                            ],
-                          ),
-                        ),
-                        InfoCard(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('体重'),
-                              const Icon(Icons.monitor_weight),
-                              Text(
-                                  '${homeViewModel.bodyGoalResponse!.weight} kg'),
-                            ],
-                          ),
-                        ),
-                        InfoCard(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('食事'),
-                              const Icon(Icons.fastfood),
-                              Text(
-                                  '${homeViewModel.activityGoalResponse!.distance} 分'),
-                            ],
-                          ),
-                        ),
-                        InfoCard(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('デバイス情報'),
-                              const Icon(Icons.watch),
-                              Text(
-                                  '${homeViewModel.deviceResponse!.batteryLevel} %'),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
+      drawer: const CustomDrawer(),
+      body: FutureBuilder(
+        future: homeViewModel.getActivityGoal(), // 非同期データ取得
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator()); // ローディング中
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('エラーが発生しました')); // エラー時
+          } else {
+            return Consumer<HomeViewModel>(
+              builder: (context, viewModel, child) {
+                if (
+                    viewModel.bodyGoalResponse == null) {
+                  return const Center(child: Text('データなし'));
+                }
+                final goalSteps = viewModel.activitySummaryResponse!.goals.steps;
+                final actualSteps = viewModel.activitySummaryResponse!.summary.steps;
+                final goalActiveMinutes = viewModel.activitySummaryResponse!.goals.activeMinutes;
+                final actualActiveMinutes = viewModel.activitySummaryResponse!.summary.veryActiveMinutes;
+
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: GridView.count(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    children: [
+                      DonutChart(
+                        title: '歩数',
+                        goal: goalSteps,
+                        actual: actualSteps,
+                        unit: '歩',
+                      ),
+                      DonutChart(
+                        title: '活動時間',
+                        goal: goalActiveMinutes,
+                        actual: actualActiveMinutes,
+                        unit: '分',
+                      ),
+                      DonutChart(
+                        title: 'カロリー',
+                        goal: viewModel.activitySummaryResponse!.goals.caloriesOut,
+                        actual: viewModel.activitySummaryResponse!.summary.caloriesOut,
+                        unit: 'kcal',
+                      ),
+                      DonutChart(
+                        title: '距離',
+                        goal: viewModel.activitySummaryResponse!.goals.distance,
+                        actual: viewModel.totalDistance,
+                        unit: 'km',
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
