@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
       initialRoute: initialRoute,
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginView(),
-        '/home': (BuildContext context) => HomeView(),
+        '/home': (BuildContext context) => const HomeView(),
       },
     );
   }

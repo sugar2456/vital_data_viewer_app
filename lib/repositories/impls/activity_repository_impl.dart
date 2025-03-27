@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:vital_data_viewer_app/models/response/activity_summary_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/activity_repository_interface.dart';
@@ -17,11 +18,11 @@ class ActivityRepositoryImpl implements ActivityGoalRepositoryInterface {
         final responseBody = json.decode(response.body);
         return AcitivityGoalResponse.fromJson(responseBody['goals']);
       } else {
-        print(response.statusCode);
+        log(response.statusCode.toString());
         throw Exception('Failed to load activity goal');
       }
     } catch (e) {
-      print(e);
+      log(e.toString());
       throw Exception('Failed to load activity goal');
     }
   }
@@ -38,11 +39,11 @@ class ActivityRepositoryImpl implements ActivityGoalRepositoryInterface {
         final responseBody = json.decode(response.body);
         return ActivitySummaryResponse.fromJson(responseBody);
       } else {
-        print(response.statusCode);
+        log(response.statusCode.toString());
         throw Exception('Failed to load activity summary');
       }
     } catch (e) {
-      print(e);
+      log(e.toString());
       throw Exception('Failed to load activity summary');
     }
   }

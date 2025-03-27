@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:vital_data_viewer_app/models/response/activity_goal_response.dart';
 import 'package:vital_data_viewer_app/models/manager/token_manager.dart';
@@ -38,7 +40,7 @@ class HomeViewModel extends ChangeNotifier {
       _bodyGoalResponse = await _bodyGoalRepository.fetchBodyGoal();
       _deviceResponse = await _deviceRepository.fetchDevice();
     } catch (e) {
-      print('Error fetching activity goal: $e');
+      log('Error fetching activity goal: $e');
     } finally {
       // _isLoading = false;
       // notifyListeners();

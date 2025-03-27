@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:vital_data_viewer_app/models/response/body_goal_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/body_goal_repository_interface.dart';
@@ -15,11 +16,11 @@ class BodyGoalRepositoryImpl extends BodyGoalRepositoryInterface {
         final responseBody = json.decode(response.body);
         return BodyGoalResponse.fromJson(responseBody['goal']);
       } else {
-        print(response.statusCode);
+        log(response.statusCode.toString());
         throw Exception('Failed to load body goal');
       }
     } catch (e) {
-      print(e);
+      log(e.toString());
       throw Exception('Failed to load body goal');
     }
   }
