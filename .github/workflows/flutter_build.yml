@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: windows-build
-          path: build/windows/runner/Release/*.exe
+          path: build\windows\x64\runner\Release\*.exe
 
   # # Linux向けのビルドジョブ
   # build-linux:
