@@ -60,3 +60,10 @@ extension DeviceTypeExtension on DeviceType {
     }
   }
 }
+
+enum SleepConsistency {
+  setGoalNotSleepRecorded,
+  notSetGoalButSleepRecorded,
+  notSetGoalNotSleepRecorded,
+  setGoalAndSleepRecorded,
+}

@@ -66,6 +66,12 @@ class HomeView extends StatelessWidget {
                         actual: viewModel.totalDistance,
                         unit: 'km',
                       ),
+                      DonutChart(
+                        title: '睡眠時間',
+                        goal: viewModel.sleepGoal,
+                        actual: viewModel.sleepActual,
+                        unit: '分'
+                      )
                     ],
                   ),
                 );
