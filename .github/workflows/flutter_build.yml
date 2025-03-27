@@ -11,12 +11,11 @@ on:
 jobs:
   build:
     name: Build Flutter Desktop Apps
-    runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
         platform: [windows, linux, macos]
+    runs-on: ${{ matrix.os }}
 
     steps:
       # 1. リポジトリをチェックアウト
@@ -33,9 +32,13 @@ jobs:
       # 3. デスクトップサポートを有効化
       - name: Enable desktop support
         run: |
-          flutter config --enable-windows-desktop
-          flutter config --enable-linux-desktop
-          flutter config --enable-macos-desktop
+          if [ "${{ matrix.platform }}" == "windows" ]; then
+            flutter config --enable-windows-desktop
+          elif [ "${{ matrix.platform }}" == "linux" ]; then
+            flutter config --enable-linux-desktop
+          elif [ "${{ matrix.platform }}" == "macos" ]; then
+            flutter config --enable-macos-desktop
+          fi
 
       # 4. 環境を確認
       - name: Verify Flutter environment
@@ -49,11 +52,11 @@ jobs:
       - name: Build for ${{ matrix.platform }}
         run: |
           if [ "${{ matrix.platform }}" == "windows" ]; then
-            flutter build windows
+            flutter build windows --release
           elif [ "${{ matrix.platform }}" == "linux" ]; then
-            flutter build linux
+            flutter build linux --release
           elif [ "${{ matrix.platform }}" == "macos" ]; then
-            flutter build macos
+            flutter build macos --release
           fi
 
       # 7. ビルド成果物を保存
