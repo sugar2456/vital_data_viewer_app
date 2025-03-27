@@ -4,8 +4,8 @@ import 'package:vital_data_viewer_app/views/component/info_card.dart';
 
 class DonutChart extends StatelessWidget {
   final String title;
-  final int goal;
-  final int actual;
+  final num goal;
+  final num actual;
   final String unit;
   
   const DonutChart({
