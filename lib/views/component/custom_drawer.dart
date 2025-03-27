@@ -15,7 +15,7 @@ class CustomDrawer extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
-              child: const Text(
+              child: Text(
                 'メニュー',
                 style: TextStyle(
                   color: Colors.white,
