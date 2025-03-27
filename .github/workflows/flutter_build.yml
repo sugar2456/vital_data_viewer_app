@@ -1,0 +1,133 @@
+name: Flutter Desktop Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # Windows向けのビルドジョブ
+  build-windows:
+    name: Build Windows App
+    runs-on: windows-latest
+    steps:
+      # 1. リポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Flutterをセットアップ
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.4'
+          channel: 'stable'
+
+      # 3. デスクトップサポートを有効化
+      - name: Enable desktop support
+        run: flutter config --enable-windows-desktop
+
+      # 4. 環境を確認
+      - name: Verify Flutter environment
+        run: flutter doctor -v
+
+      # 5. Flutterの依存関係を取得
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 6. Windows向けにビルド
+      - name: Build Windows App
+        run: flutter build windows --release
+
+      # 7. ビルド成果物を保存
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: build/windows/runner/Release/*.exe
+
+  # # Linux向けのビルドジョブ
+  # build-linux:
+  #   name: Build Linux App
+  #   runs-on: ubuntu-24.04
+  #   steps:
+  #     # 1. リポジトリをチェックアウト
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+
+  #     # 2. 必要な依存関係をインストール
+  #     - name: Install dependencies
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install -y ninja-build libgtk-3-dev
+
+  #     # 3. Flutterをセットアップ
+  #     - name: Set up Flutter
+  #       uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: '3.24.4'
+  #         channel: 'stable'
+
+  #     # 4. デスクトップサポートを有効化
+  #     - name: Enable desktop support
+  #       run: flutter config --enable-linux-desktop
+
+  #     # 5. 環境を確認
+  #     - name: Verify Flutter environment
+  #       run: flutter doctor -v
+
+  #     # 6. Flutterの依存関係を取得
+  #     - name: Install Flutter dependencies
+  #       run: flutter pub get
+
+  #     # 7. Linux向けにビルド
+  #     - name: Build Linux App
+  #       run: flutter build linux --release
+
+  #     # 8. ビルド成果物を保存
+  #     - name: Upload build artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: linux-build
+  #         path: build/linux/runner/release/*.AppImage
+
+  # macOS向けのビルドジョブ
+  build-macos:
+    name: Build macOS App
+    runs-on: macos-latest
+    steps:
+      # 1. リポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Flutterをセットアップ
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.4'
+          channel: 'stable'
+
+      # 3. デスクトップサポートを有効化
+      - name: Enable desktop support
+        run: flutter config --enable-macos-desktop
+
+      # 4. 環境を確認
+      - name: Verify Flutter environment
+        run: flutter doctor -v
+
+      # 5. Flutterの依存関係を取得
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 6. macOS向けにビルド
+      - name: Build macOS App
+        run: flutter build macos --release
+
+      # 7. ビルド成果物を保存
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-build
+          path: build/macos/Build/Products/Release/*.app
