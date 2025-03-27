@@ -5,6 +5,7 @@ import 'package:vital_data_viewer_app/models/response/device_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/device_repository_interdace.dart';
 
 class DeviceRepositoryImpl extends DeviceRepositoryInterface {
+  @override
   Future<DeviceResponse> fetchDevice() async {
     final uri = Uri.https('api.fitbit.com', '/1/user/-/devices.json');
 
