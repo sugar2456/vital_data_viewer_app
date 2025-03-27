@@ -52,9 +52,9 @@ jobs:
       - name: Build for ${{ matrix.platform }}
         run: |
           if [ "${{ matrix.platform }}" == "windows" ]; then
-            flutter build windows --release
+            flutter build windows
           elif [ "${{ matrix.platform }}" == "linux" ]; then
-            flutter build linux --release
+            flutter build linux
           elif [ "${{ matrix.platform }}" == "macos" ]; then
             flutter build macos --release
           fi
