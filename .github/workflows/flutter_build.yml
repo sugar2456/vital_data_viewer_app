@@ -27,7 +27,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.0'
+          flutter-version: '3.24.4'
           channel: 'stable'
 
       # 3. デスクトップサポートを有効化
@@ -37,11 +37,15 @@ jobs:
           flutter config --enable-linux-desktop
           flutter config --enable-macos-desktop
 
-      # 4. Flutterの依存関係を取得
+      # 4. 環境を確認
+      - name: Verify Flutter environment
+        run: flutter doctor -v
+
+      # 5. Flutterの依存関係を取得
       - name: Install dependencies
         run: flutter pub get
 
-      # 5. 各プラットフォーム向けにビルド
+      # 6. 各プラットフォーム向けにビルド
       - name: Build for ${{ matrix.platform }}
         run: |
           if [ "${{ matrix.platform }}" == "windows" ]; then
@@ -52,7 +56,7 @@ jobs:
             flutter build macos --release
           fi
 
-      # 6. ビルド成果物を保存
+      # 7. ビルド成果物を保存
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
