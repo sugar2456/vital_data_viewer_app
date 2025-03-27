@@ -4,19 +4,21 @@ import 'package:vital_data_viewer_app/views/component/info_card.dart';
 
 class DonutChart extends StatelessWidget {
   final String title;
-  final int goalSteps;
-  final int actualSteps;
-
+  final int goal;
+  final int actual;
+  final String unit;
+  
   const DonutChart({
     super.key,
     required this.title,
-    required this.goalSteps,
-    required this.actualSteps,
+    required this.goal,
+    required this.actual,
+    required this.unit,
   });
 
   @override
   Widget build(BuildContext context) {
-    final remainingSteps = goalSteps - actualSteps;
+    final remainingSteps = goal - actual;
 
     return InfoCard(
       child: Stack(
@@ -24,7 +26,7 @@ class DonutChart extends StatelessWidget {
         children: [
           Chart(
             data: [
-              {'label': '実際の歩数', 'value': actualSteps},
+              {'label': '実際の歩数', 'value': actual},
               {'label': '残りの歩数', 'value': remainingSteps},
             ],
             variables: {
@@ -70,7 +72,7 @@ class DonutChart extends StatelessWidget {
                 ),
               ),
               Text(
-                '$actualSteps歩',
+                '$actual $unit',
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -79,7 +81,7 @@ class DonutChart extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                '目標: $goalSteps歩',
+                '目標: $goal $unit',
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.grey,
