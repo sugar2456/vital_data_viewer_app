@@ -3,11 +3,13 @@ import 'package:graphic/graphic.dart';
 import 'package:vital_data_viewer_app/views/component/info_card.dart';
 
 class DonutChart extends StatelessWidget {
+  final String title;
   final int goalSteps;
   final int actualSteps;
 
   const DonutChart({
     super.key,
+    required this.title,
     required this.goalSteps,
     required this.actualSteps,
   });
@@ -59,6 +61,14 @@ class DonutChart extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
               Text(
                 '$actualSteps歩',
                 style: const TextStyle(
