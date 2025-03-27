@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:vital_data_viewer_app/models/manager/auth_manager.dart';
 import 'package:vital_data_viewer_app/providers/providers.dart';
+import 'package:vital_data_viewer_app/views/home_view.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:provider/provider.dart';
-import 'view_models/login_view_model.dart';
-import 'package:vital_data_viewer_app/repositories/impls/login_repository_impl.dart';
 import 'views/login_view.dart';
 
 void main() async {
@@ -20,16 +20,22 @@ void main() async {
     await windowManager.show();
     await windowManager.focus();
   });
+
+  final authManager = AuthManager();
+  final isAuthenticated = authManager.isAuthenticated();
+
   runApp(
     MultiProvider(
       providers: getProviders(),
-      child: const MyApp(),
+      child: MyApp(initialRoute: isAuthenticated ? '/home' : '/login'),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String initialRoute;
+
+  const MyApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginView(),
+      initialRoute: initialRoute,
+      routes: <String, WidgetBuilder>{
+        '/login': (BuildContext context) => LoginView(),
+        '/home': (BuildContext context) => const HomeView(),
+      },
     );
   }
 }

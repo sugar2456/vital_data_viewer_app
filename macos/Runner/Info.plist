@@ -28,5 +28,22 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>api.fitbit.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/> <!-- サブドメインも許可 -->
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<false/> <!-- HTTPSのみ許可 -->
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<true/> <!-- 前方秘匿性を要求 -->
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string> <!-- 最低TLSバージョン -->
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>
