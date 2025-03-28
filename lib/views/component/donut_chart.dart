@@ -18,7 +18,7 @@ class DonutChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final remainingSteps = goal - actual;
+    final remainingSteps = goal - actual < 0 ? 0 : goal - actual;
 
     return InfoCard(
       child: Stack(
