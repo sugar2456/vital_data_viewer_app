@@ -158,7 +158,7 @@ class LevelDetail {
 }
 
 class Summary {
-  final Stages stages;
+  final Stages? stages;
   final int totalMinutesAsleep;
   final int totalSleepRecords;
   final int totalTimeInBed;
@@ -172,7 +172,7 @@ class Summary {
 
   factory Summary.fromJson(Map<String, dynamic> json) {
     return Summary(
-      stages: Stages.fromJson(json['stages']),
+      stages: json['stage'] != null ? Stages.fromJson(json['stages']) : null,
       totalMinutesAsleep: json['totalMinutesAsleep'],
       totalSleepRecords: json['totalSleepRecords'],
       totalTimeInBed: json['totalTimeInBed'],

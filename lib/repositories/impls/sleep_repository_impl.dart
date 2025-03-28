@@ -40,8 +40,9 @@ class SleepRepositoryImpl extends SleepRepositoryInterface {
         log(response.statusCode.toString());
         throw Exception('Failed to load sleep log');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       log(e.toString());
+      log(stackTrace.toString());
       throw Exception('Failed to load sleep log');
     }
   }
