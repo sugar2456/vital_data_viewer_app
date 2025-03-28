@@ -28,7 +28,14 @@ class CustomDrawer extends StatelessWidget {
               title: const Text('ホーム'),
               onTap: () {
                 // ホーム画面への遷移処理
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/home');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.directions_run),
+              title: const Text('アクティビティ'),
+              onTap: () {
+                Navigator.pushNamed(context, '/activity');
               },
             ),
             ListTile(
@@ -43,6 +50,7 @@ class CustomDrawer extends StatelessWidget {
               leading: const Icon(Icons.logout),
               title: const Text('ログアウト'),
               onTap: () {
+                
                 // ログアウト処理
                 Navigator.pop(context);
               },
