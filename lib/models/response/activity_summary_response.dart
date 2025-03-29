@@ -109,7 +109,7 @@ class Summary {
           .toList() ?? [],
       lightlyActiveMinutes: json['lightlyActiveMinutes'],
       marginalCalories: json['marginalCalories'],
-      restingHeartRate: json['restingHeartRate'],
+      restingHeartRate: json['restingHeartRate'] ?? 0,
       sedentaryMinutes: json['sedentaryMinutes'],
       steps: json['steps'],
       useEstimation: json['useEstimation'] ?? false,
