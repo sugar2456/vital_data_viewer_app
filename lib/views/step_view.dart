@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vital_data_viewer_app/view_models/home_view_model.dart';
 import 'package:vital_data_viewer_app/view_models/steps_view_model.dart';
 import 'package:vital_data_viewer_app/views/component/custom_drawer.dart';
-import 'package:vital_data_viewer_app/views/component/donut_chart.dart';
 import 'package:vital_data_viewer_app/views/component/line_chart.dart';
 import 'package:vital_data_viewer_app/views/component/stack_cord.dart';
 
@@ -29,10 +27,6 @@ class StepView extends StatelessWidget {
           } else {
             return Consumer<StepsViewModel>(
               builder: (context, viewModel, child) {
-                if (viewModel.getStepsIntraday == null) {
-                  return const Center(child: Text('データなし'));
-                }
-
                 return Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Stack(
