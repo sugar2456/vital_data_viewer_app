@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();
   WindowOptions windowOptions = const WindowOptions(
-    size: Size(1800, 900),
+    size: Size(1800, 980),
     center: true,
     backgroundColor: Colors.transparent,
     skipTaskbar: false,
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         '/step': (BuildContext context) => const StepView(),
         '/heart_rate': (BuildContext context) => const HeartRateView(),
         '/calories': (BuildContext context) => const CaloriesView(),
-        '/swimming_stroke': (BuildContext context) => const SwimmingStrokesView(),
+        '/swimming': (BuildContext context) => const SwimmingStrokesView(),
       },
     );
   }
