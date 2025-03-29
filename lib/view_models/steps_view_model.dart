@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:vital_data_viewer_app/models/response/dataset.dart';
 import 'package:vital_data_viewer_app/models/response/step_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/step_repository_interface.dart';
 
@@ -7,7 +8,7 @@ class StepsViewModel extends ChangeNotifier {
   final StepRepositoryInterface _stepRepository;
   final DateTime date = DateTime.now();
   StepResponse? _stepResponse;
-  List<IntradayStep> get getStepsIntraday => _stepResponse!.activitiesStepsIntraday.dataset;
+  List<Dataset> get getStepsIntraday => _stepResponse!.activitiesStepsIntraday.dataset;
   int get getTotalSteps => _stepResponse!.activitiesSteps[0].value;
 
   StepsViewModel(this._stepRepository);
