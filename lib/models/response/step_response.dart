@@ -1,3 +1,5 @@
+import 'package:vital_data_viewer_app/models/response/dataset.dart';
+
 class StepResponse {
   final List<ActivityStep> activitiesSteps;
   final IntradaySteps activitiesStepsIntraday;
@@ -40,7 +42,7 @@ class ActivityStep {
 }
 
 class IntradaySteps {
-  final List<IntradayStep> dataset;
+  final List<Dataset> dataset;
   final int datasetInterval;
   final String datasetType;
 
@@ -53,32 +55,10 @@ class IntradaySteps {
   factory IntradaySteps.fromJson(Map<String, dynamic> json, String baseDate) {
     return IntradaySteps(
       dataset: (json['dataset'] as List)
-          .map((item) => IntradayStep.fromJson(item, baseDate))
+          .map((item) => Dataset.fromJson(item, baseDate))
           .toList(),
       datasetInterval: json['datasetInterval'],
       datasetType: json['datasetType'],
-    );
-  }
-}
-
-class IntradayStep {
-  final String time;
-  final int value;
-  final DateTime dateTime;
-
-  IntradayStep({
-    required this.time,
-    required this.value,
-    required this.dateTime,
-  });
-
-  factory IntradayStep.fromJson(Map<String, dynamic> json, String baseDate) {
-     // yyyy-MM-dd hh:mm:ss
-    final fullDateTimeString = '$baseDate ${json['time']}';
-    return IntradayStep(
-      time: json['time'],
-      value: json['value'],
-      dateTime: DateTime.parse(fullDateTimeString),
     );
   }
 }

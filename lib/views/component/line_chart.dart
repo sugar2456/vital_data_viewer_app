@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphic/graphic.dart';
-import 'package:vital_data_viewer_app/models/response/step_response.dart';
+import 'package:vital_data_viewer_app/models/response/dataset.dart';
 import 'package:vital_data_viewer_app/views/component/info_card.dart';
 
 class LineChart extends StatelessWidget {
@@ -47,16 +47,16 @@ class LineChart extends StatelessWidget {
                       data: data,
                       variables: {
                         'time': Variable(
-                          accessor: (dynamic step) =>
-                              (step as IntradayStep).dateTime,
+                          accessor: (dynamic data) =>
+                              (data as Dataset).dateTime,
                           scale: TimeScale(
                             formatter: (time) => '${time.hour}:${time.minute}',
                             tickCount: 24,
                           ),
                         ),
                         'value': Variable(
-                          accessor: (dynamic step) =>
-                              (step as IntradayStep).value,
+                          accessor: (dynamic data) =>
+                              (data as Dataset).value,
                           scale: LinearScale(min: 0),
                         ),
                       },
