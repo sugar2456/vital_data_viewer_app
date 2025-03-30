@@ -1,6 +1,6 @@
 class Dataset {
   final String time;
-  final int value;
+  final double value;
   final DateTime dateTime;
 
   Dataset({
@@ -14,7 +14,7 @@ class Dataset {
     final fullDateTimeString = '$baseDate ${json['time']}';
     return Dataset(
       time: json['time'],
-      value: json['value'],
+      value: (json['value'] as num).toDouble(),
       dateTime: DateTime.parse(fullDateTimeString),
     );
   }
