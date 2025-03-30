@@ -10,6 +10,7 @@ class SwimmingViewModel extends ChangeNotifier {
   final DateTime date = DateTime.now();
   SwimmingResponse? _swimmingResponse;
   List<Dataset> get getSwimmingIntraday => _swimmingResponse!.activitiesSwimmingStrokeIntraday.dataset;
+  int get getTotalSwimmingStrokes => _swimmingResponse!.activitiesSwimmingStroke[0].value;
 
   SwimmingViewModel(this._swimmingRepository);
 

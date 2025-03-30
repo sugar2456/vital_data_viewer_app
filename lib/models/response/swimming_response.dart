@@ -10,16 +10,16 @@ class SwimmingResponse {
   });
 
   factory SwimmingResponse.fromJson(Map<String, dynamic> json) {
-    final baseDate = (json['activities-swimming-stroke'] as List)
+    final baseDate = (json['activities-swimming-strokes'] as List)
         .map((item) => ActivitySwimmingStroke.fromJson(item))
         .first
         .dateTime;
     return SwimmingResponse(
-      activitiesSwimmingStroke: (json['activities-swimming-stroke'] as List)
+      activitiesSwimmingStroke: (json['activities-swimming-strokes'] as List)
           .map((item) => ActivitySwimmingStroke.fromJson(item))
           .toList(),
       activitiesSwimmingStrokeIntraday:
-          ActivitySwimmingStrokeIntraday.fromJson(json['activities-swimming-stroke-intraday'], baseDate),
+          ActivitySwimmingStrokeIntraday.fromJson(json['activities-swimming-strokes-intraday'], baseDate),
     );
   }
 }

@@ -9,7 +9,7 @@ import 'package:vital_data_viewer_app/util/header_util.dart';
 class SwimmingRepositoryImpl extends SwimmingRepositoryInterface {
   @override
   Future<SwimmingResponse> fetchSwimming(String date, String detailLevel) async {
-    final uri = Uri.https('api.fitbit.com', '/1/user/-/activities/swimming/date/$date/$detailLevel.json');
+    final uri = Uri.https('api.fitbit.com', '/1/user/-/activities/swimming-strokes/date/$date/1d/$detailLevel.json');
 
     try {
       final response = await http.get(uri, headers: HeaderUtil.createAuthHeaders());
