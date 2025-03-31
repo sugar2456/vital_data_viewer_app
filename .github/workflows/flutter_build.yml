@@ -22,7 +22,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.4'
+          flutter-version: '3.29.2'
           channel: 'stable'
 
       # 3. デスクトップサポートを有効化
@@ -117,7 +117,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.4'
+          flutter-version: '3.29.2'
           channel: 'stable'
 
       # 3. デスクトップサポートを有効化
