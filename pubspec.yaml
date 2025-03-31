@@ -39,6 +39,7 @@ dependencies:
   flutter_web_auth_2: ^4.0.0-alpha.0
   graphic: ^2.5.1
   flutter_launcher_icons: ^0.14.3
+  fl_chart: ^0.70.2
 
 dev_dependencies:
   flutter_test:
