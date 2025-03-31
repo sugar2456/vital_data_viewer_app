@@ -33,15 +33,34 @@ jobs:
       - name: Verify Flutter environment
         run: flutter doctor -v
 
-      # 5. Flutterの依存関係を取得
+      # 5. Flutterの依存関係をキャッシュ
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+            build/
+          key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
+
+      # 6. Flutterの依存関係を取得
       - name: Install dependencies
         run: flutter pub get
 
-      # 6. Windows向けにビルド
+      # 7. Windows向けにビルド
       - name: Build Windows App
         run: flutter build windows --release
 
-      # 7. ビルド成果物を保存
+      # 8. DLL ファイルの存在確認
+      - name: Verify DLL files
+        run: |
+          if not exist "build\windows\x64\runner\Release\screen_retriever_windows_plugin.dll" (
+            echo "Missing screen_retriever_windows_plugin.dll"
+            exit 1
+          )
+
+      # 9. ビルド成果物を保存
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
