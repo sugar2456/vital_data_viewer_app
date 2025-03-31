@@ -10,7 +10,7 @@ class SleepRepositoryImpl extends SleepRepositoryInterface {
     final uri = Uri.https('api.fitbit.com', '/1.2/user/-/sleep/goal.json');
     final headers = HeaderUtil.createAuthHeaders();
     final responseBody = await HttpUtil.get(uri, headers);
-    return SleepGoalResponse.fromJson(responseBody['goal']);
+    return SleepGoalResponse.fromJson(responseBody);
   }
 
   @override
@@ -19,6 +19,6 @@ class SleepRepositoryImpl extends SleepRepositoryInterface {
     final uri = Uri.https('api.fitbit.com', '/1.2/user/-/sleep/date/$date.json');
     final headers = HeaderUtil.createAuthHeaders();
     final responseBody = await HttpUtil.get(uri, headers);
-    return SleepLogResponse.fromJson(responseBody['sleep']);
+    return SleepLogResponse.fromJson(responseBody);
   }
 }

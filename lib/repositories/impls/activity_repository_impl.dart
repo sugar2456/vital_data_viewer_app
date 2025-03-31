@@ -23,6 +23,6 @@ class ActivityRepositoryImpl implements ActivityGoalRepositoryInterface {
     final headers = HeaderUtil.createAuthHeaders();
 
     final responseBody = await HttpUtil.get(uri, headers);
-    return ActivitySummaryResponse.fromJson(responseBody['summary']);
+    return ActivitySummaryResponse.fromJson(responseBody);
   }
 }
