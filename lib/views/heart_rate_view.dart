@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vital_data_viewer_app/views/component/custom_drawer.dart';
 import 'package:vital_data_viewer_app/view_models/heart_rate_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:vital_data_viewer_app/views/component/line_chart.dart';
+import 'package:vital_data_viewer_app/views/component/custom_line_chart.dart';
 
 class HeartRateView extends StatelessWidget {
   const HeartRateView({super.key});
@@ -29,7 +29,7 @@ class HeartRateView extends StatelessWidget {
               builder: (context, viewModel, child) {
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: LineChart(
+                  child: CustomLineChart(
                     xAxisLabel: '時刻',
                     xAxisUnit: '分',
                     yAxisLabel: '心拍数',
