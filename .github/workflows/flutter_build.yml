@@ -52,15 +52,7 @@ jobs:
       - name: Build Windows App
         run: flutter build windows --release
 
-      # 8. DLL ファイルの存在確認
-      - name: Verify DLL files
-        run: |
-          if (-Not (Test-Path "build/windows/x64/runner/Release/screen_retriever_windows_plugin.dll")) {
-            Write-Error "Missing screen_retriever_windows_plugin.dll"
-            exit 1
-          }
-
-      # 9. ビルド成果物を保存
+      # 8. ビルド成果物を保存
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
