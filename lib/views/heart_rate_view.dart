@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:vital_data_viewer_app/exceptions/external_service_exception.dart';
 import 'package:vital_data_viewer_app/views/component/custom_drawer.dart';
 import 'package:vital_data_viewer_app/view_models/heart_rate_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:vital_data_viewer_app/views/component/custom_line_chart.dart';
+import 'package:vital_data_viewer_app/views/component/error_dialog.dart';
 
 class HeartRateView extends StatelessWidget {
   const HeartRateView({super.key});
@@ -23,6 +25,13 @@ class HeartRateView extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              String errorMessage = 'エラーが発生しました';
+              if (snapshot.error is ExternalServiceException) {
+                errorMessage = (snapshot.error as ExternalServiceException).userMessage;
+              }
+              ErrorDialog.show(context, errorMessage);
+            });
             return const Center(child: Text('エラーが発生しました'));
           } else {
             return Consumer<HeartRateViewModel>(
