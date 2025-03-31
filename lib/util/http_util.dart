@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:vital_data_viewer_app/const/http_status_code.dart';
 import 'package:vital_data_viewer_app/exceptions/external_service_exception.dart';
