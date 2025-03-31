@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:graphic/graphic.dart';
-import 'package:vital_data_viewer_app/models/response/calories_dataset.dart';
 import 'package:vital_data_viewer_app/models/response/dataset.dart';
 import 'package:vital_data_viewer_app/views/component/info_card.dart';
 
-class CaloriesLineChart extends StatelessWidget {
+class LineChart extends StatelessWidget {
   final String xAxisLabel;
   final String xAxisUnit;
   final String yAxisLabel;
   final String yAxisUnit;
   final List<dynamic> data;
 
-  const CaloriesLineChart(
+  const LineChart(
       {super.key,
       required this.xAxisLabel,
       required this.xAxisUnit,
@@ -56,23 +55,18 @@ class CaloriesLineChart extends StatelessWidget {
                           ),
                         ),
                         'value': Variable(
-                          accessor: (dynamic data) => (data as Dataset).value,
-                          scale: LinearScale(min: 0),
-                        ),
-                        'mets': Variable(
                           accessor: (dynamic data) =>
-                              (data as CaloriesDataset).mets ?? 0,
+                              (data as Dataset).value,
                           scale: LinearScale(min: 0),
                         ),
                       },
                       marks: [
                         LineMark(
-                          position: Varset('time') * Varset('value'),
                           shape:
                               ShapeEncode(value: BasicLineShape()), // 線の形状を指定
                           color: ColorEncode(value: Colors.blue), // 単一の色を指定
                           size: SizeEncode(value: 2), // 線の太さを指定
-                        ),
+                        )
                       ],
                       axes: [
                         AxisGuide(

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:vital_data_viewer_app/models/manager/token_manager.dart';
 import 'package:vital_data_viewer_app/models/response/body_goal_response.dart';
@@ -61,25 +59,12 @@ class HomeViewModel extends ChangeNotifier {
     return _sleepLogResponse!.summary.totalMinutesAsleep;
   }
 
-  // bool _isLoading = false;
-  // bool get isLoading => _isLoading;
-
   Future<void> getActivityGoal() async {
-    // _isLoading = true;
-    // notifyListeners();
-
-    try {
-      _activitySummaryResponse =
-          await _activityGoalRepository.fetchActivitySummary();
-      _bodyGoalResponse = await _bodyGoalRepository.fetchBodyGoal();
-      _sleepGoalResponse = await _sleepRepository.fetchSleepGoal();
-      _sleepLogResponse = await _sleepRepository.fetchSleepLog();
-    } catch (e) {
-      log('Error fetching activity goal: $e');
-    } finally {
-      // _isLoading = false;
-      // notifyListeners();
-    }
+    _activitySummaryResponse =
+        await _activityGoalRepository.fetchActivitySummary();
+    _bodyGoalResponse = await _bodyGoalRepository.fetchBodyGoal();
+    _sleepGoalResponse = await _sleepRepository.fetchSleepGoal();
+    _sleepLogResponse = await _sleepRepository.fetchSleepLog();
   }
 
   Future<void> logout() async {

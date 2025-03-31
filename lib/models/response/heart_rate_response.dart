@@ -55,7 +55,7 @@ class HeartRateValue {
     return HeartRateValue(
       customHeartRateZones: json['customHeartRateZones'],
       heartRateZones: json['heartRateZones'],
-      restingHeartRate: json['restingHeartRate'],
+      restingHeartRate: json['restingHeartRate'] ?? 0,
     );
   }
 }

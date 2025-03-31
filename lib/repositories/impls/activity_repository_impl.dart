@@ -1,30 +1,18 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'package:http/http.dart' as http;
 import 'package:vital_data_viewer_app/models/response/activity_summary_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/activity_repository_interface.dart';
 import 'package:vital_data_viewer_app/models/response/activity_goal_response.dart';
 import 'package:vital_data_viewer_app/util/header_util.dart';
+import 'package:vital_data_viewer_app/util/http_util.dart';
 
 
 class ActivityRepositoryImpl implements ActivityGoalRepositoryInterface {
   @override
   Future<AcitivityGoalResponse> fetchActivityGoal() async {
     final uri = Uri.https('api.fitbit.com', '/1/user/-/activities/goals/daily.json');
+    final headers = HeaderUtil.createAuthHeaders();
 
-    try {
-      final response = await http.get(uri, headers: HeaderUtil.createAuthHeaders());
-      if (response.statusCode == 200) {
-        final responseBody = json.decode(response.body);
-        return AcitivityGoalResponse.fromJson(responseBody['goals']);
-      } else {
-        log(response.statusCode.toString());
-        throw Exception('Failed to load activity goal');
-      }
-    } catch (e) {
-      log(e.toString());
-      throw Exception('Failed to load activity goal');
-    }
+    final responseBody = await HttpUtil.get(uri, headers);
+    return AcitivityGoalResponse.fromJson(responseBody['goals']);
   }
 
   @override
@@ -32,19 +20,9 @@ class ActivityRepositoryImpl implements ActivityGoalRepositoryInterface {
     // 今日の日付 yyyy-MM-dd
     final date = DateTime.now().toIso8601String().substring(0, 10);
     final uri = Uri.https('api.fitbit.com', '/1/user/-/activities/date/$date.json');
+    final headers = HeaderUtil.createAuthHeaders();
 
-    try {
-      final response = await http.get(uri, headers: HeaderUtil.createAuthHeaders());
-      if (response.statusCode == 200) {
-        final responseBody = json.decode(response.body);
-        return ActivitySummaryResponse.fromJson(responseBody);
-      } else {
-        log(response.statusCode.toString());
-        throw Exception('Failed to load activity summary');
-      }
-    } catch (e) {
-      log(e.toString());
-      throw Exception('Failed to load activity summary');
-    }
+    final responseBody = await HttpUtil.get(uri, headers);
+    return ActivitySummaryResponse.fromJson(responseBody);
   }
 }
