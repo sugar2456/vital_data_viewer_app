@@ -7,16 +7,14 @@ class HeartRateViewModel extends ChangeNotifier {
   final DateTime date = DateTime.now();
   HeartRateResponse? _heartRateResponse;
 
-  List<dynamic> get getHeartRateIntraday => _heartRateResponse!.activitiesHeartRateIntraday.dataset;
+  List<dynamic> get getHeartRateIntraday =>
+      _heartRateResponse!.activitiesHeartRateIntraday.dataset;
 
   HeartRateViewModel(this._heartRateRepository);
 
   Future<void> fetchHeartRate() async {
-    try {
-      final getDate = date.toIso8601String().split('T').first;
-      _heartRateResponse = await _heartRateRepository.fetchHeartRate(getDate, '1min');
-    } catch (e) {
-      debugPrint('心拍数情報の取得に失敗しました。$e');
-    }
+    final getDate = date.toIso8601String().split('T').first;
+    _heartRateResponse =
+        await _heartRateRepository.fetchHeartRate(getDate, '1min');
   }
 }
