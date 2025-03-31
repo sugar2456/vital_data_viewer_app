@@ -55,10 +55,10 @@ jobs:
       # 8. DLL ファイルの存在確認
       - name: Verify DLL files
         run: |
-          if not exist "build\windows\x64\runner\Release\screen_retriever_windows_plugin.dll" (
-            echo "Missing screen_retriever_windows_plugin.dll"
+          if (-Not (Test-Path "build/windows/x64/runner/Release/screen_retriever_windows_plugin.dll")) {
+            Write-Error "Missing screen_retriever_windows_plugin.dll"
             exit 1
-          )
+          }
 
       # 9. ビルド成果物を保存
       - name: Upload build artifacts
