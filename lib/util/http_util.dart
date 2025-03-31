@@ -20,6 +20,7 @@ class HttpUtil {
           final errorResponse = ApiErrorResponse.fromJson(errorResponseJson);
           const userMessage = '不正なリクエストです。';
           final systemMessage = errorResponse.errors[0].message;
+          log('HTTPエラー: ${response.statusCode}');
           throw ExternalServiceException(
               systemMessage, userMessage, response.statusCode);
 
@@ -28,6 +29,7 @@ class HttpUtil {
           final errorResponse = ApiErrorResponse.fromJson(errorResponseJson);
           const userMessage = '認証エラーが発生しました。再度ログインを行ってください。';
           final systemMessage = errorResponse.errors[0].message;
+          log('HTTPエラー: ${response.statusCode}');
           throw ExternalServiceException(
               systemMessage, userMessage, response.statusCode);
 
@@ -36,6 +38,7 @@ class HttpUtil {
           final errorResponse = ApiErrorResponse.fromJson(errorResponseJson);
           const userMessage = 'このユーザではこのリソースにアクセスできません';
           final systemMessage = errorResponse.errors[0].message;
+          log('HTTPエラー: ${response.statusCode}');
           throw ExternalServiceException(
               systemMessage, userMessage, response.statusCode);
 
@@ -52,18 +55,20 @@ class HttpUtil {
           final errorResponse = ApiErrorResponse.fromJson(errorResponseJson);
           const userMessage = 'HTTPメソッドが許可されていません';
           final systemMessage = errorResponse.errors[0].message;
+          log('HTTPエラー: ${response.statusCode}');
           throw ExternalServiceException(
               systemMessage, userMessage, response.statusCode);
 
         case HttpStatusCode.tooManyRequests:
+          log('HTTPエラー: ${response.statusCode}');
           final errorResponseJson = json.decode(response.body);
-          final errorResponse = ApiErrorResponse.fromJson(errorResponseJson);
           const userMessage = 'リクエストが多すぎます。しばらく待ってから再試行してください。';
-          final systemMessage = errorResponse.errors[0].message;
+          final systemMessage = errorResponseJson['error']['message'];
           throw ExternalServiceException(
               systemMessage, userMessage, response.statusCode);
 
         case HttpStatusCode.internalServerError:
+          log('HTTPエラー: ${response.statusCode}');
           final errorResponseJson = json.decode(response.body);
           final errorResponse = ApiErrorResponse.fromJson(errorResponseJson);
           const userMessage = 'サーバーエラーが発生しました。';
@@ -77,7 +82,13 @@ class HttpUtil {
     } catch (e, stackTrace) {
       log('HTTPリクエストエラー: $e');
       log(stackTrace.toString());
-      throw Exception('HTTPリクエストに失敗しました');
+
+      if (e is ExternalServiceException) {
+        rethrow;
+      }
+
+      // その他の例外を再スロー
+      throw Exception('HTTPリクエストに失敗しました: $e');
     }
   }
 }
