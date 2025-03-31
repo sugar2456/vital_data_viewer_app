@@ -1,7 +1,7 @@
 
 class ExternalServiceException implements Exception{
   final String systemMessage;
-  final String? userMessage;
+  final String userMessage;
   final int? statusCode;
 
   ExternalServiceException(this.systemMessage, this.userMessage, this.statusCode);
