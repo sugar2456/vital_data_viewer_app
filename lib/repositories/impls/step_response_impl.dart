@@ -1,34 +1,16 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'package:http/http.dart' as http;
-import 'package:vital_data_viewer_app/models/response/error/api_error_response.dart';
 import 'package:vital_data_viewer_app/models/response/step_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/step_repository_interface.dart';
 import 'package:vital_data_viewer_app/util/header_util.dart';
+import 'package:vital_data_viewer_app/util/http_util.dart';
 
 class StepResponseImpl extends StepRepositoryInterface {
   @override
   Future<StepResponse> fetchStep(String date, String min) async{
     final uri = Uri.https('api.fitbit.com', '/1/user/-/activities/steps/date/$date/1d/$min.json');
-
-    try {
-      final response = await http.get(uri, headers: HeaderUtil.createAuthHeaders());
-      if (response.statusCode == 200) {
-        final responseBody = json.decode(response.body);
-        return StepResponse.fromJson(responseBody);
-      } else {
-        final errorResponseJson = json.decode(response.body);
-        final errorResponse = ApiErrorResponse.fromJson(errorResponseJson);
-        log('ステータスエラー：${errorResponse.success}');
-        log('エラータイプ：${errorResponse.errors[0].errorType}');
-        log('エラーメッセージ：${errorResponse.errors[0].message}');
-        throw Exception('ステータスエラー：歩数の取得に失敗');
-      }
-    } catch (e, stackTrace) {
-      log(e.toString());
-      log(stackTrace.toString());
-      throw Exception('歩数の取得に失敗');
-    }   
+    final headers = HeaderUtil.createAuthHeaders();
+    
+    final responseBody = await HttpUtil.get(uri, headers);
+    return StepResponse.fromJson(responseBody);
   }
 
   /// 指定した期間の歩数を取得するメソッド
@@ -44,23 +26,8 @@ class StepResponseImpl extends StepRepositoryInterface {
   @override
   Future<StepResponse> fetchStepPeriod(String startDate, String endDate, String min) async{
     final uri = Uri.https('api.fitbit.com', '/1/user/-/activities/steps/date/$startDate/$endDate/$min.json');
-    try {
-      final response = await http.get(uri, headers: HeaderUtil.createAuthHeaders());
-      if (response.statusCode == 200) {
-        final responseBody = json.decode(response.body);
-        return StepResponse.fromJson(responseBody);
-      } else {
-        final errorResponseJson = json.decode(response.body);
-        final errorResponse = ApiErrorResponse.fromJson(errorResponseJson);
-        log('ステータスエラー：${errorResponse.success}');
-        log('エラータイプ：${errorResponse.errors[0].errorType}');
-        log('エラーメッセージ：${errorResponse.errors[0].message}');
-        throw Exception('ステータスエラー：歩数の取得に失敗');
-      }
-    } catch (e, stackTrace) {
-      log(e.toString());
-      log(stackTrace.toString());
-      throw Exception('歩数の取得に失敗');
-    }   
+    final headers = HeaderUtil.createAuthHeaders();
+    final responseBody = await HttpUtil.get(uri, headers);
+    return StepResponse.fromJson(responseBody);
   }
 }
