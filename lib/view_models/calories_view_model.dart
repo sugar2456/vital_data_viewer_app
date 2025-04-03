@@ -16,5 +16,6 @@ class CaloriesViewModel extends ChangeNotifier {
     final getDate = date.toIso8601String().split('T').first;
     _caloriesResponse =
         await _caloriesRepository.fetchCalories(getDate, '1min');
+    notifyListeners();
   }
 }

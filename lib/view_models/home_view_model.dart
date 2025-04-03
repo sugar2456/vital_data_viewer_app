@@ -65,6 +65,7 @@ class HomeViewModel extends ChangeNotifier {
     _bodyGoalResponse = await _bodyGoalRepository.fetchBodyGoal();
     _sleepGoalResponse = await _sleepRepository.fetchSleepGoal();
     _sleepLogResponse = await _sleepRepository.fetchSleepLog();
+    notifyListeners();
   }
 
   Future<void> logout() async {

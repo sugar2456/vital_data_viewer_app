@@ -58,8 +58,8 @@ class StepView extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // リフレッシュ処理
+        onPressed: () async {
+          await stepsViewModel.fetchStep();
         },
         child: const Icon(Icons.refresh),
       ),

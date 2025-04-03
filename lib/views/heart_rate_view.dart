@@ -52,8 +52,8 @@ class HeartRateView extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // リフレッシュ処理
+        onPressed: () async {
+          await heartRateViewModel.fetchHeartRate();
         },
         child: const Icon(Icons.refresh),
       ),
