@@ -6,10 +6,14 @@ import 'package:vital_data_viewer_app/exceptions/external_service_exception.dart
 import 'package:vital_data_viewer_app/models/response/error/api_error_response.dart';
 
 class HttpUtil {
-  static Future<Map<String, dynamic>> get(
+  final http.Client client;
+
+  HttpUtil({required this.client});
+
+  Future<Map<String, dynamic>> get(
       Uri uri, Map<String, String> headers) async {
     try {
-      final response = await http.get(uri, headers: headers);
+      final response = await client.get(uri, headers: headers);
 
       switch (response.statusCode) {
         case HttpStatusCode.ok:
