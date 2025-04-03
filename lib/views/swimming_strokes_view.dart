@@ -63,8 +63,8 @@ class SwimmingStrokesView extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // リフレッシュ処理
+        onPressed: () async {
+          await swimmingStrokesViewModel.fetchSwimming();
         },
         child: const Icon(Icons.refresh),
       ),

@@ -51,7 +51,9 @@ class CaloriesView extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () async {
+          await caloriesViewModel.fetchCalories();
+        },
         child: const Icon(Icons.refresh),
       ),
     );
