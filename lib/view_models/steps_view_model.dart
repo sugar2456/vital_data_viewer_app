@@ -16,6 +16,7 @@ class StepsViewModel extends ChangeNotifier {
   Future<void> fetchStep() async {
     final getDate = date.toIso8601String().split('T').first;
     _stepResponse = await _stepRepository.fetchStep(getDate, '1min');
+    notifyListeners();
   }
 
   Future<void> fetchStepPeriod() async {

@@ -16,5 +16,6 @@ class HeartRateViewModel extends ChangeNotifier {
     final getDate = date.toIso8601String().split('T').first;
     _heartRateResponse =
         await _heartRateRepository.fetchHeartRate(getDate, '1min');
+    notifyListeners();
   }
 }

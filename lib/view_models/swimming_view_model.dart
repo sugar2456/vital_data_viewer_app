@@ -18,5 +18,6 @@ class SwimmingViewModel extends ChangeNotifier {
     final getDate = date.toIso8601String().split('T').first;
     _swimmingResponse =
         await _swimmingRepository.fetchSwimming(getDate, '1min');
+    notifyListeners();
   }
 }
