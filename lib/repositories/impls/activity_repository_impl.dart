@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:vital_data_viewer_app/models/response/activity_summary_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/activity_repository_interface.dart';
