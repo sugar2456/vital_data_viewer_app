@@ -1,3 +1,4 @@
+import 'package:http/http.dart' as http;
 import 'package:vital_data_viewer_app/models/response/sleep_goal_response.dart';
 import 'package:vital_data_viewer_app/models/response/sleep_log_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/sleep_repository_interface.dart';
@@ -9,7 +10,8 @@ class SleepRepositoryImpl extends SleepRepositoryInterface {
   Future<SleepGoalResponse> fetchSleepGoal() async {
     final uri = Uri.https('api.fitbit.com', '/1.2/user/-/sleep/goal.json');
     final headers = HeaderUtil.createAuthHeaders();
-    final responseBody = await HttpUtil.get(uri, headers);
+    final httpUtil = HttpUtil(client: http.Client());
+    final responseBody = await httpUtil.get(uri, headers);
     return SleepGoalResponse.fromJson(responseBody);
   }
 
@@ -18,7 +20,8 @@ class SleepRepositoryImpl extends SleepRepositoryInterface {
     final date = DateTime.now().toIso8601String().substring(0, 10);
     final uri = Uri.https('api.fitbit.com', '/1.2/user/-/sleep/date/$date.json');
     final headers = HeaderUtil.createAuthHeaders();
-    final responseBody = await HttpUtil.get(uri, headers);
+    final httpUtil = HttpUtil(client: http.Client());
+    final responseBody = await httpUtil.get(uri, headers);
     return SleepLogResponse.fromJson(responseBody);
   }
 }

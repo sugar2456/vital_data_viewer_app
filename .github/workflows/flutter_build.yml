@@ -1,4 +1,4 @@
-name: Flutter Desktop Build
+name: Flutter Desktop Build and Test
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 jobs:
   # Windows向けのビルドジョブ
   build-windows:
-    name: Build Windows App
+    name: Build and Test Windows App
     runs-on: windows-latest
     steps:
       # 1. リポジトリをチェックアウト
@@ -48,65 +48,24 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # 7. Windows向けにビルド
+      # 7. テストを実行
+      - name: Run tests
+        run: flutter test
+
+      # 8. Windows向けにビルド
       - name: Build Windows App
         run: flutter build windows --release
 
-      # 8. ビルド成果物を保存
+      # 9. ビルド成果物を保存
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: windows-build
           path: build\windows\x64\runner\Release\
 
-  # # Linux向けのビルドジョブ
-  # build-linux:
-  #   name: Build Linux App
-  #   runs-on: ubuntu-24.04
-  #   steps:
-  #     # 1. リポジトリをチェックアウト
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-
-  #     # 2. 必要な依存関係をインストール
-  #     - name: Install dependencies
-  #       run: |
-  #         sudo apt-get update
-  #         sudo apt-get install -y ninja-build libgtk-3-dev
-
-  #     # 3. Flutterをセットアップ
-  #     - name: Set up Flutter
-  #       uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: '3.24.4'
-  #         channel: 'stable'
-
-  #     # 4. デスクトップサポートを有効化
-  #     - name: Enable desktop support
-  #       run: flutter config --enable-linux-desktop
-
-  #     # 5. 環境を確認
-  #     - name: Verify Flutter environment
-  #       run: flutter doctor -v
-
-  #     # 6. Flutterの依存関係を取得
-  #     - name: Install Flutter dependencies
-  #       run: flutter pub get
-
-  #     # 7. Linux向けにビルド
-  #     - name: Build Linux App
-  #       run: flutter build linux --release
-
-  #     # 8. ビルド成果物を保存
-  #     - name: Upload build artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: linux-build
-  #         path: build/linux/runner/release/*.AppImage
-
   # macOS向けのビルドジョブ
   build-macos:
-    name: Build macOS App
+    name: Build and Test macOS App
     runs-on: macos-latest
     steps:
       # 1. リポジトリをチェックアウト
@@ -132,11 +91,15 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # 6. macOS向けにビルド
+      # 6. テストを実行
+      - name: Run tests
+        run: flutter test
+
+      # 7. macOS向けにビルド
       - name: Build macOS App
         run: flutter build macos --release
 
-      # 7. ビルド成果物を保存
+      # 8. ビルド成果物を保存
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:

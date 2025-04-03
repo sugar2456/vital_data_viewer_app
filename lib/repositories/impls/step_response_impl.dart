@@ -1,3 +1,4 @@
+import 'package:http/http.dart' as http;
 import 'package:vital_data_viewer_app/models/response/step_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/step_repository_interface.dart';
 import 'package:vital_data_viewer_app/util/header_util.dart';
@@ -8,8 +9,8 @@ class StepResponseImpl extends StepRepositoryInterface {
   Future<StepResponse> fetchStep(String date, String min) async{
     final uri = Uri.https('api.fitbit.com', '/1/user/-/activities/steps/date/$date/1d/$min.json');
     final headers = HeaderUtil.createAuthHeaders();
-    
-    final responseBody = await HttpUtil.get(uri, headers);
+    final httpUtil = HttpUtil(client: http.Client());
+    final responseBody = await httpUtil.get(uri, headers);
     return StepResponse.fromJson(responseBody);
   }
 
@@ -27,7 +28,8 @@ class StepResponseImpl extends StepRepositoryInterface {
   Future<StepResponse> fetchStepPeriod(String startDate, String endDate, String min) async{
     final uri = Uri.https('api.fitbit.com', '/1/user/-/activities/steps/date/$startDate/$endDate/$min.json');
     final headers = HeaderUtil.createAuthHeaders();
-    final responseBody = await HttpUtil.get(uri, headers);
+    final httpUtil = HttpUtil(client: http.Client());
+    final responseBody = await httpUtil.get(uri, headers);
     return StepResponse.fromJson(responseBody);
   }
 }
