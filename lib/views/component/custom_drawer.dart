@@ -31,13 +31,6 @@ class CustomDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, '/home');
               },
             ),
-            // ListTile(
-            //   leading: const Icon(Icons.directions_run),
-            //   title: const Text('アクティビティ'),
-            //   onTap: () {
-            //     Navigator.pushNamed(context, '/activity');
-            //   },
-            // ),
             ListTile(
               leading: const Icon(Icons.directions_walk),
               title: const Text('歩数'),
@@ -70,14 +63,14 @@ class CustomDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, '/swimming');
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('設定'),
-              onTap: () {
-                // 設定画面への遷移処理
-                Navigator.pop(context);
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.settings),
+            //   title: const Text('設定'),
+            //   onTap: () {
+            //     // 設定画面への遷移処理
+            //     Navigator.pop(context);
+            //   },
+            // ),
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('ログアウト'),
