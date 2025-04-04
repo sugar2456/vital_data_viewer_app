@@ -59,9 +59,17 @@ class StepView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await stepsViewModel.fetchStep();
+          final selectedDate = await showDatePicker(
+            context: context,
+            initialDate: context.read<StepsViewModel>().date,
+            firstDate: DateTime(2020),
+            lastDate: DateTime.now(),
+          );
+          if (selectedDate != null) {
+            stepsViewModel.setSelectedDate(selectedDate);
+          }
         },
-        child: const Icon(Icons.refresh),
+        child: const Icon(Icons.calendar_month),
       ),
     );
   }

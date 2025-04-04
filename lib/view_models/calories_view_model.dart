@@ -5,15 +5,23 @@ import 'package:vital_data_viewer_app/repositories/impls/calories_repository_imp
 
 class CaloriesViewModel extends ChangeNotifier {
   final CaloriesRepositoryImpl _caloriesRepository;
-  final DateTime date = DateTime.now();
+  DateTime _date = DateTime.now();
+  DateTime get date => _date;
   CaloriesResponse? _caloriesResponse;
   List<CaloriesDataset> get getCaloriesIntraday =>
       _caloriesResponse!.activitiesCaloriesIntraday.dataset;
-
   CaloriesViewModel(this._caloriesRepository);
+
 
   Future<void> fetchCalories() async {
     final getDate = date.toIso8601String().split('T').first;
+    _caloriesResponse =
+        await _caloriesRepository.fetchCalories(getDate, '1min');
+    notifyListeners();
+  }
+  Future<void> setSelectedDate(DateTime selectedDate) async {
+    final getDate = selectedDate.toIso8601String().split('T').first;
+    _date = selectedDate;
     _caloriesResponse =
         await _caloriesRepository.fetchCalories(getDate, '1min');
     notifyListeners();

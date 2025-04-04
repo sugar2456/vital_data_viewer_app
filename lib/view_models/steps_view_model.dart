@@ -5,7 +5,8 @@ import 'package:vital_data_viewer_app/repositories/interfaces/step_repository_in
 
 class StepsViewModel extends ChangeNotifier {
   final StepRepositoryInterface _stepRepository;
-  final DateTime date = DateTime.now();
+  DateTime _date = DateTime.now();
+  DateTime get date => _date;
   StepResponse? _stepResponse;
   List<Dataset> get getStepsIntraday =>
       _stepResponse!.activitiesStepsIntraday.dataset;
@@ -15,6 +16,13 @@ class StepsViewModel extends ChangeNotifier {
 
   Future<void> fetchStep() async {
     final getDate = date.toIso8601String().split('T').first;
+    _stepResponse = await _stepRepository.fetchStep(getDate, '1min');
+    notifyListeners();
+  }
+
+  Future<void> setSelectedDate(DateTime selectedDate) async {
+    final getDate = selectedDate.toIso8601String().split('T').first;
+    _date = selectedDate;
     _stepResponse = await _stepRepository.fetchStep(getDate, '1min');
     notifyListeners();
   }

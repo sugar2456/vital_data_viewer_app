@@ -5,7 +5,8 @@ import 'package:vital_data_viewer_app/repositories/impls/swimming_repository_imp
 
 class SwimmingViewModel extends ChangeNotifier {
   final SwimmingRepositoryImpl _swimmingRepository;
-  final DateTime date = DateTime.now();
+  DateTime _date = DateTime.now();
+  DateTime get date => _date;
   SwimmingResponse? _swimmingResponse;
   List<Dataset> get getSwimmingIntraday =>
       _swimmingResponse!.activitiesSwimmingStrokeIntraday.dataset;
@@ -16,6 +17,14 @@ class SwimmingViewModel extends ChangeNotifier {
 
   Future<void> fetchSwimming() async {
     final getDate = date.toIso8601String().split('T').first;
+    _swimmingResponse =
+        await _swimmingRepository.fetchSwimming(getDate, '1min');
+    notifyListeners();
+  }
+
+  Future<void> setSelectedDate(DateTime selectedDate) async {
+    final getDate = selectedDate.toIso8601String().split('T').first;
+    _date = selectedDate;
     _swimmingResponse =
         await _swimmingRepository.fetchSwimming(getDate, '1min');
     notifyListeners();

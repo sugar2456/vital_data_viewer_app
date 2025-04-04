@@ -53,9 +53,17 @@ class HeartRateView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await heartRateViewModel.fetchHeartRate();
+          final selectedDate = await showDatePicker(
+            context: context,
+            initialDate: context.read<HeartRateViewModel>().date,
+            firstDate: DateTime(2020),
+            lastDate: DateTime.now(),
+          );
+          if (selectedDate != null && context.mounted) {
+            await heartRateViewModel.setSelectedDate(selectedDate);
+          }
         },
-        child: const Icon(Icons.refresh),
+        child: const Icon(Icons.calendar_month),
       ),
     );
   }
