@@ -102,7 +102,7 @@ class CustomLineChart extends StatelessWidget {
                                         .shrink(); // 空のウィジェットを返す
                                   }
                                   return Text(
-                                    value.toDouble().toString(),
+                                    value.toStringAsFixed(1),
                                     style: const TextStyle(
                                       fontSize: 12,
                                       color: Colors.black,
