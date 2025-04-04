@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:vital_data_viewer_app/models/manager/auth_manager.dart';
 import 'package:vital_data_viewer_app/providers/providers.dart';
 // import 'package:vital_data_viewer_app/views/activity_view.dart';
@@ -32,7 +33,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: getProviders(),
-      child: MyApp(initialRoute: isAuthenticated ? '/home' : '/login'),
+      child: MyApp(
+        initialRoute: isAuthenticated ? '/home' : '/login',
+      ),
     ),
   );
 }
@@ -51,6 +54,16 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: initialRoute,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ja', 'JP'),
+        Locale('en', 'US'),
+      ],
+      locale: const Locale('ja', 'JP'),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginView(),
         '/home': (BuildContext context) => const HomeView(),
