@@ -4,7 +4,8 @@ import 'package:vital_data_viewer_app/repositories/interfaces/heart_rate_reposit
 
 class HeartRateViewModel extends ChangeNotifier {
   final HeartRateRepositoryInterdace _heartRateRepository;
-  final DateTime date = DateTime.now();
+  DateTime _date = DateTime.now();
+  DateTime get date => _date;
   HeartRateResponse? _heartRateResponse;
 
   List<dynamic> get getHeartRateIntraday =>
@@ -14,6 +15,14 @@ class HeartRateViewModel extends ChangeNotifier {
 
   Future<void> fetchHeartRate() async {
     final getDate = date.toIso8601String().split('T').first;
+    _heartRateResponse =
+        await _heartRateRepository.fetchHeartRate(getDate, '1min');
+    notifyListeners();
+  }
+
+  Future<void> setSelectedDate(DateTime selectedDate) async {
+    final getDate = selectedDate.toIso8601String().split('T').first;
+    _date = selectedDate;
     _heartRateResponse =
         await _heartRateRepository.fetchHeartRate(getDate, '1min');
     notifyListeners();
