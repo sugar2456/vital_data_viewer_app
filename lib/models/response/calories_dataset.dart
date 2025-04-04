@@ -1,4 +1,5 @@
 import 'package:vital_data_viewer_app/models/response/dataset.dart';
+import 'package:vital_data_viewer_app/util/convert_util.dart';
 
 class CaloriesDataset extends Dataset {
   final int? mets;
@@ -16,7 +17,7 @@ class CaloriesDataset extends Dataset {
     final fullDateTimeString = '$baseDate ${json['time'] ?? ''}';
     return CaloriesDataset(
       time: json['time'] ?? '',
-      value: json['value'] ?? 0,
+      value: ConvertUtil.roundToOneDecimalPlaces(json['value']),
       dateTime: DateTime.parse(fullDateTimeString),
       mets: json['mets'],
       level: json['level'],
