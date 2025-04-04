@@ -57,6 +57,10 @@ void main() {
       expect(ConvertUtil.roundToOneDecimalPlaces(0), 0.0);
     });
 
+    test('null を渡すと ArgumentError をスローする', () {
+      expect(() => ConvertUtil.roundToOneDecimalPlaces(null), throwsA(isA<ArgumentError>()));
+    });
+
     test('なんらかの理由で無効な値が渡された場合、ArgumentError をスローする', () {
       expect(() => ConvertUtil.roundToOneDecimalPlaces(double.nan), throwsA(isA<ArgumentError>()));
       expect(() => ConvertUtil.roundToOneDecimalPlaces(double.infinity), throwsA(isA<ArgumentError>()));
