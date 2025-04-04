@@ -64,9 +64,17 @@ class SwimmingStrokesView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await swimmingStrokesViewModel.fetchSwimming();
+          final selectedDate = await showDatePicker(
+            context: context,
+            initialDate: context.read<SwimmingViewModel>().date,
+            firstDate: DateTime(2020),
+            lastDate: DateTime.now(),
+          );
+          if (selectedDate != null && context.mounted) {
+            await swimmingStrokesViewModel.setSelectedDate(selectedDate);
+          }
         },
-        child: const Icon(Icons.refresh),
+        child: const Icon(Icons.calendar_month),
       ),
     );
   }
