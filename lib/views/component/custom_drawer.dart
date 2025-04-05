@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vital_data_viewer_app/models/manager/token_manager.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -75,9 +76,8 @@ class CustomDrawer extends StatelessWidget {
               leading: const Icon(Icons.logout),
               title: const Text('ログアウト'),
               onTap: () {
-                
-                // ログアウト処理
-                Navigator.pop(context);
+                TokenManager().deleteToken();
+                Navigator.pushNamed(context, '/login');
               },
             ),
           ],

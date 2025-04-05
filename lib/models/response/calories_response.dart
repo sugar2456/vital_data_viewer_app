@@ -1,4 +1,5 @@
 import 'package:vital_data_viewer_app/models/response/calories_dataset.dart';
+import 'package:vital_data_viewer_app/util/convert_util.dart';
 
 class CaloriesResponse {
   final List<ActivityCalories> activitiesCalories;
@@ -26,7 +27,7 @@ class CaloriesResponse {
 
 class ActivityCalories {
   final String dateTime;
-  final String value;
+  final double value;
 
   ActivityCalories({
     required this.dateTime,
@@ -34,9 +35,10 @@ class ActivityCalories {
   });
 
   factory ActivityCalories.fromJson(Map<String, dynamic> json) {
+    final calorories = ConvertUtil.convertStringToDouble(json['value']);
     return ActivityCalories(
       dateTime: json['dateTime'],
-      value: json['value'],
+      value: ConvertUtil.roundToOneDecimalPlaces(calorories),
     );
   }
 }

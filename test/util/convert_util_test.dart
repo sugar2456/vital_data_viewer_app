@@ -66,4 +66,34 @@ void main() {
       expect(() => ConvertUtil.roundToOneDecimalPlaces(double.infinity), throwsA(isA<ArgumentError>()));
     });
   });
+
+  group('ConvertUtil.convertStringToDouble', () {
+    test('null を渡すと ArgumentError をスローする', () {
+      expect(() => ConvertUtil.convertStringToDouble(null), throwsA(isA<ArgumentError>()));
+    });
+
+    test('空文字列を渡すと ArgumentError をスローする', () {
+      expect(() => ConvertUtil.convertStringToDouble(''), throwsA(isA<ArgumentError>()));
+    });
+
+    test('空白を含む文字列を渡すと ArgumentError をスローする', () {
+      expect(() => ConvertUtil.convertStringToDouble(' 123.45 '), throwsA(isA<ArgumentError>()));
+    });
+
+    test('無効な文字列を渡すと ArgumentError をスローする', () {
+      expect(() => ConvertUtil.convertStringToDouble('abc'), throwsA(isA<ArgumentError>()));
+    });
+
+    test('有効な小数点数文字列を渡すと対応する double を返す', () {
+      expect(ConvertUtil.convertStringToDouble('123.45'), 123.45);
+    });
+
+    test('負の小数点数文字列を渡すと対応する負の double を返す', () {
+      expect(ConvertUtil.convertStringToDouble('-123.45'), -123.45);
+    });
+
+    test('0を渡すと0.0を返す', () {
+      expect(ConvertUtil.convertStringToDouble('0'), 0.0);
+    });
+  });
 }

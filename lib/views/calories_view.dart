@@ -5,6 +5,7 @@ import 'package:vital_data_viewer_app/view_models/calories_view_model.dart';
 import 'package:vital_data_viewer_app/views/component/custom_drawer.dart';
 import 'package:vital_data_viewer_app/views/component/custom_line_chart.dart';
 import 'package:vital_data_viewer_app/views/component/error_dialog.dart';
+import 'package:vital_data_viewer_app/views/component/stack_cord.dart';
 
 class CaloriesView extends StatelessWidget {
   const CaloriesView({super.key});
@@ -16,7 +17,7 @@ class CaloriesView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('カロリー画面'),
+        title: const Text('カロリー消費画面'),
       ),
       drawer: const CustomDrawer(),
       body: FutureBuilder(
@@ -38,13 +39,22 @@ class CaloriesView extends StatelessWidget {
               builder: (context, viewModel, child) {
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: CustomLineChart(
-                      xAxisLabel: '時刻',
-                      xAxisUnit: '分',
-                      yAxisLabel: '消費カロリー',
-                      yAxisUnit: 'kcal',
-                      data: viewModel.getCaloriesIntraday),
-                );
+                  child: Stack(
+                    children: [
+                      CustomLineChart(
+                        xAxisLabel: '時刻',
+                        xAxisUnit: '分',
+                        yAxisLabel: 'カロリー消費量',
+                        yAxisUnit: 'kcal/分',
+                        data: caloriesViewModel.getCaloriesIntraday,
+                      ),
+                      Positioned(
+                          top: 20,
+                          right: 20,
+                          child: StackCord(valueText: viewModel.getTotalCalories.toString(), unitText: 'kcal')
+                      ),
+                    ],
+                  ));
               },
             );
           }
