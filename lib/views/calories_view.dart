@@ -16,7 +16,7 @@ class CaloriesView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('カロリー画面'),
+        title: const Text('カロリー消費画面'),
       ),
       drawer: const CustomDrawer(),
       body: FutureBuilder(
@@ -42,7 +42,7 @@ class CaloriesView extends StatelessWidget {
                       xAxisLabel: '時刻',
                       xAxisUnit: '分',
                       yAxisLabel: '消費カロリー',
-                      yAxisUnit: 'kcal',
+                      yAxisUnit: 'kcal/分',
                       data: viewModel.getCaloriesIntraday),
                 );
               },
