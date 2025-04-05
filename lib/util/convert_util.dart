@@ -26,4 +26,16 @@ class ConvertUtil {
       throw ArgumentError('Convert Util 不正な値が渡されました: $value');
     }
   }
+
+  static double convertStringToDouble(String? value) {
+    if (value == null || value.isEmpty || value.contains(' ')) {
+      throw ArgumentError('Convert Util 不正な値が渡されました: $value');
+    }
+    try {
+      return double.parse(value);
+    } catch (e) {
+      log('doubleに変換できない値: $e');
+      throw ArgumentError('Convert Util 不正な値が渡されました: $value');
+    }
+  }
 }

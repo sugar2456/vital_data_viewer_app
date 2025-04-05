@@ -8,6 +8,14 @@ class CaloriesViewModel extends ChangeNotifier {
   DateTime _date = DateTime.now();
   DateTime get date => _date;
   CaloriesResponse? _caloriesResponse;
+
+  double get getTotalCalories {
+    if (_caloriesResponse == null) {
+      return 0.0;
+    }
+    return _caloriesResponse!.activitiesCalories[0].value;
+  }
+
   List<CaloriesDataset> get getCaloriesIntraday =>
       _caloriesResponse!.activitiesCaloriesIntraday.dataset;
   CaloriesViewModel(this._caloriesRepository);
