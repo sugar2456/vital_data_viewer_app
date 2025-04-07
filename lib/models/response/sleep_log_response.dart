@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class SleepLogResponse {
   final List<Sleep> sleep;
   final Summary summary;
@@ -88,7 +90,9 @@ class Levels {
   factory Levels.fromJson(Map<String, dynamic> json) {
     return Levels(
       data: (json['data'] as List).map((e) => LevelData.fromJson(e)).toList(),
-      shortData: (json['shortData'] as List).map((e) => LevelData.fromJson(e)).toList(),
+      shortData: (json['shortData'] as List? ?? [])
+          .map((e) => LevelData.fromJson(e))
+          .toList(),
       summary: LevelSummary.fromJson(json['summary']),
     );
   }
@@ -106,11 +110,11 @@ class LevelData {
   });
 
   factory LevelData.fromJson(Map<String, dynamic> json) {
-    return LevelData(
-      dateTime: DateTime.parse(json['dateTime']),
-      level: json['level'],
-      seconds: json['seconds'],
-    );
+      return LevelData(
+        dateTime: DateTime.parse(json['dateTime']),
+        level: json['level'],
+        seconds: json['seconds'],
+      );
   }
 }
 
