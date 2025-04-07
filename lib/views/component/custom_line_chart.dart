@@ -21,7 +21,8 @@ class CustomLineChart extends StatelessWidget {
     List<FlSpot> spots = [];
     for (int i = 0; i < data.length; i++) {
       final current = data[i];
-      final currentTime = (current.dateTime as DateTime).millisecondsSinceEpoch.toDouble();
+      final currentTime =
+          (current.dateTime as DateTime).millisecondsSinceEpoch.toDouble();
       final currentValue = current.value.toDouble();
 
       // 最初のデータポイントはそのまま追加
@@ -31,7 +32,8 @@ class CustomLineChart extends StatelessWidget {
       }
 
       final previous = data[i - 1];
-      final previousTime = (previous.dateTime as DateTime).millisecondsSinceEpoch.toDouble();
+      final previousTime =
+          (previous.dateTime as DateTime).millisecondsSinceEpoch.toDouble();
 
       // 30分（1800000ミリ秒）以上間隔が空いている場合、NaNを挿入
       if (currentTime - previousTime > 1800000) {
@@ -94,9 +96,11 @@ class CustomLineChart extends StatelessWidget {
                                 reservedSize: 40,
                                 getTitlesWidget: (value, meta) {
                                   //データの最大値のラベルは表示しない
-                                  final maxY = data
-                                      .map((item) => (item.value as double))
-                                      .reduce((a, b) => a > b ? a : b);
+                                  final maxY = data.isNotEmpty
+                                      ? data
+                                          .map((item) => (item.value as double))
+                                          .reduce((a, b) => a > b ? a : b)
+                                      : 0;
                                   if (value == maxY) {
                                     return const SizedBox
                                         .shrink(); // 空のウィジェットを返す
@@ -124,10 +128,13 @@ class CustomLineChart extends StatelessWidget {
                                   final date =
                                       DateTime.fromMillisecondsSinceEpoch(
                                           value.toInt());
-                                  final maxX = data
-                                      .map((item) => (item.dateTime as DateTime)
-                                          .millisecondsSinceEpoch)
-                                      .reduce((a, b) => a > b ? a : b);
+                                  final maxX = data.isNotEmpty
+                                      ? data
+                                          .map((item) =>
+                                              (item.dateTime as DateTime)
+                                                  .millisecondsSinceEpoch)
+                                          .reduce((a, b) => a > b ? a : b)
+                                      : 0;
 
                                   // 最新データのラベルを非表示にする
                                   if (value.toInt() == maxX) {
