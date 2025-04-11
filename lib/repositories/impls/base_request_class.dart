@@ -5,11 +5,17 @@ import 'package:vital_data_viewer_app/const/http_status_code.dart';
 import 'package:vital_data_viewer_app/exceptions/external_service_exception.dart';
 import 'package:vital_data_viewer_app/models/response/error/api_error_response.dart';
 
-class HttpUtil {
+abstract class BaseRequestClass {
   final http.Client client;
 
-  HttpUtil({required this.client});
+  BaseRequestClass({required this.client});
 
+  /// GETリクエストを送信するメソッド<br>
+  /// [uri] リクエスト先のURI<br>
+  /// [headers] リクエストヘッダー<br>
+  /// [return] レスポンスのボディをMap<String, dynamic>として返す<br>
+  /// [throws] ExternalServiceException<br>
+  /// [throws] Exception<br>
   Future<Map<String, dynamic>> get(
       Uri uri, Map<String, String> headers) async {
     try {

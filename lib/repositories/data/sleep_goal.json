@@ -1,0 +1,9 @@
+{
+    "consistency": {
+        "flowId": 2
+    },
+    "goal": {
+        "minDuration": 480,
+        "updatedOn": "2020-01-01T13:00:00.126Z"
+    }
+}
