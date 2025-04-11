@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:vital_data_viewer_app/repositories/impls/activity_repository_impl.dart';
@@ -10,7 +8,6 @@ import 'package:vital_data_viewer_app/repositories/impls/sleep_repository_impl.d
 import 'package:vital_data_viewer_app/repositories/impls/step_repository_impl.dart';
 import 'package:vital_data_viewer_app/repositories/impls/swimming_repository_impl.dart';
 import 'package:vital_data_viewer_app/util/header_util.dart';
-import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart';
 import 'package:vital_data_viewer_app/view_models/calories_view_model.dart';
 import 'package:vital_data_viewer_app/view_models/heart_rate_view_model.dart';
 import 'package:vital_data_viewer_app/view_models/login_view_model.dart';
