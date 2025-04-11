@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 class SleepLogResponse {
   final List<Sleep> sleep;
   final Summary summary;
