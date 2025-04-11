@@ -27,14 +27,11 @@ void main() async {
     await windowManager.focus();
   });
 
-  final authManager = AuthManager();
-  final isAuthenticated = authManager.isAuthenticated();
-
   runApp(
     MultiProvider(
       providers: getProviders(),
-      child: MyApp(
-        initialRoute: isAuthenticated ? '/home' : '/login',
+      child: const MyApp(
+        initialRoute: '/login'
       ),
     ),
   );
@@ -67,7 +64,6 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginView(),
         '/home': (BuildContext context) => const HomeView(),
-        // '/activity': (BuildContext context) => const ActivityView(),
         '/step': (BuildContext context) => const StepView(),
         '/heart_rate': (BuildContext context) => const HeartRateView(),
         '/calories': (BuildContext context) => const CaloriesView(),

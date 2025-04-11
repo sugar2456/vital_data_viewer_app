@@ -19,58 +19,62 @@ import 'package:http/http.dart' as http;
 
 List<SingleChildWidget> getProviders() {
   final httpClient = http.Client();
-  final headers = HeaderUtil.createAuthHeaders();
+  final headerUtil = HeaderUtil();
+
   return [
+    ChangeNotifierProvider(
+      create: (_) => headerUtil,
+    ),
     ChangeNotifierProvider(
       create: (_) => LoginViewModel(LoginRepositoryImpl()),
     ),
     ChangeNotifierProvider(
-      create: (_) => HomeViewModel(
+      create: (context) => HomeViewModel(
         ActivityRepositoryImpl(
-          headers: headers,
+          headers: context.read<HeaderUtil>().headers,
           client: httpClient,
         ),
         BodyGoalRepositoryImpl(
-          headers: headers,
+          headers: context.read<HeaderUtil>().headers,
           client: httpClient,
         ),
         SleepRepositoryImpl(
-          headers: headers,
+          headers: context.read<HeaderUtil>().headers,
           client: httpClient,
-        )
-      )
+        ),
+      ),
     ),
     ChangeNotifierProvider(
-      create: (_) => StepsViewModel(
+      create: (context) => StepsViewModel(
         StepResponseImpl(
-          headers: headers,
+          headers: context.read<HeaderUtil>().headers,
           client: httpClient,
-        )
-      )
+        ),
+      ),
     ),
     ChangeNotifierProvider(
-      create: (_) => HeartRateViewModel(
+      create: (context) => HeartRateViewModel(
         HeartRateRepositoryImpl(
-          headers: headers,
+          headers: context.read<HeaderUtil>().headers,
           client: httpClient,
-        )
-      )
+        ),
+      ),
     ),
     ChangeNotifierProvider(
-      create: (_) => CaloriesViewModel(
+      create: (context) => CaloriesViewModel(
         CaloriesRepositoryImpl(
-          headers: headers,
+          headers: context.read<HeaderUtil>().headers,
           client: httpClient,
-        )
-      )
+        ),
+      ),
     ),
     ChangeNotifierProvider(
-      create: (_) => SwimmingViewModel(
+      create: (context) => SwimmingViewModel(
         SwimmingRepositoryImpl(
-          headers: headers,
+          headers: context.read<HeaderUtil>().headers,
           client: httpClient,
-        )
-      )
+        ),
+      ),
     ),
   ];
 }

@@ -59,7 +59,7 @@ class LoginView extends StatelessWidget {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           try {
-                            await loginViewModel.login(fitbitIdController.text);
+                            await loginViewModel.login(fitbitIdController.text, context);
 
                             // ignore: use_build_context_synchronously
                             Navigator.of(context).pushNamed('/home');
