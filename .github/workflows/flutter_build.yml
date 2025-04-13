@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  # 一時的にブランチを増やす
+      - dev
   pull_request:
     branches:
       - main
