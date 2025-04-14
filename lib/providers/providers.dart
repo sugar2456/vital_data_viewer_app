@@ -9,6 +9,7 @@ import 'package:vital_data_viewer_app/repositories/impls/step_repository_impl.da
 import 'package:vital_data_viewer_app/repositories/impls/swimming_repository_impl.dart';
 import 'package:vital_data_viewer_app/util/header_util.dart';
 import 'package:vital_data_viewer_app/view_models/calories_view_model.dart';
+import 'package:vital_data_viewer_app/view_models/csv_view_model.dart';
 import 'package:vital_data_viewer_app/view_models/heart_rate_view_model.dart';
 import 'package:vital_data_viewer_app/view_models/login_view_model.dart';
 import 'package:vital_data_viewer_app/repositories/impls/login_repository_impl.dart';
@@ -76,5 +77,7 @@ List<SingleChildWidget> getProviders() {
         ),
       ),
     ),
+    ChangeNotifierProvider(create: (context) => CsvViewModel(
+    ),)
   ];
 }

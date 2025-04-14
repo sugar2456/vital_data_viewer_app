@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:vital_data_viewer_app/models/manager/auth_manager.dart';
 import 'package:vital_data_viewer_app/providers/providers.dart';
-// import 'package:vital_data_viewer_app/views/activity_view.dart';
 import 'package:vital_data_viewer_app/views/calories_view.dart';
+import 'package:vital_data_viewer_app/views/csv_view.dart';
 import 'package:vital_data_viewer_app/views/heart_rate_view.dart';
 import 'package:vital_data_viewer_app/views/home_view.dart';
 import 'package:vital_data_viewer_app/views/step_view.dart';
@@ -68,6 +67,7 @@ class MyApp extends StatelessWidget {
         '/heart_rate': (BuildContext context) => const HeartRateView(),
         '/calories': (BuildContext context) => const CaloriesView(),
         '/swimming': (BuildContext context) => const SwimmingStrokesView(),
+        '/csv': (BuildContext context) => const CsvView(),
       },
     );
   }
