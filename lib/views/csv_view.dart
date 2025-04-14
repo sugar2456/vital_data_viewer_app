@@ -29,11 +29,11 @@ class CsvView extends StatelessWidget {
                 ),
 
                 // 期間表示部分
-                if (viewModel.startDate != null && viewModel.endDate != null)
+                if (viewModel.selectedDate != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
-                      '期間: ${_formatDate(viewModel.startDate!)} 〜 ${_formatDate(viewModel.endDate!)}',
+                      '期間: ${_formatDate(viewModel.selectedDate!)}',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -62,8 +62,7 @@ class CsvView extends StatelessWidget {
                     width: 300,  // ボタンの幅を制限
                     child: ElevatedButton(
                       onPressed: viewModel.selectedOptions.isEmpty ||
-                              viewModel.startDate == null ||
-                              viewModel.endDate == null
+                              viewModel.selectedDate == null
                           ? null // 選択がない場合は無効化
                           : () async {
                               final result = await viewModel.exportCsv();
@@ -82,23 +81,15 @@ class CsvView extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              // カレンダーで日付範囲を選択する処理
-              final result = await showDateRangePicker(
-                context: context,
-                firstDate: DateTime(2020),
-                lastDate: DateTime.now(),
-                initialDateRange:
-                    viewModel.startDate != null && viewModel.endDate != null
-                        ? DateTimeRange(
-                            start: viewModel.startDate!,
-                            end: viewModel.endDate!,
-                          )
-                        : null,
-              );
-
-              if (result != null) {
-                viewModel.setDateRange(result.start, result.end);
-              }
+                final selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: context.read<CsvViewModel>().selectedDate,
+                  firstDate: DateTime(2020),
+                  lastDate: DateTime.now(),
+                );
+                if (selectedDate != null && context.mounted) {
+                  viewModel.setSelectedDate(selectedDate);
+                }
             },
             child: const Icon(Icons.calendar_month),
           ),

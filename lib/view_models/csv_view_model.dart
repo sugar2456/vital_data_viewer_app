@@ -17,13 +17,13 @@ class CsvViewModel extends ChangeNotifier {
   ];
 
   // 期間指定用の日付範囲
-  DateTime? _startDate;
-  DateTime? _endDate;
+  DateTime? _selectedDate;
+  // DateTime? _endDate;
   
   // ゲッター
   List<CsvExportModel> get dataOptions => _dataOptions;
-  DateTime? get startDate => _startDate;
-  DateTime? get endDate => _endDate;
+  DateTime? get selectedDate => _selectedDate;
+  // DateTime? get endDate => _endDate;
   
   // 選択されているデータ項目を取得
   List<CsvExportModel> get selectedOptions => 
@@ -39,9 +39,14 @@ class CsvViewModel extends ChangeNotifier {
   }
   
   // 日付範囲の設定
-  void setDateRange(DateTime start, DateTime end) {
-    _startDate = start;
-    _endDate = end;
+  // void setDateRange(DateTime start, DateTime end) {
+  //   _startDate = start;
+  //   _endDate = end;
+  //   notifyListeners();
+  // }
+
+  void setSelectedDate(DateTime start) {
+    _selectedDate = start;
     notifyListeners();
   }
   
@@ -51,7 +56,7 @@ class CsvViewModel extends ChangeNotifier {
       return null;
     }
     
-    if (_startDate == null || _endDate == null) {
+    if (_selectedDate == null) {
       return null;
     }
     
