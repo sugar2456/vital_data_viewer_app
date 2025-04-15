@@ -45,12 +45,12 @@ void main() {
       expect(result.stepDatasets[index19_26].value, 113);
     });
 
-    test('addSummaryHeaderは正しいヘッダー形式を生成する', () {
+    test('createStepSummaryCsvはcsvを生成する', () {
       // テスト用のデータを準備
       final stepCsvData = stepCsvService.convertCsvData();
       
       // テスト実行
-      final headerResult = stepCsvService.addSummaryHeader(stepCsvData.stepCsvSummary);
+      final headerResult = stepCsvService.createStepSummaryCsv(stepCsvData.stepCsvSummary);
       
       // 検証
       expect(headerResult.length, 2);
@@ -58,12 +58,12 @@ void main() {
       expect(headerResult[1], '"2023-01-19,9919,1,minute"');
     });
     
-    test('addDatasetHeaderは正しいデータセットヘッダーとデータを生成する', () {
+    test('createStepDatasetCsvはcsvを生成する', () {
       // テスト用のデータを準備
       final stepCsvData = stepCsvService.convertCsvData();
       
       // テスト実行
-      final datasetResult = stepCsvService.addDatasetHeader(stepCsvData.stepDatasets);
+      final datasetResult = stepCsvService.createStepDatasetCsv(stepCsvData.stepDatasets);
       
       // 検証
       expect(datasetResult.length, 1441); // ヘッダー + 1440データポイント

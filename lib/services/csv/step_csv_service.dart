@@ -46,13 +46,13 @@ class StepCsvService {
     );
   }
 
-  List<String> addSummaryHeader(StepCsvSummary stepCsvSummary) {
+  List<String> createStepSummaryCsv(StepCsvSummary stepCsvSummary) {
     String header = '"日付,総合歩数,間隔,単位"';
     String summary = '"${stepCsvSummary.date},${stepCsvSummary.totalSteps},${stepCsvSummary.interval},${stepCsvSummary.unit}"';
     return [header, summary];
   }
 
-  List<String> addDatasetHeader(List<StepDataset> stepDatasets) {
+  List<String> createStepDatasetCsv(List<StepDataset> stepDatasets) {
     String header = '"時間,歩数"';
     List<String> datasetList = [];
     for (var dataset in stepDatasets) {
@@ -63,8 +63,11 @@ class StepCsvService {
   }
 }
 
+/// CSVデータの構造体
 class StepCsvData {
+  /// CSVのサマリー情報
   StepCsvSummary stepCsvSummary;
+  /// CSVのデータセット
   List<StepDataset> stepDatasets;
   StepCsvData({
     required this.stepCsvSummary,
