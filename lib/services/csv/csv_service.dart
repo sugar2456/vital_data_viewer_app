@@ -35,12 +35,21 @@ class CsvService {
           final stepData = await _stepRepository.fetchStep(
               selectedDate.toIso8601String().split('T')[0], '1min');
           break;
-
         case 'heartrate':
           final heartRateData = await _heartRateRepository.fetchHeartRate(
               selectedDate.toIso8601String().split('T')[0], '1min');
           break;
-
+        case 'calories':
+          final caloriesData = await _caloriesRepository.fetchCalories(
+              selectedDate.toIso8601String().split('T')[0], '1min');
+          break;
+        case 'swimming':
+          final swimmingData = await _swimmingRepository.fetchSwimming(
+              selectedDate.toIso8601String().split('T')[0], '1min');
+          break;
+        case 'sleep':
+          final sleepData = await _sleepRepository.fetchSleepLog();
+          break;
       }
     }
 
