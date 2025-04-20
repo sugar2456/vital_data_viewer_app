@@ -27,59 +27,53 @@ List<SingleChildWidget> getProviders() {
     ChangeNotifierProvider(
       create: (_) => headerUtil,
     ),
-    ChangeNotifierProvider(
-      create: (_) => LoginViewModel(LoginRepositoryImpl()),
-    ),
-    ChangeNotifierProvider(
-      create: (context) => HomeViewModel(
-        ActivityRepositoryImpl(
-          headers: context.read<HeaderUtil>().headers,
-          client: httpClient,
-        ),
-        BodyGoalRepositoryImpl(
-          headers: context.read<HeaderUtil>().headers,
-          client: httpClient,
-        ),
-        SleepRepositoryImpl(
-          headers: context.read<HeaderUtil>().headers,
-          client: httpClient,
-        ),
+    // リポジトリのプロバイダ登録
+    Provider<StepResponseImpl>(
+      create: (context) => StepResponseImpl(
+        headers: context.read<HeaderUtil>().headers,
+        client: httpClient,
       ),
     ),
-    ChangeNotifierProvider(
-      create: (context) => StepsViewModel(
-        StepResponseImpl(
-          headers: context.read<HeaderUtil>().headers,
-          client: httpClient,
-        ),
+    Provider<HeartRateRepositoryImpl>(
+      create: (context) => HeartRateRepositoryImpl(
+        headers: context.read<HeaderUtil>().headers,
+        client: httpClient,
       ),
     ),
-    ChangeNotifierProvider(
-      create: (context) => HeartRateViewModel(
-        HeartRateRepositoryImpl(
-          headers: context.read<HeaderUtil>().headers,
-          client: httpClient,
-        ),
+    Provider<SwimmingRepositoryImpl>(
+      create: (context) => SwimmingRepositoryImpl(
+        headers: context.read<HeaderUtil>().headers,
+        client: httpClient,
       ),
     ),
-    ChangeNotifierProvider(
-      create: (context) => CaloriesViewModel(
-        CaloriesRepositoryImpl(
-          headers: context.read<HeaderUtil>().headers,
-          client: httpClient,
-        ),
+    Provider<SleepRepositoryImpl>(
+      create: (context) => SleepRepositoryImpl(
+        headers: context.read<HeaderUtil>().headers,
+        client: httpClient,
       ),
     ),
-    ChangeNotifierProvider(
-      create: (context) => SwimmingViewModel(
-        SwimmingRepositoryImpl(
-          headers: context.read<HeaderUtil>().headers,
-          client: httpClient,
-        ),
+    Provider<CaloriesRepositoryImpl>(
+      create: (context) => CaloriesRepositoryImpl(
+        headers: context.read<HeaderUtil>().headers,
+        client: httpClient,
       ),
     ),
-    ChangeNotifierProvider(create: (context) => CsvViewModel(
-    ),),
+    Provider<LoginRepositoryImpl>(
+      create: (_) => LoginRepositoryImpl(),
+    ),
+    Provider<ActivityRepositoryImpl>(
+      create: (context) => ActivityRepositoryImpl(
+        headers: context.read<HeaderUtil>().headers,
+        client: httpClient,
+      ),
+    ),
+    Provider<BodyGoalRepositoryImpl>(
+      create: (context) => BodyGoalRepositoryImpl(
+        headers: context.read<HeaderUtil>().headers,
+        client: httpClient,
+      ),
+    ),
+    // サービスのプロバイダ登録
     Provider<CsvService>(
       create: (context) => CsvService(
         stepRepository: context.read<StepResponseImpl>(),
@@ -88,6 +82,43 @@ List<SingleChildWidget> getProviders() {
         sleepRepository: context.read<SleepRepositoryImpl>(),
         caloriesRepository: context.read<CaloriesRepositoryImpl>(),
       ),
-    )
+    ),
+    // ViewModelのプロバイダ登録
+    ChangeNotifierProvider(
+      create: (context) => LoginViewModel(context.read<LoginRepositoryImpl>()),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => HomeViewModel(
+        context.read<ActivityRepositoryImpl>(),
+        context.read<BodyGoalRepositoryImpl>(),
+        context.read<SleepRepositoryImpl>(),
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => StepsViewModel(
+        context.read<StepResponseImpl>(),
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => HeartRateViewModel(
+        context.read<HeartRateRepositoryImpl>(),
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => CaloriesViewModel(
+        context.read<CaloriesRepositoryImpl>(),
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => SwimmingViewModel(
+        context.read<SwimmingRepositoryImpl>(),
+      ),
+    ),
+    // Service を使う ViewModel を登録
+    ChangeNotifierProvider(
+      create: (context) => CsvViewModel(
+        csvService: context.read<CsvService>(),
+      ),
+    ),
   ];
 }
