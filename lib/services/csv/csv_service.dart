@@ -3,6 +3,7 @@ import 'package:vital_data_viewer_app/repositories/interfaces/heart_rate_reposit
 import 'package:vital_data_viewer_app/repositories/interfaces/sleep_repository_interface.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/calories_repository_interdace.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/swimming_repository_interface.dart';
+import 'package:vital_data_viewer_app/services/csv/step_csv_service.dart';
 
 class CsvService {
   final StepRepositoryInterface _stepRepository;
@@ -32,21 +33,27 @@ class CsvService {
         case 'steps':
           final stepData = await _stepRepository.fetchStep(
               selectedDate.toIso8601String().split('T')[0], '1min');
+          final stepCsvData = StepCsvService.convertCsvData(stepData);
+          results.add('steps');
           break;
         case 'heartrate':
           final heartRateData = await _heartRateRepository.fetchHeartRate(
               selectedDate.toIso8601String().split('T')[0], '1min');
+          results.add('heartrate');
           break;
         case 'calories':
           final caloriesData = await _caloriesRepository.fetchCalories(
               selectedDate.toIso8601String().split('T')[0], '1min');
+          results.add('calories');
           break;
         case 'swimming':
           final swimmingData = await _swimmingRepository.fetchSwimming(
               selectedDate.toIso8601String().split('T')[0], '1min');
+          results.add('swimming');
           break;
         case 'sleep':
           final sleepData = await _sleepRepository.fetchSleepLog();
+          results.add('sleep');
           break;
       }
     }

@@ -6,7 +6,6 @@ import 'dart:io';
 
 void main() {
   late StepResponse stepResponse;
-  late StepCsvService stepCsvService;
 
   setUp(() async {
     // テスト用のJSONファイルを読み込む
@@ -14,16 +13,13 @@ void main() {
     final jsonString = await file.readAsString();
     final jsonData = json.decode(jsonString);
     stepResponse = StepResponse.fromJson(jsonData);
-    
-    // テスト対象のサービスをインスタンス化
-    stepCsvService = StepCsvService(stepResponse: stepResponse);
   });
 
   group('StepCsvService', () {
     test('convertCsvDataはStepResponseから正しくStepCsvDataに変換する', () {
-      // テスト実行
-      final result = stepCsvService.convertCsvData();
-
+      // テスト実行 - 静的メソッドを使用
+      final result = StepCsvService.convertCsvData(stepResponse);
+      
       // 検証
       expect(result, isA<StepCsvData>());
       expect(result.stepCsvSummary.date, '2023-01-19');
@@ -47,10 +43,10 @@ void main() {
 
     test('createStepSummaryCsvはcsvを生成する', () {
       // テスト用のデータを準備
-      final stepCsvData = stepCsvService.convertCsvData();
+      final stepCsvData = StepCsvService.convertCsvData(stepResponse);
       
-      // テスト実行
-      final headerResult = stepCsvService.createStepSummaryCsv(stepCsvData.stepCsvSummary);
+      // テスト実行 - 静的メソッドを使用
+      final headerResult = StepCsvService.createStepSummaryCsv(stepCsvData.stepCsvSummary);
       
       // 検証
       expect(headerResult.length, 2);
@@ -60,10 +56,10 @@ void main() {
     
     test('createStepDatasetCsvはcsvを生成する', () {
       // テスト用のデータを準備
-      final stepCsvData = stepCsvService.convertCsvData();
+      final stepCsvData = StepCsvService.convertCsvData(stepResponse);
       
-      // テスト実行
-      final datasetResult = stepCsvService.createStepDatasetCsv(stepCsvData.stepDatasets);
+      // テスト実行 - 静的メソッドを使用
+      final datasetResult = StepCsvService.createStepDatasetCsv(stepCsvData.stepDatasets);
       
       // 検証
       expect(datasetResult.length, 1441); // ヘッダー + 1440データポイント
@@ -76,11 +72,8 @@ void main() {
     });
     
     test('stepResponseがnullのときは空のデータを返す', () {
-      // nullを与えたサービスをインスタンス化
-      final nullService = StepCsvService(stepResponse: null);
-      
-      // テスト実行
-      final result = nullService.convertCsvData();
+      // テスト実行 - nullを渡して静的メソッドを呼び出す
+      final result = StepCsvService.convertCsvData(null);
       
       // 検証
       expect(result.stepCsvSummary.date, '');

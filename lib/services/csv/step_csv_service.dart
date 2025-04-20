@@ -1,13 +1,10 @@
 import 'package:vital_data_viewer_app/models/response/step_response.dart';
 
 class StepCsvService {
-  StepResponse? stepResponse;
+  // コンストラクタとステート（状態）を削除
 
-  StepCsvService({
-    required this.stepResponse,
-  });
-
-  StepCsvData convertCsvData() {
+  /// StepResponseからCSVデータに変換する
+  static StepCsvData convertCsvData(StepResponse? stepResponse) {
     StepCsvData csvData = StepCsvData(
       stepCsvSummary: StepCsvSummary(
         date: '',
@@ -22,14 +19,14 @@ class StepCsvService {
     }
 
     StepCsvSummary stepCsvData = StepCsvSummary(
-      date: stepResponse!.activitiesSteps.first.dateTime.split('T')[0],
-      totalSteps: stepResponse!.activitiesSteps.first.value,
-      interval: stepResponse!.activitiesStepsIntraday.datasetInterval,
-      unit: stepResponse!.activitiesStepsIntraday.datasetType,
+      date: stepResponse.activitiesSteps.first.dateTime.split('T')[0],
+      totalSteps: stepResponse.activitiesSteps.first.value,
+      interval: stepResponse.activitiesStepsIntraday.datasetInterval,
+      unit: stepResponse.activitiesStepsIntraday.datasetType,
     );
 
     List<StepDataset> stepDatasets = [];
-    stepResponse?.activitiesStepsIntraday.dataset.forEach((dataset) {
+    stepResponse.activitiesStepsIntraday.dataset.forEach((dataset) {
       DateTime dateTime = dataset.dateTime;
       double value = dataset.value;
 
@@ -46,13 +43,15 @@ class StepCsvService {
     );
   }
 
-  List<String> createStepSummaryCsv(StepCsvSummary stepCsvSummary) {
+  /// サマリー情報からCSV行を生成する
+  static List<String> createStepSummaryCsv(StepCsvSummary stepCsvSummary) {
     String header = '"日付,総合歩数,間隔,単位"';
     String summary = '"${stepCsvSummary.date},${stepCsvSummary.totalSteps},${stepCsvSummary.interval},${stepCsvSummary.unit}"';
     return [header, summary];
   }
 
-  List<String> createStepDatasetCsv(List<StepDataset> stepDatasets) {
+  /// データセットからCSV行を生成する
+  static List<String> createStepDatasetCsv(List<StepDataset> stepDatasets) {
     String header = '"時間,歩数"';
     List<String> datasetList = [];
     for (var dataset in stepDatasets) {
