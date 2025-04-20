@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:vital_data_viewer_app/models/response/step_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/step_repository_interface.dart';
 import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart';

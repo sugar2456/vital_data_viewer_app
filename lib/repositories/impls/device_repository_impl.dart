@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:vital_data_viewer_app/models/response/device_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/device_repository_interdace.dart';
 import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart';
