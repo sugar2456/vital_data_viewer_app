@@ -1,8 +1,6 @@
 import 'package:vital_data_viewer_app/models/response/step_response.dart';
 
 class StepCsvService {
-  // コンストラクタとステート（状態）を削除
-
   /// StepResponseからCSVデータに変換する
   static StepCsvData convertCsvData(StepResponse? stepResponse) {
     StepCsvData csvData = StepCsvData(
