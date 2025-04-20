@@ -6,12 +6,11 @@ import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart
 class StepResponseImpl extends BaseRequestClass
     implements StepRepositoryInterface {
   final Map<String, String> headers;
-  @override
-  final http.Client client;
+
   StepResponseImpl({
     required this.headers,
-    required this.client,
-  }) : super(client: client);
+    required super.client,
+  });
   @override
   Future<StepResponse> fetchStep(String date, String min) async {
     final uri = Uri.https(

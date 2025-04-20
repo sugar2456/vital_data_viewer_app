@@ -7,12 +7,11 @@ import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart
 class SleepRepositoryImpl extends BaseRequestClass
     implements SleepRepositoryInterface {
   final Map<String, String> headers;
-  @override
-  final http.Client client;
+
   SleepRepositoryImpl({
     required this.headers,
-    required this.client,
-  }) : super(client: client);
+    required super.client,
+  });
   @override
   Future<SleepGoalResponse> fetchSleepGoal() async {
     final uri = Uri.https('api.fitbit.com', '/1.2/user/-/sleep/goal.json');

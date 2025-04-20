@@ -6,12 +6,11 @@ import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart
 class BodyGoalRepositoryImpl extends BaseRequestClass
     implements BodyGoalRepositoryInterface {
   final Map<String, String> headers;
-  @override
-  final http.Client client;
+
   BodyGoalRepositoryImpl({
     required this.headers,
-    required this.client,
-  }) : super(client: client);
+    required super.client,
+  });
 
   @override
   Future<BodyGoalResponse> fetchBodyGoal() async {

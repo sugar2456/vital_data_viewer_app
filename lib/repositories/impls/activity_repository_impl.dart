@@ -7,12 +7,11 @@ import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart
 class ActivityRepositoryImpl extends BaseRequestClass
     implements ActivityGoalRepositoryInterface {
   final Map<String, String> headers;
-  @override
-  final http.Client client;
+
   ActivityRepositoryImpl({
     required this.headers,
-    required this.client,
-  }) : super(client: client);
+    required super.client,
+  }); 
 
   @override
   Future<AcitivityGoalResponse> fetchActivityGoal() async {
