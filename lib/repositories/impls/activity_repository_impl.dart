@@ -7,6 +7,7 @@ import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart
 class ActivityRepositoryImpl extends BaseRequestClass
     implements ActivityGoalRepositoryInterface {
   final Map<String, String> headers;
+  @override
   final http.Client client;
   ActivityRepositoryImpl({
     required this.headers,

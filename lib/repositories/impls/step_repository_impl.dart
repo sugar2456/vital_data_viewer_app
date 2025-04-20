@@ -6,6 +6,7 @@ import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart
 class StepResponseImpl extends BaseRequestClass
     implements StepRepositoryInterface {
   final Map<String, String> headers;
+  @override
   final http.Client client;
   StepResponseImpl({
     required this.headers,

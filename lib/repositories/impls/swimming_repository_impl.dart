@@ -6,6 +6,7 @@ import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart
 class SwimmingRepositoryImpl extends BaseRequestClass
     implements SwimmingRepositoryInterface {
   final Map<String, String> headers;
+  @override
   final http.Client client;
   SwimmingRepositoryImpl({
     required this.headers,

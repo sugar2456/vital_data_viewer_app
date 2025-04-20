@@ -5,6 +5,7 @@ import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart
 
 class HeartRateRepositoryImpl extends BaseRequestClass implements HeartRateRepositoryInterdace {
   final Map<String, String> headers;
+  @override
   final http.Client client;
   HeartRateRepositoryImpl({
     required this.headers,
