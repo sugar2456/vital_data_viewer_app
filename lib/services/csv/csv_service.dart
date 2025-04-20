@@ -4,8 +4,6 @@ import 'package:vital_data_viewer_app/repositories/interfaces/sleep_repository_i
 import 'package:vital_data_viewer_app/repositories/interfaces/calories_repository_interdace.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/swimming_repository_interface.dart';
 
-// 他の必要なimport
-
 class CsvService {
   final StepRepositoryInterface _stepRepository;
   final HeartRateRepositoryInterdace _heartRateRepository;
