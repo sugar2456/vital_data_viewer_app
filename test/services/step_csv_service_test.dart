@@ -50,8 +50,8 @@ void main() {
       
       // 検証
       expect(headerResult.length, 2);
-      expect(headerResult[0], '"日付,総合歩数,間隔,単位"');
-      expect(headerResult[1], '"2023-01-19,9919,1,minute"');
+      expect(headerResult[0], '日付,総合歩数,間隔,単位');
+      expect(headerResult[1], '2023-01-19,9919,1,minute');
     });
     
     test('createStepDatasetCsvはcsvを生成する', () {
@@ -63,7 +63,7 @@ void main() {
       
       // 検証
       expect(datasetResult.length, 1441); // ヘッダー + 1440データポイント
-      expect(datasetResult[0], '"時間,歩数"');
+      expect(datasetResult[0], '時間,歩数');
       
       // サンプルデータをチェック (時刻によって異なるので注意)
       // 日付データを含まないため、文字列マッチングで確認

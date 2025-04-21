@@ -47,7 +47,7 @@ void main() {
       
       // 検証
       expect(headerResult.length, 2);
-      expect(headerResult[0], '"日付,睡眠時間(分),ベッドでの時間(分),睡眠効率(%)"');
+      expect(headerResult[0], '日付,睡眠時間(分),ベッドでの時間(分),睡眠効率(%)');
       expect(headerResult[1].contains(sleepCsvData.sleepCsvSummary.date), isTrue);
       expect(headerResult[1].contains(sleepCsvData.sleepCsvSummary.totalMinutesAsleep.toString()), isTrue);
     });
@@ -61,7 +61,7 @@ void main() {
       
       // 検証
       expect(datasetResult.length, sleepCsvData.sleepDatasets.length + 1); // ヘッダー + データポイント
-      expect(datasetResult[0], '"時間,睡眠レベル,継続時間(秒)"');
+      expect(datasetResult[0], '時間,睡眠レベル,継続時間(秒)');
       
       // データフォーマットの確認（最初のデータが正しく変換されているか）
       if (sleepCsvData.sleepDatasets.isNotEmpty) {
