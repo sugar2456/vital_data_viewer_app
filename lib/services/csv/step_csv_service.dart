@@ -24,7 +24,7 @@ class StepCsvService {
     );
 
     List<StepDataset> stepDatasets = [];
-    stepResponse.activitiesStepsIntraday.dataset.forEach((dataset) {
+    for (var dataset in stepResponse.activitiesStepsIntraday.dataset) {
       DateTime dateTime = dataset.dateTime;
       double value = dataset.value;
 
@@ -33,7 +33,7 @@ class StepCsvService {
         value: value,
       );
       stepDatasets.add(stepDataset);
-    });
+    }
 
     return StepCsvData(
       stepCsvSummary: stepCsvData,
