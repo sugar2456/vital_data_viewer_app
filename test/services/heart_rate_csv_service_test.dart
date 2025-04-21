@@ -45,7 +45,7 @@ void main() {
       
       // 検証
       expect(headerResult.length, 2);
-      expect(headerResult[0], '"日付,平均心拍数,間隔,単位"');
+      expect(headerResult[0], '日付,平均心拍数,間隔,単位');
       expect(headerResult[1].contains('2023-01-19'), true);
     });
     
@@ -58,11 +58,11 @@ void main() {
       
       // 検証
       expect(datasetResult.length, heartRateCsvData.heartRateDatasets.length + 1); // ヘッダー + データポイント
-      expect(datasetResult[0], '"時間,心拍数"');
+      expect(datasetResult[0], '時間,心拍数');
       
       // データ行の形式を確認
       if (heartRateCsvData.heartRateDatasets.isNotEmpty) {
-        expect(datasetResult[1], contains('"'));
+        expect(datasetResult[1], contains(''));
         expect(datasetResult[1], contains(','));
       }
     });

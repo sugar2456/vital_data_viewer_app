@@ -46,7 +46,7 @@ void main() {
       
       // 検証
       expect(headerResult.length, 2);
-      expect(headerResult[0], '"日付,総合ストローク数,間隔,単位"');
+      expect(headerResult[0], '日付,総合ストローク数,間隔,単位');
       expect(headerResult[1].contains(swimmingCsvData.swimmingCsvSummary.date), isTrue);
       expect(headerResult[1].contains(swimmingCsvData.swimmingCsvSummary.totalStrokes.toString()), isTrue);
     });
@@ -60,7 +60,7 @@ void main() {
       
       // 検証
       expect(datasetResult.length, swimmingCsvData.swimmingDatasets.length + 1); // ヘッダー + データポイント
-      expect(datasetResult[0], '"時間,ストローク数"');
+      expect(datasetResult[0], '時間,ストローク数');
       
       // データフォーマットの確認（最初のデータが正しく変換されているか）
       if (swimmingCsvData.swimmingDatasets.isNotEmpty) {

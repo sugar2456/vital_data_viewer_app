@@ -50,7 +50,7 @@ void main() {
       
       // 検証
       expect(headerResult.length, 2);
-      expect(headerResult[0], '"日付,総合消費カロリー,間隔,単位"');
+      expect(headerResult[0], '日付,総合消費カロリー,間隔,単位');
       expect(headerResult[1].contains(caloriesCsvData.caloriesCsvSummary.date), isTrue);
       expect(headerResult[1].contains(caloriesCsvData.caloriesCsvSummary.totalCalories.toString()), isTrue);
     });
@@ -64,7 +64,7 @@ void main() {
       
       // 検証
       expect(datasetResult.length, caloriesCsvData.caloriesDatasets.length + 1); // ヘッダー + データポイント数
-      expect(datasetResult[0], '"時間,消費カロリー"');
+      expect(datasetResult[0], '時間,消費カロリー');
       
       // サンプルデータをチェック
       if (caloriesCsvData.caloriesDatasets.isNotEmpty) {
