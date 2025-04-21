@@ -42,6 +42,7 @@ dependencies:
   graphic: ^2.5.1
   flutter_launcher_icons: ^0.14.3
   fl_chart: ^0.70.2
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:
