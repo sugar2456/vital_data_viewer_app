@@ -64,6 +64,11 @@ class CustomDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, '/swimming');
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.data_array),
+              title: const Text('CSV'),
+              onTap: () => Navigator.pushNamed(context, '/csv'),
+            ),
             // ListTile(
             //   leading: const Icon(Icons.settings),
             //   title: const Text('設定'),
