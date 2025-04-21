@@ -1,3 +1,9 @@
+import 'dart:developer';
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
+import 'package:vital_data_viewer_app/repositories/interfaces/csv_repository_interface.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/step_repository_interface.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/heart_rate_repository_interdace.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/sleep_repository_interface.dart';
@@ -15,6 +21,7 @@ class CsvService {
   final SleepRepositoryInterface _sleepRepository;
   final CaloriesRepositoryInterdace _caloriesRepository;
   final SwimmingRepositoryInterface _swimmingRepository;
+  final CsvRepositoryInterface _csvRepository;
 
   CsvService({
     required StepRepositoryInterface stepRepository,
@@ -22,50 +29,180 @@ class CsvService {
     required SleepRepositoryInterface sleepRepository,
     required CaloriesRepositoryInterdace caloriesRepository,
     required SwimmingRepositoryInterface swimmingRepository,
+    required CsvRepositoryInterface csvRepository,
   })  : _stepRepository = stepRepository,
         _heartRateRepository = heartRateRepository,
         _sleepRepository = sleepRepository,
         _caloriesRepository = caloriesRepository,
-        _swimmingRepository = swimmingRepository;
+        _swimmingRepository = swimmingRepository,
+        _csvRepository = csvRepository;
 
-  Future<List<String>> exportCsvData(
+  Future<bool> exportCsvData(
       List<String> dataTypes, DateTime selectedDate) async {
-    final results = <String>[];
-
+    final results = <List<String>>[];
+    final generatedFileNames = <String>[];
     for (final dataType in dataTypes) {
       switch (dataType) {
         case 'steps':
           final stepData = await _stepRepository.fetchStep(
               selectedDate.toIso8601String().split('T')[0], '1min');
           final stepCsvData = StepCsvService.convertCsvData(stepData);
-          results.add('steps');
+          final stepSummaryCsv =
+              StepCsvService.createStepSummaryCsv(stepCsvData.stepCsvSummary);
+          final stepDatasetCsv =
+              StepCsvService.createStepDatasetCsv(stepCsvData.stepDatasets);
+          results.add(stepSummaryCsv);
+          results.add(stepDatasetCsv);
+          generatedFileNames.add('steps_summary.csv');
+          generatedFileNames.add('steps_dataset.csv');
           break;
         case 'heartrate':
           final heartRateData = await _heartRateRepository.fetchHeartRate(
               selectedDate.toIso8601String().split('T')[0], '1min');
-          final heartRateCsvData = HeartRateCsvService.convertCsvData(heartRateData);
-          results.add('heartrate');
+          final heartRateCsvData =
+              HeartRateCsvService.convertCsvData(heartRateData);
+          final heartRateSummaryCsv =
+              HeartRateCsvService.createHeartRateSummaryCsv(
+                  heartRateCsvData.heartRateCsvSummary);
+          final heartRateDatasetCsv =
+              HeartRateCsvService.createHeartRateDatasetCsv(
+                  heartRateCsvData.heartRateDatasets);
+          results.add(heartRateSummaryCsv);
+          results.add(heartRateDatasetCsv);
+          generatedFileNames.add('heartrate_summary.csv');
+          generatedFileNames.add('heartrate_dataset.csv');
           break;
         case 'calories':
           final caloriesData = await _caloriesRepository.fetchCalories(
               selectedDate.toIso8601String().split('T')[0], '1min');
-          final caloriesCsvData = CaloriesCsvService.convertCsvData(caloriesData);
-          results.add('calories');
+          final caloriesCsvData =
+              CaloriesCsvService.convertCsvData(caloriesData);
+          final caloriesSummaryCsv =
+              CaloriesCsvService.createCaloriesSummaryCsv(
+                  caloriesCsvData.caloriesCsvSummary);
+          final caloriesDatasetCsv =
+              CaloriesCsvService.createCaloriesDatasetCsv(
+                  caloriesCsvData.caloriesDatasets);
+          results.add(caloriesSummaryCsv);
+          results.add(caloriesDatasetCsv);
+          generatedFileNames.add('calories_summary.csv');
+          generatedFileNames.add('calories_dataset.csv');
           break;
         case 'swimming':
           final swimmingData = await _swimmingRepository.fetchSwimming(
               selectedDate.toIso8601String().split('T')[0], '1min');
-          final swimmingCsvData = SwimmingCsvService.convertCsvData(swimmingData);
-          results.add('swimming');
+          final swimmingCsvData =
+              SwimmingCsvService.convertCsvData(swimmingData);
+          final swimmingSummaryCsv =
+              SwimmingCsvService.createSwimmingSummaryCsv(
+                  swimmingCsvData.swimmingCsvSummary);
+          final swimmingDatasetCsv =
+              SwimmingCsvService.createSwimmingDatasetCsv(
+                  swimmingCsvData.swimmingDatasets);
+          results.add(swimmingSummaryCsv);
+          results.add(swimmingDatasetCsv);
+          generatedFileNames.add('swimming_summary.csv');
+          generatedFileNames.add('swimming_dataset.csv');
           break;
         case 'sleep':
           final sleepData = await _sleepRepository.fetchSleepLog();
           final sleepCsvData = SleepCsvService.convertCsvData(sleepData);
-          results.add('sleep');
+          final sleepSummaryCsv = SleepCsvService.createSleepSummaryCsv(
+              sleepCsvData.sleepCsvSummary);
+          final sleepDatasetCsv =
+              SleepCsvService.createSleepDatasetCsv(sleepCsvData.sleepDatasets);
+          results.add(sleepSummaryCsv);
+          results.add(sleepDatasetCsv);
+          generatedFileNames.add('sleep_summary.csv');
+          generatedFileNames.add('sleep_dataset.csv');
           break;
       }
     }
 
-    return results;
+    // ユーザーにディレクトリを選択させる
+    try {
+      String? directoryPath = await FilePicker.platform.getDirectoryPath(
+        dialogTitle: 'CSVファイルの保存先を選択してください',
+      );
+
+      // ユーザーがキャンセルした場合
+      if (directoryPath == null) {
+        return false;
+      }
+      // CSVファイルの保存処理
+      final isSave = await _csvRepository.saveMultipleCsvFiles(
+          generatedFileNames, directoryPath, results);
+
+      return isSave;
+    } catch (e) {
+      log('ファイル保存先選択エラー: $e');
+      
+      // エラーが発生した場合は代替としてアプリのドキュメントディレクトリを使用
+      final fallbackPath = await _getAppropriateDownloadPath();
+      log('代替ディレクトリを使用します: $fallbackPath');
+      
+      // フォールバックパスでの保存を試行
+      final isSave = await _csvRepository.saveMultipleCsvFiles(
+          generatedFileNames, fallbackPath, results);
+      
+      return isSave;
+    }
+  }
+
+// プラットフォームに応じた保存先パスを取得するメソッド
+  Future<String> _getAppropriateDownloadPath() async {
+    try {
+      if (Platform.isMacOS) {
+        // macOSではアプリのドキュメントディレクトリを使用（確実にアクセス可能）
+        final documentsDirectory = await getApplicationDocumentsDirectory();
+        final csvDir =
+            Directory(path.join(documentsDirectory.path, 'CSVExports'));
+
+        // ディレクトリが存在しない場合は作成
+        if (!await csvDir.exists()) {
+          await csvDir.create(recursive: true);
+        }
+
+        log('Using directory: ${csvDir.path}'); // デバッグ用
+        return csvDir.path;
+      } else if (Platform.isWindows) {
+        // Windowsではユーザープロファイルのドキュメントディレクトリを使用
+        final documentsDirectory = await getApplicationDocumentsDirectory();
+        final csvDir =
+            Directory(path.join(documentsDirectory.path, 'CSVExports'));
+
+        // ディレクトリが存在しない場合は作成
+        if (!await csvDir.exists()) {
+          await csvDir.create(recursive: true);
+        }
+
+        log('Using directory: ${csvDir.path}'); // デバッグ用
+        return csvDir.path;
+      } else {
+        // その他のプラットフォーム（Linuxなど）では一時ディレクトリを使用
+        final tempDir = await getTemporaryDirectory();
+        return tempDir.path;
+      }
+    } catch (e) {
+      log('Error getting directory: $e'); // デバッグ用
+      final tempDir = await getTemporaryDirectory();
+      return tempDir.path;
+    }
+  }
+
+  Future<Directory> getHomeDirectory() async {
+    if (Platform.isMacOS) {
+      // macOSでホームディレクトリを取得
+      return Directory(Platform.environment['HOME'] ??
+          '/Users/${Platform.environment['USER']}');
+    } else if (Platform.isWindows) {
+      // Windowsでホームディレクトリを取得
+      return Directory(Platform.environment['USERPROFILE'] ??
+          'C:\\Users\\${Platform.environment['USERNAME']}');
+    } else {
+      // その他の場合
+      final documents = await getApplicationDocumentsDirectory();
+      return Directory(path.dirname(documents.path));
+    }
   }
 }

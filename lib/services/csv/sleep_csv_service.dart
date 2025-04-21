@@ -54,17 +54,17 @@ class SleepCsvService {
 
   /// サマリー情報からCSV行を生成する
   static List<String> createSleepSummaryCsv(SleepCsvSummary sleepCsvSummary) {
-    String header = '"日付,睡眠時間(分),ベッドでの時間(分),睡眠効率(%)"';
-    String summary = '"${sleepCsvSummary.date},${sleepCsvSummary.totalMinutesAsleep},${sleepCsvSummary.totalTimeInBed},${sleepCsvSummary.sleepEfficiency}"';
+    String header = '日付,睡眠時間(分),ベッドでの時間(分),睡眠効率(%)';
+    String summary = '${sleepCsvSummary.date},${sleepCsvSummary.totalMinutesAsleep},${sleepCsvSummary.totalTimeInBed},${sleepCsvSummary.sleepEfficiency}';
     return [header, summary];
   }
 
   /// データセットからCSV行を生成する
   static List<String> createSleepDatasetCsv(List<SleepDataset> sleepDatasets) {
-    String header = '"時間,睡眠レベル,継続時間(秒)"';
+    String header = '時間,睡眠レベル,継続時間(秒)';
     List<String> datasetList = [];
     for (var dataset in sleepDatasets) {
-      String datasetString = '"${dataset.dateTime},${dataset.level},${dataset.seconds}"';
+      String datasetString = '${dataset.dateTime},${dataset.level},${dataset.seconds}';
       datasetList.add(datasetString);
     }
     return [header, ...datasetList];

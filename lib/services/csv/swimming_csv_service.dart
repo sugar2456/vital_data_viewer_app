@@ -43,17 +43,17 @@ class SwimmingCsvService {
 
   /// サマリー情報からCSV行を生成する
   static List<String> createSwimmingSummaryCsv(SwimmingCsvSummary swimmingCsvSummary) {
-    String header = '"日付,総合ストローク数,間隔,単位"';
-    String summary = '"${swimmingCsvSummary.date},${swimmingCsvSummary.totalStrokes},${swimmingCsvSummary.interval},${swimmingCsvSummary.unit}"';
+    String header = '日付,総合ストローク数,間隔,単位';
+    String summary = '${swimmingCsvSummary.date},${swimmingCsvSummary.totalStrokes},${swimmingCsvSummary.interval},${swimmingCsvSummary.unit}';
     return [header, summary];
   }
 
   /// データセットからCSV行を生成する
   static List<String> createSwimmingDatasetCsv(List<SwimmingDataset> swimmingDatasets) {
-    String header = '"時間,ストローク数"';
+    String header = '時間,ストローク数';
     List<String> datasetList = [];
     for (var dataset in swimmingDatasets) {
-      String datasetString = '"${dataset.dateTime},${dataset.value}"';
+      String datasetString = '${dataset.dateTime},${dataset.value}';
       datasetList.add(datasetString);
     }
     return [header, ...datasetList];
