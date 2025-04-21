@@ -7,6 +7,7 @@ import 'package:vital_data_viewer_app/services/csv/calories_csv_service.dart';
 import 'package:vital_data_viewer_app/services/csv/step_csv_service.dart';
 import 'package:vital_data_viewer_app/services/csv/heart_rate_csv_service.dart';
 import 'package:vital_data_viewer_app/services/csv/swimming_csv_service.dart';
+import 'package:vital_data_viewer_app/services/csv/sleep_csv_service.dart';
 
 class CsvService {
   final StepRepositoryInterface _stepRepository;
@@ -59,6 +60,7 @@ class CsvService {
           break;
         case 'sleep':
           final sleepData = await _sleepRepository.fetchSleepLog();
+          final sleepCsvData = SleepCsvService.convertCsvData(sleepData);
           results.add('sleep');
           break;
       }
