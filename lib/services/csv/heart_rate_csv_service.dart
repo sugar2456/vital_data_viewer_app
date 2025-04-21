@@ -43,17 +43,17 @@ class HeartRateCsvService {
 
   /// サマリー情報からCSV行を生成する
   static List<String> createHeartRateSummaryCsv(HeartRateCsvSummary heartRateCsvSummary) {
-    String header = '"日付,平均心拍数,間隔,単位"';
-    String summary = '"${heartRateCsvSummary.date},${heartRateCsvSummary.averageHeartRate},${heartRateCsvSummary.interval},${heartRateCsvSummary.unit}"';
+    String header = '日付,平均心拍数,間隔,単位';
+    String summary = '${heartRateCsvSummary.date},${heartRateCsvSummary.averageHeartRate},${heartRateCsvSummary.interval},${heartRateCsvSummary.unit}';
     return [header, summary];
   }
 
   /// データセットからCSV行を生成する
   static List<String> createHeartRateDatasetCsv(List<HeartRateDataset> heartRateDatasets) {
-    String header = '"時間,心拍数"';
+    String header = '時間,心拍数';
     List<String> datasetList = [];
     for (var dataset in heartRateDatasets) {
-      String datasetString = '"${dataset.dateTime},${dataset.value}"';
+      String datasetString = '${dataset.dateTime},${dataset.value}';
       datasetList.add(datasetString);
     }
     return [header, ...datasetList];

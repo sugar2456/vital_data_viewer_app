@@ -43,17 +43,17 @@ class StepCsvService {
 
   /// サマリー情報からCSV行を生成する
   static List<String> createStepSummaryCsv(StepCsvSummary stepCsvSummary) {
-    String header = '"日付,総合歩数,間隔,単位"';
-    String summary = '"${stepCsvSummary.date},${stepCsvSummary.totalSteps},${stepCsvSummary.interval},${stepCsvSummary.unit}"';
+    String header = '日付,総合歩数,間隔,単位';
+    String summary = '${stepCsvSummary.date},${stepCsvSummary.totalSteps},${stepCsvSummary.interval},${stepCsvSummary.unit}';
     return [header, summary];
   }
 
   /// データセットからCSV行を生成する
   static List<String> createStepDatasetCsv(List<StepDataset> stepDatasets) {
-    String header = '"時間,歩数"';
+    String header = '時間,歩数';
     List<String> datasetList = [];
     for (var dataset in stepDatasets) {
-      String datasetString = '"${dataset.dateTime},${dataset.value}"';
+      String datasetString = '${dataset.dateTime},${dataset.value}';
       datasetList.add(datasetString);
     }
     return [header, ...datasetList];

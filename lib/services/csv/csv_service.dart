@@ -120,19 +120,33 @@ class CsvService {
     }
 
     // ユーザーにディレクトリを選択させる
-    String? directoryPath = await FilePicker.platform.getDirectoryPath(
-      dialogTitle: 'CSVファイルの保存先を選択してください',
-    );
+    try {
+      String? directoryPath = await FilePicker.platform.getDirectoryPath(
+        dialogTitle: 'CSVファイルの保存先を選択してください',
+      );
 
-    // ユーザーがキャンセルした場合
-    if (directoryPath == null) {
-      return false;
+      // ユーザーがキャンセルした場合
+      if (directoryPath == null) {
+        return false;
+      }
+      // CSVファイルの保存処理
+      final isSave = await _csvRepository.saveMultipleCsvFiles(
+          generatedFileNames, directoryPath, results);
+
+      return isSave;
+    } catch (e) {
+      log('ファイル保存先選択エラー: $e');
+      
+      // エラーが発生した場合は代替としてアプリのドキュメントディレクトリを使用
+      final fallbackPath = await _getAppropriateDownloadPath();
+      log('代替ディレクトリを使用します: $fallbackPath');
+      
+      // フォールバックパスでの保存を試行
+      final isSave = await _csvRepository.saveMultipleCsvFiles(
+          generatedFileNames, fallbackPath, results);
+      
+      return isSave;
     }
-    // CSVファイルの保存処理
-    final isSave = _csvRepository.saveMultipleCsvFiles(
-        generatedFileNames, directoryPath, results);
-
-    return isSave;
   }
 
 // プラットフォームに応じた保存先パスを取得するメソッド
