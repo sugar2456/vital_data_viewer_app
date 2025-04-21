@@ -63,7 +63,7 @@ class CsvViewModel extends ChangeNotifier {
     try {
       final selectedIds = selectedOptions.map((option) => option.id).toList();
       final result = await csvService.exportCsvData(selectedIds, _selectedDate!);
-      if (result == []) {
+      if (!result) {
         return 'CSV出力に失敗しました';
       }
       return 'CSV出力完了！選択項目: ${selectedIds.join(", ")}';

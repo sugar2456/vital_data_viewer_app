@@ -48,4 +48,19 @@ class TestCsvRepository extends CsvRepositoryInterface {
       return false;
     }
   }
+  @override
+  Future<bool> saveMultipleCsvFiles(
+      List<String> fileNames, String filePath, List<List<String>> csvDataList) async {
+    try {
+      for (int i = 0; i < fileNames.length; i++) {
+        final fileName = fileNames[i];
+        final csvData = csvDataList[i];
+        await saveCsvFile(fileName, filePath, csvData);
+      }
+      return true;
+    } catch (e) {
+      log('Error saving multiple CSV files: $e');
+      return false;
+    }
+  }
 }

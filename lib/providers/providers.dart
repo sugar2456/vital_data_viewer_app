@@ -1,3 +1,5 @@
+import 'package:file/file.dart';
+import 'package:file/local.dart'; 
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:vital_data_viewer_app/repositories/impls/activity_repository_impl.dart';
@@ -7,6 +9,7 @@ import 'package:vital_data_viewer_app/repositories/impls/heart_rate_repository_i
 import 'package:vital_data_viewer_app/repositories/impls/sleep_repository_impl.dart';
 import 'package:vital_data_viewer_app/repositories/impls/step_repository_impl.dart';
 import 'package:vital_data_viewer_app/repositories/impls/swimming_repository_impl.dart';
+import 'package:vital_data_viewer_app/repositories/memory/csv_repository_impl.dart';
 import 'package:vital_data_viewer_app/services/csv/csv_service.dart';
 import 'package:vital_data_viewer_app/util/header_util.dart';
 import 'package:vital_data_viewer_app/view_models/calories_view_model.dart';
@@ -26,6 +29,9 @@ List<SingleChildWidget> getProviders() {
   return [
     ChangeNotifierProvider(
       create: (_) => headerUtil,
+    ),
+    Provider<FileSystem>(
+      create: (_) => const LocalFileSystem(), // プラットフォームに応じたファイルシステム実装
     ),
     // リポジトリのプロバイダ登録
     Provider<StepResponseImpl>(
@@ -73,6 +79,11 @@ List<SingleChildWidget> getProviders() {
         client: httpClient,
       ),
     ),
+    Provider<CsvRepositoryImpl>(
+      create: (context) => CsvRepositoryImpl(
+        fileSystem: context.read<FileSystem>()
+      ),
+    ),
     // サービスのプロバイダ登録
     Provider<CsvService>(
       create: (context) => CsvService(
@@ -81,6 +92,7 @@ List<SingleChildWidget> getProviders() {
         swimmingRepository: context.read<SwimmingRepositoryImpl>(),
         sleepRepository: context.read<SleepRepositoryImpl>(),
         caloriesRepository: context.read<CaloriesRepositoryImpl>(),
+        csvRepository: context.read<CsvRepositoryImpl>(),
       ),
     ),
     // ViewModelのプロバイダ登録

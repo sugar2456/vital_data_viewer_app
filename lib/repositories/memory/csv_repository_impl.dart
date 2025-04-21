@@ -46,4 +46,48 @@ class CsvRepositoryImpl implements CsvRepositoryInterface {
       return false;
     }
   }
+
+
+  /// 複数のCSVファイルを一括で保存する
+  /// 
+  /// [fileNames]: 保存するファイル名のリスト
+  /// [filePath]: ファイルを保存するディレクトリのパス
+  /// [csvDataList]: 各ファイルに対応するCSVデータのリスト
+  /// 
+  /// 戻り値: 全てのファイルが正常に保存された場合はtrue、1つでも失敗した場合はfalse
+  @override
+  Future<bool> saveMultipleCsvFiles(
+    List<String> fileNames,
+    String filePath,
+    List<List<String>> csvDataList,
+  ) async {
+    // ファイル名とデータのリストの長さが一致しない場合はエラー
+    if (fileNames.length != csvDataList.length) {
+      log('Error: Number of file names (${fileNames.length}) does not match number of data sets (${csvDataList.length})');
+      return false;
+    }
+
+    try {
+      // ディレクトリが存在しない場合は作成（一度だけ）
+      final directory = fileSystem.directory(filePath);
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
+
+      // 全てのファイルを保存
+      for (int i = 0; i < fileNames.length; i++) {
+        final result = await saveCsvFile(fileNames[i], filePath, csvDataList[i]);
+        if (!result) {
+          log('Failed to save file: ${fileNames[i]}');
+          return false; // 1つでも失敗したら全体を失敗とする
+        }
+      }
+      
+      log('Successfully saved ${fileNames.length} CSV files to: $filePath');
+      return true;
+    } catch (e) {
+      log('Error saving multiple CSV files: $e');
+      return false;
+    }
+  }
 }

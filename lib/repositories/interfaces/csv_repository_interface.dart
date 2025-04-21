@@ -4,4 +4,9 @@ abstract class CsvRepositoryInterface {
     String filePath,
     List<String> csvData,
   );
+  Future<bool> saveMultipleCsvFiles(
+    List<String> fileNames,
+    String filePath,
+    List<List<String>> csvDataList,
+  );
 }
