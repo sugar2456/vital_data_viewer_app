@@ -6,6 +6,7 @@ import 'package:vital_data_viewer_app/repositories/interfaces/swimming_repositor
 import 'package:vital_data_viewer_app/services/csv/calories_csv_service.dart';
 import 'package:vital_data_viewer_app/services/csv/step_csv_service.dart';
 import 'package:vital_data_viewer_app/services/csv/heart_rate_csv_service.dart';
+import 'package:vital_data_viewer_app/services/csv/swimming_csv_service.dart';
 
 class CsvService {
   final StepRepositoryInterface _stepRepository;
@@ -53,6 +54,7 @@ class CsvService {
         case 'swimming':
           final swimmingData = await _swimmingRepository.fetchSwimming(
               selectedDate.toIso8601String().split('T')[0], '1min');
+          final swimmingCsvData = SwimmingCsvService.convertCsvData(swimmingData);
           results.add('swimming');
           break;
         case 'sleep':
