@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:vital_data_viewer_app/models/response/activity_summary_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/activity_repository_interface.dart';
 import 'package:vital_data_viewer_app/models/response/activity_goal_response.dart';
@@ -7,11 +6,11 @@ import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart
 class ActivityRepositoryImpl extends BaseRequestClass
     implements ActivityGoalRepositoryInterface {
   final Map<String, String> headers;
-  final http.Client client;
+
   ActivityRepositoryImpl({
     required this.headers,
-    required this.client,
-  }) : super(client: client);
+    required super.client,
+  }); 
 
   @override
   Future<AcitivityGoalResponse> fetchActivityGoal() async {
