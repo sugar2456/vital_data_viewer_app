@@ -42,6 +42,7 @@ class CaloriesView extends StatelessWidget {
                   child: Stack(
                     children: [
                       CustomLineChart(
+                        selectedDate: viewModel.dateLabel,
                         xAxisLabel: '時刻',
                         xAxisUnit: '分',
                         yAxisLabel: 'カロリー消費量',
