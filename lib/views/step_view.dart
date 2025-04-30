@@ -41,6 +41,7 @@ class StepView extends StatelessWidget {
                     child: Stack(
                       children: [
                         CustomLineChart(
+                            selectedDate: viewModel.dateLabel,
                             xAxisLabel: '時刻',
                             xAxisUnit: '分',
                             yAxisLabel: '歩数',

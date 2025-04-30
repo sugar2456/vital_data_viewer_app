@@ -39,6 +39,7 @@ class HeartRateView extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: CustomLineChart(
+                    selectedDate: viewModel.dateLabel,
                     xAxisLabel: '時刻',
                     xAxisUnit: '分',
                     yAxisLabel: '心拍数',

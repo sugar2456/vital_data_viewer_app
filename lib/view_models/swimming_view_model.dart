@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:vital_data_viewer_app/models/response/dataset.dart';
 import 'package:vital_data_viewer_app/models/response/swimming_response.dart';
 import 'package:vital_data_viewer_app/repositories/impls/swimming_repository_impl.dart';
+import 'package:intl/intl.dart';
 
 class SwimmingViewModel extends ChangeNotifier {
   final SwimmingRepositoryImpl _swimmingRepository;
   DateTime _date = DateTime.now();
   DateTime get date => _date;
+  String get dateLabel => DateFormat('yyyy/MM/dd').format(_date.toLocal());
   SwimmingResponse? _swimmingResponse;
   List<Dataset> get getSwimmingIntraday =>
       _swimmingResponse!.activitiesSwimmingStrokeIntraday.dataset;
@@ -16,7 +18,7 @@ class SwimmingViewModel extends ChangeNotifier {
   SwimmingViewModel(this._swimmingRepository);
 
   Future<void> fetchSwimming() async {
-    final getDate = date.toIso8601String().split('T').first;
+    final getDate = _date.toIso8601String().split('T').first;
     _swimmingResponse =
         await _swimmingRepository.fetchSwimming(getDate, '1min');
     notifyListeners();

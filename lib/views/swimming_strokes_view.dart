@@ -40,6 +40,7 @@ class SwimmingStrokesView extends StatelessWidget {
                   child: Stack(
                     children: [
                       CustomLineChart(
+                        selectedDate: viewModel.dateLabel,
                         xAxisLabel: '時刻',
                         xAxisUnit: '分',
                         yAxisLabel: 'ストローク数',

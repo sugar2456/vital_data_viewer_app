@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:vital_data_viewer_app/views/component/info_card.dart';
 
 class CustomLineChart extends StatelessWidget {
+  final String selectedDate;
   final String xAxisLabel;
   final String xAxisUnit;
   final String yAxisLabel;
@@ -11,6 +12,7 @@ class CustomLineChart extends StatelessWidget {
 
   const CustomLineChart(
       {super.key,
+      required this.selectedDate,
       required this.xAxisLabel,
       required this.xAxisUnit,
       required this.yAxisLabel,
@@ -189,7 +191,7 @@ class CustomLineChart extends StatelessWidget {
             const SizedBox(height: 10), // グラフとx軸タイトルの間のスペース
             // X軸のタイトル
             Text(
-              '$xAxisLabel ($xAxisUnit)', // X軸のタイトル
+              '$xAxisLabel ($xAxisUnit) / 日付: $selectedDate', // X軸のタイトル
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
