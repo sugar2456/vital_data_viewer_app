@@ -15,7 +15,7 @@ class HeartRateViewModel extends ChangeNotifier {
   HeartRateViewModel(this._heartRateRepository);
 
   Future<void> fetchHeartRate() async {
-    final getDate = date.toIso8601String().split('T').first;
+    final getDate = _date.toIso8601String().split('T').first;
     _heartRateResponse =
         await _heartRateRepository.fetchHeartRate(getDate, '1min');
     notifyListeners();

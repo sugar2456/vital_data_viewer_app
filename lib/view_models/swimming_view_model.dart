@@ -18,7 +18,7 @@ class SwimmingViewModel extends ChangeNotifier {
   SwimmingViewModel(this._swimmingRepository);
 
   Future<void> fetchSwimming() async {
-    final getDate = date.toIso8601String().split('T').first;
+    final getDate = _date.toIso8601String().split('T').first;
     _swimmingResponse =
         await _swimmingRepository.fetchSwimming(getDate, '1min');
     notifyListeners();
