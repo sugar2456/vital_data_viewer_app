@@ -40,9 +40,9 @@ jobs:
       # 6. Windows用ZIPファイルを作成
       - name: Create Windows ZIP
         run: |
-          cd build\windows\x64\runner\Release
-          tar -czf ..\..\..\..\..\..\vital-data-viewer-windows-${{ github.ref_name }}.zip *
-        shell: cmd
+          Compress-Archive -Path "build\windows\x64\runner\Release\*" -DestinationPath "vital-data-viewer-windows-${{ github.ref_name }}.zip"
+          Write-Host "ZIP file created: $(Get-Item vital-data-viewer-windows-${{ github.ref_name }}.zip | Select-Object Name, Length)"
+        shell: powershell
 
       # 7. GitHub Releaseを作成してファイルをアップロード
       - name: Upload Windows Release
