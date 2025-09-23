@@ -129,54 +129,34 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: windows-build
-          path: ./artifacts/windows
+          path: ./
 
       # 3. macOS ビルド成果物をダウンロード
       - name: Download macOS artifacts
         uses: actions/download-artifact@v4
         with:
           name: macos-build
-          path: ./artifacts/macos
+          path: ./
 
-      # 4. アーティファクトの確認とデバッグ
-      - name: List downloaded artifacts
+      # 4. ダウンロードされたファイルを確認
+      - name: List downloaded files
         run: |
-          echo "Windows artifacts:"
-          ls -la ./artifacts/windows/ || echo "No Windows artifacts found"
-          echo "macOS artifacts:"
-          ls -la ./artifacts/macos/ || echo "No macOS artifacts found"
-
-      # 5. Windows用ZIPファイルを作成
-      - name: Create Windows ZIP
-        run: |
-          if [ -d "./artifacts/windows" ] && [ "$(ls -A ./artifacts/windows)" ]; then
-            cd ./artifacts/windows
-            zip -r ../../vital-data-viewer-windows-${{ github.ref_name }}.zip .
-            cd ../..
-            echo "Windows ZIP created: $(ls -la vital-data-viewer-windows-${{ github.ref_name }}.zip)"
-          else
-            echo "Warning: No Windows artifacts found"
-          fi
-
-      # 6. macOS用ZIPファイルを作成
-      - name: Create macOS ZIP
-        run: |
-          if [ -d "./artifacts/macos" ] && [ "$(ls -A ./artifacts/macos)" ]; then
-            cd ./artifacts/macos
-            zip -r ../../vital-data-viewer-macos-${{ github.ref_name }}.zip .
-            cd ../..
-            echo "macOS ZIP created: $(ls -la vital-data-viewer-macos-${{ github.ref_name }}.zip)"
-          else
-            echo "Warning: No macOS artifacts found"
-          fi
-
-      # 7. 作成されたファイルを確認
-      - name: List created files
-        run: |
-          echo "Created files:"
+          echo "Downloaded files:"
           ls -la *.zip || echo "No ZIP files found"
 
-      # 8. GitHub Releaseを作成してファイルをアップロード
+      # 5. ファイル名を変更（オプション）
+      - name: Rename artifacts
+        run: |
+          if [ -f "windows-build.zip" ]; then
+            mv windows-build.zip vital-data-viewer-windows-${{ github.ref_name }}.zip
+            echo "Renamed: windows-build.zip -> vital-data-viewer-windows-${{ github.ref_name }}.zip"
+          fi
+          if [ -f "macos-build.zip" ]; then
+            mv macos-build.zip vital-data-viewer-macos-${{ github.ref_name }}.zip
+            echo "Renamed: macos-build.zip -> vital-data-viewer-macos-${{ github.ref_name }}.zip"
+          fi
+
+      # 6. GitHub Releaseを作成してファイルをアップロード
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
