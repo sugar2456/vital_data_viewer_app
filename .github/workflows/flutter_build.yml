@@ -110,11 +110,10 @@ jobs:
           name: macos-build
           path: build/macos/Build/Products/Release/*.app
 
-  # GitHub Releasesにビルド成果物をアップロード（タグプッシュ時のみ）
-  release:
-    name: Create Release
-    needs: [build-windows, build-macos]
-    runs-on: ubuntu-latest
+  # Windows用リリースビルド（タグプッシュ時のみ）
+  release-windows:
+    name: Release Windows Build
+    runs-on: windows-latest
     if: startsWith(github.ref, 'refs/tags/')
     permissions:
       contents: write
@@ -124,44 +123,82 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Windows ビルド成果物をダウンロード
-      - name: Download Windows artifacts
-        uses: actions/download-artifact@v4
+      # 2. Flutterをセットアップ
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
-          name: windows-build
-          path: ./
+          flutter-version: '3.29.2'
+          channel: 'stable'
 
-      # 3. macOS ビルド成果物をダウンロード
-      - name: Download macOS artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: macos-build
-          path: ./
+      # 3. デスクトップサポートを有効化
+      - name: Enable desktop support
+        run: flutter config --enable-windows-desktop
 
-      # 4. ダウンロードされたファイルを確認
-      - name: List downloaded files
+      # 4. Flutterの依存関係を取得
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 5. Windows向けにビルド
+      - name: Build Windows App
+        run: flutter build windows --release
+
+      # 6. Windows用ZIPファイルを作成
+      - name: Create Windows ZIP
         run: |
-          echo "Downloaded files:"
-          ls -la *.zip || echo "No ZIP files found"
+          cd build\windows\x64\runner\Release
+          tar -czf ..\..\..\..\..\..\vital-data-viewer-windows-${{ github.ref_name }}.zip *
+        shell: cmd
 
-      # 5. ファイル名を変更（オプション）
-      - name: Rename artifacts
-        run: |
-          if [ -f "windows-build.zip" ]; then
-            mv windows-build.zip vital-data-viewer-windows-${{ github.ref_name }}.zip
-            echo "Renamed: windows-build.zip -> vital-data-viewer-windows-${{ github.ref_name }}.zip"
-          fi
-          if [ -f "macos-build.zip" ]; then
-            mv macos-build.zip vital-data-viewer-macos-${{ github.ref_name }}.zip
-            echo "Renamed: macos-build.zip -> vital-data-viewer-macos-${{ github.ref_name }}.zip"
-          fi
-
-      # 6. GitHub Releaseを作成してファイルをアップロード
-      - name: Create GitHub Release
+      # 7. GitHub Releaseを作成してファイルをアップロード
+      - name: Upload Windows Release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            vital-data-viewer-windows-${{ github.ref_name }}.zip
-            vital-data-viewer-macos-${{ github.ref_name }}.zip
+          files: vital-data-viewer-windows-${{ github.ref_name }}.zip
+          generate_release_notes: true
+          fail_on_unmatched_files: false
+
+  # macOS用リリースビルド（タグプッシュ時のみ）
+  release-macos:
+    name: Release macOS Build
+    runs-on: macos-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+
+    steps:
+      # 1. リポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Flutterをセットアップ
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.2'
+          channel: 'stable'
+
+      # 3. デスクトップサポートを有効化
+      - name: Enable desktop support
+        run: flutter config --enable-macos-desktop
+
+      # 4. Flutterの依存関係を取得
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 5. macOS向けにビルド
+      - name: Build macOS App
+        run: flutter build macos --release
+
+      # 6. macOS用ZIPファイルを作成
+      - name: Create macOS ZIP
+        run: |
+          cd build/macos/Build/Products/Release
+          zip -r ../../../../../vital-data-viewer-macos-${{ github.ref_name }}.zip *.app
+
+      # 7. GitHub Releaseを作成してファイルをアップロード
+      - name: Upload macOS Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: vital-data-viewer-macos-${{ github.ref_name }}.zip
           generate_release_notes: true
           fail_on_unmatched_files: false
