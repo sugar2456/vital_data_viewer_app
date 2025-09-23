@@ -55,7 +55,7 @@ void main() {
       final response = await sleepRepository.fetchSleepGoal();
 
       // Assert
-      expect(response.sleepConsistency.flowId, SleepConsistency.notSetGoalNotSleepRecorded);
+      expect(response.sleepConsistency?.flowId, SleepConsistency.notSetGoalNotSleepRecorded);
       expect(response.goal.minDuration, 480);
       expect(response.goal.updatedOn.toIso8601String(),
           '2020-01-01T13:00:00.126Z');
