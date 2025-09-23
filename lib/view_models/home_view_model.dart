@@ -60,12 +60,34 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   Future<void> getActivityGoal() async {
-    _activitySummaryResponse =
-        await _activityGoalRepository.fetchActivitySummary();
-    _bodyGoalResponse = await _bodyGoalRepository.fetchBodyGoal();
-    _sleepGoalResponse = await _sleepRepository.fetchSleepGoal();
-    _sleepLogResponse = await _sleepRepository.fetchSleepLog();
-    notifyListeners();
+    try {
+      _activitySummaryResponse =
+          await _activityGoalRepository.fetchActivitySummary();
+
+      try {
+        _bodyGoalResponse = await _bodyGoalRepository.fetchBodyGoal();
+      } catch (e) {
+        // 体重目標が設定されていない場合はnullのまま継続
+        _bodyGoalResponse = null;
+      }
+
+      try {
+        _sleepGoalResponse = await _sleepRepository.fetchSleepGoal();
+      } catch (e) {
+        // 睡眠目標が設定されていない場合はnullのまま継続
+        _sleepGoalResponse = null;
+      }
+
+      try {
+        _sleepLogResponse = await _sleepRepository.fetchSleepLog();
+      } catch (e) {
+        // 睡眠ログが取得できない場合はnullのまま継続
+        _sleepLogResponse = null;
+      }
+      notifyListeners();
+    } catch (e) {
+      rethrow; // 他のAPIエラーは上位に伝播
+    }
   }
 
   Future<void> logout() async {

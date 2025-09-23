@@ -1,16 +1,18 @@
 import 'package:vital_data_viewer_app/const/response_type.dart';
 
 class SleepGoalResponse {
-  final Consistency sleepConsistency;
+  final Consistency? sleepConsistency;
   final Goal goal;
   SleepGoalResponse({
-    required this.sleepConsistency,
+    this.sleepConsistency,
     required this.goal,
   });
 
   factory SleepGoalResponse.fromJson(Map<String, dynamic> json) {
     return SleepGoalResponse(
-      sleepConsistency: Consistency.fromJson(json['consistency']),
+      sleepConsistency: json['consistency'] != null
+          ? Consistency.fromJson(json['consistency'])
+          : null,
       goal: Goal.fromJson(json['goal']),
     );
   }
