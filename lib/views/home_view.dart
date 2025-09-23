@@ -35,8 +35,7 @@ class HomeView extends StatelessWidget {
           } else {
             return Consumer<HomeViewModel>(
               builder: (context, viewModel, child) {
-                if (
-                    viewModel.bodyGoalResponse == null) {
+                if (viewModel.activitySummaryResponse == null) {
                   return const Center(child: Text('データなし'));
                 }
                 final goalSteps = viewModel.activitySummaryResponse!.goals.steps;

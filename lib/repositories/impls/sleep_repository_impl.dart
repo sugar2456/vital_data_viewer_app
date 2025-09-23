@@ -15,6 +15,17 @@ class SleepRepositoryImpl extends BaseRequestClass
   Future<SleepGoalResponse> fetchSleepGoal() async {
     final uri = Uri.https('api.fitbit.com', '/1.2/user/-/sleep/goal.json');
     final responseBody = await super.get(uri, headers);
+
+    // 空のレスポンスチェック
+    if (responseBody.isEmpty) {
+      throw Exception('睡眠目標が設定されていません。Fitbitアプリで睡眠目標を設定してください。');
+    }
+
+    // goalキーの存在チェック
+    if (!responseBody.containsKey('goal') || responseBody['goal'] == null) {
+      throw Exception('睡眠目標データの取得に失敗しました。APIレスポンス: $responseBody');
+    }
+
     return SleepGoalResponse.fromJson(responseBody);
   }
 
