@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vital_data_viewer_app/exceptions/external_service_exception.dart';
+import 'package:vital_data_viewer_app/models/manager/fitbit_id_manager.dart';
 import '../view_models/login_view_model.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
   final TextEditingController fitbitIdController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  LoginView({super.key});
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedFitbitId();
+  }
+
+  Future<void> _loadSavedFitbitId() async {
+    final savedId = await FitbitIdManager().getFitbitId();
+    if (savedId != null) {
+      fitbitIdController.text = savedId;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
