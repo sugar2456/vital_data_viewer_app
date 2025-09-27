@@ -13,6 +13,9 @@ VERSION=$1
 echo "Checking out main branch..."
 git checkout main
 
+echo "Pulling latest changes from main..."
+git pull origin main
+
 echo "Creating and pushing tag: $VERSION"
 git tag $VERSION
 git push origin $VERSION
