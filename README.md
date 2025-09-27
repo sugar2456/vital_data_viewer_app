@@ -9,11 +9,9 @@ mac os/ windowsアプリで動作する
 認証はImplicit Grantを採用
 
 ## リリースタグのプッシュ
-github actionsにタグをプッシュするとリリースノート生成する処理があるので、機能やバグ対応が発生したら以下のコマンドでタグを作成してプッシュすること
-```
-git tag vx.x.x
-git push origin vx.x.x
-```
+`current_version.sh`で現在のリリースバージョンを取得できる
+
+`release_tag.sh`で新たにバージョンのタグ付与とpushができる
 
 # アプリの利用方法
 
