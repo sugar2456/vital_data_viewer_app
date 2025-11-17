@@ -1,5 +1,5 @@
 import 'package:file/file.dart';
-import 'package:file/local.dart'; 
+import 'package:file/local.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:vital_data_viewer_app/repositories/impls/activity_repository_impl.dart';
@@ -18,6 +18,7 @@ import 'package:vital_data_viewer_app/view_models/heart_rate_view_model.dart';
 import 'package:vital_data_viewer_app/view_models/login_view_model.dart';
 import 'package:vital_data_viewer_app/repositories/impls/login_repository_impl.dart';
 import 'package:vital_data_viewer_app/view_models/home_view_model.dart';
+import 'package:vital_data_viewer_app/view_models/sleep_view_model.dart';
 import 'package:vital_data_viewer_app/view_models/steps_view_model.dart';
 import 'package:vital_data_viewer_app/view_models/swimming_view_model.dart';
 import 'package:http/http.dart' as http;
@@ -80,9 +81,8 @@ List<SingleChildWidget> getProviders() {
       ),
     ),
     Provider<CsvRepositoryImpl>(
-      create: (context) => CsvRepositoryImpl(
-        fileSystem: context.read<FileSystem>()
-      ),
+      create: (context) =>
+          CsvRepositoryImpl(fileSystem: context.read<FileSystem>()),
     ),
     // サービスのプロバイダ登録
     Provider<CsvService>(
@@ -124,6 +124,11 @@ List<SingleChildWidget> getProviders() {
     ChangeNotifierProvider(
       create: (context) => SwimmingViewModel(
         context.read<SwimmingRepositoryImpl>(),
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => SleepViewModel(
+        repository: context.read<SleepRepositoryImpl>(),
       ),
     ),
     // Service を使う ViewModel を登録
