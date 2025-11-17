@@ -117,24 +117,24 @@ class LevelData {
 }
 
 class LevelSummary {
-  final LevelDetail deep;
-  final LevelDetail light;
-  final LevelDetail rem;
-  final LevelDetail wake;
+  final LevelDetail? deep;
+  final LevelDetail? light;
+  final LevelDetail? rem;
+  final LevelDetail? wake;
 
   LevelSummary({
-    required this.deep,
-    required this.light,
-    required this.rem,
-    required this.wake,
+    this.deep,
+    this.light,
+    this.rem,
+    this.wake,
   });
 
   factory LevelSummary.fromJson(Map<String, dynamic> json) {
     return LevelSummary(
-      deep: LevelDetail.fromJson(json['deep']),
-      light: LevelDetail.fromJson(json['light']),
-      rem: LevelDetail.fromJson(json['rem']),
-      wake: LevelDetail.fromJson(json['wake']),
+      deep: json['deep'] != null ? LevelDetail.fromJson(json['deep']) : null,
+      light: json['light'] != null ? LevelDetail.fromJson(json['light']) : null,
+      rem: json['rem'] != null ? LevelDetail.fromJson(json['rem']) : null,
+      wake: json['wake'] != null ? LevelDetail.fromJson(json['wake']) : null,
     );
   }
 }

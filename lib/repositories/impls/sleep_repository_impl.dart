@@ -37,4 +37,49 @@ class SleepRepositoryImpl extends BaseRequestClass
     final responseBody = await super.get(uri, headers);
     return SleepLogResponse.fromJson(responseBody);
   }
+
+  @override
+  Future<SleepLogResponse> fetchSleepLogByDate(String date) async {
+    if (!_isValidDateFormat(date)) {
+      throw ArgumentError('Invalid date format. Expected YYYY-MM-DD');
+    }
+
+    final uri = Uri.https(
+      'api.fitbit.com',
+      '/1.2/user/-/sleep/date/$date.json',
+    );
+
+    final responseBody = await super.get(uri, headers);
+
+    if (responseBody.isEmpty) {
+      throw Exception('睡眠データが取得できませんでした。');
+    }
+
+    return SleepLogResponse.fromJson(responseBody);
+  }
+
+  /// 日付形式のバリデーション（YYYY-MM-DD）
+  bool _isValidDateFormat(String date) {
+    final regex = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+    if (!regex.hasMatch(date)) {
+      return false;
+    }
+
+    // さらに日付として有効かチェック
+    try {
+      final parts = date.split('-');
+      final month = int.parse(parts[1]);
+
+      // 月の範囲チェック
+      if (month < 1 || month > 12) {
+        return false;
+      }
+
+      // DateTime.parseでパース可能かチェック
+      DateTime.parse(date);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

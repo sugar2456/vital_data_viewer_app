@@ -203,18 +203,18 @@ void main() {
           DateTime.parse('2020-02-21T00:10:30.000'));
       expect(response.sleep[0].levels.shortData[0].level, 'wake');
       expect(response.sleep[0].levels.shortData[0].seconds, 30);
-      expect(response.sleep[0].levels.summary.deep.count, 5);
-      expect(response.sleep[0].levels.summary.deep.minutes, 104);
-      expect(response.sleep[0].levels.summary.deep.thirtyDayAvgMinutes, 69);
-      expect(response.sleep[0].levels.summary.light.count, 32);
-      expect(response.sleep[0].levels.summary.light.minutes, 205);
-      expect(response.sleep[0].levels.summary.light.thirtyDayAvgMinutes, 202);
-      expect(response.sleep[0].levels.summary.rem.count, 11);
-      expect(response.sleep[0].levels.summary.rem.minutes, 75);
-      expect(response.sleep[0].levels.summary.rem.thirtyDayAvgMinutes, 87);
-      expect(response.sleep[0].levels.summary.wake.count, 30);
-      expect(response.sleep[0].levels.summary.wake.minutes, 78);
-      expect(response.sleep[0].levels.summary.wake.thirtyDayAvgMinutes, 55);
+      expect(response.sleep[0].levels.summary.deep!.count, 5);
+      expect(response.sleep[0].levels.summary.deep!.minutes, 104);
+      expect(response.sleep[0].levels.summary.deep!.thirtyDayAvgMinutes, 69);
+      expect(response.sleep[0].levels.summary.light!.count, 32);
+      expect(response.sleep[0].levels.summary.light!.minutes, 205);
+      expect(response.sleep[0].levels.summary.light!.thirtyDayAvgMinutes, 202);
+      expect(response.sleep[0].levels.summary.rem!.count, 11);
+      expect(response.sleep[0].levels.summary.rem!.minutes, 75);
+      expect(response.sleep[0].levels.summary.rem!.thirtyDayAvgMinutes, 87);
+      expect(response.sleep[0].levels.summary.wake!.count, 30);
+      expect(response.sleep[0].levels.summary.wake!.minutes, 78);
+      expect(response.sleep[0].levels.summary.wake!.thirtyDayAvgMinutes, 55);
     });
 
     test('fetchSleepGoal throws Exception when API call fails', () async {

@@ -29,9 +29,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: getProviders(),
-      child: const MyApp(
-        initialRoute: '/login'
-      ),
+      child: const MyApp(initialRoute: '/login'),
     ),
   );
 }
@@ -61,7 +59,7 @@ class MyApp extends StatelessWidget {
       ],
       locale: const Locale('ja', 'JP'),
       routes: <String, WidgetBuilder>{
-        '/login': (BuildContext context) => LoginView(),
+        '/login': (BuildContext context) => const LoginView(),
         '/home': (BuildContext context) => const HomeView(),
         '/step': (BuildContext context) => const StepView(),
         '/heart_rate': (BuildContext context) => const HeartRateView(),
