@@ -26,9 +26,9 @@ Flutter プロジェクト構造:
 
 **目的**: データモデルとヘルパークラスの作成
 
-- [ ] T001 [P] SleepType enum を lib/view_models/sleep_chart_data.dart に作成
-- [ ] T002 [P] SleepChartData モデルを lib/view_models/sleep_chart_data.dart に作成（formattedTotalSleep getter を含む）
-- [ ] T003 [P] SleepStageSegment モデルを lib/view_models/sleep_chart_data.dart に作成
+- [x] T001 [P] SleepType enum を lib/view_models/sleep_chart_data.dart に作成
+- [x] T002 [P] SleepChartData モデルを lib/view_models/sleep_chart_data.dart に作成（formattedTotalSleep getter を含む）
+- [x] T003 [P] SleepStageSegment モデルを lib/view_models/sleep_chart_data.dart に作成
 
 **チェックポイント**: データモデルの準備完了
 
@@ -40,10 +40,10 @@ Flutter プロジェクト構造:
 
 **⚠️ 重要**: このフェーズが完了するまで、ユーザーストーリーの作業は開始できません
 
-- [ ] T004 fetchSleepLogByDate(String date) メソッドを lib/repositories/interfaces/sleep_repository_interface.dart に追加
-- [ ] T005 fetchSleepLogByDate メソッドを lib/repositories/impls/sleep_repository_impl.dart に実装（日付バリデーション、Fitbit API 呼び出し、エラーハンドリングを含む）
-- [ ] T006 _isValidDateFormat ヘルパーメソッドを lib/repositories/impls/sleep_repository_impl.dart に追加
-- [ ] T007 [P] fetchSleepLogByDate の単体テストを test/repositories/sleep_repository_impl_test.dart に作成（正常ケース、不正な日付形式、API エラーをカバー）
+- [x] T004 fetchSleepLogByDate(String date) メソッドを lib/repositories/interfaces/sleep_repository_interface.dart に追加
+- [x] T005 fetchSleepLogByDate メソッドを lib/repositories/impls/sleep_repository_impl.dart に実装（日付バリデーション、Fitbit API 呼び出し、エラーハンドリングを含む）
+- [x] T006 _isValidDateFormat ヘルパーメソッドを lib/repositories/impls/sleep_repository_impl.dart に追加
+- [x] T007 [P] fetchSleepLogByDate の単体テストを test/repositories/sleep_repository_impl_test.dart に作成（正常ケース、不正な日付形式、API エラーをカバー）
 
 **チェックポイント**: 基盤の準備完了 - ユーザーストーリーの実装を並列開始可能
 
@@ -65,17 +65,17 @@ Flutter プロジェクト構造:
 
 ### User Story 1 の実装
 
-- [ ] T011 [US1] SleepViewModel クラスを lib/view_models/sleep_view_model.dart に作成（状態プロパティ: selectedDate, sleepChartData, isLoading, errorMessage）
-- [ ] T012 [US1] fetchTodaySleepData メソッドを lib/view_models/sleep_view_model.dart に実装（Repository 呼び出しとエラーハンドリングを含む）
-- [ ] T013 [US1] _convertToChartData プライベートメソッドを lib/view_models/sleep_view_model.dart に実装（SleepLogResponse を SleepChartData に変換、stages 形式と classic 形式の両方をサポート）
-- [ ] T014 [US1] _getStageColor ヘルパーメソッドを lib/view_models/sleep_view_model.dart に実装（stages: deep→blue[900], light→blue[300], rem→purple, wake→orange; classic: asleep→blue, restless→yellow, awake→red）
-- [ ] T015 [US1] SleepView StatefulWidget を lib/views/sleep_view.dart に作成（Scaffold、AppBar、Consumer<SleepViewModel> を含む）
-- [ ] T016 [US1] initState で fetchTodaySleepData を呼び出すように lib/views/sleep_view.dart を実装
-- [ ] T017 [US1] ローディング状態 UI（CircularProgressIndicator）を lib/views/sleep_view.dart に実装
-- [ ] T018 [US1] エラー状態 UI（エラーアイコンとメッセージ）を lib/views/sleep_view.dart に実装
-- [ ] T019 [US1] データなし状態 UI（「選択した日付の睡眠データがありません」メッセージ）を lib/views/sleep_view.dart に実装
-- [ ] T020 [US1] SleepViewModel を MultiProvider に lib/main.dart で登録
-- [ ] T021 [US1] 「睡眠データ」への ListTile ナビゲーションを lib/views/component/custom_drawer.dart に追加
+- [x] T011 [US1] SleepViewModel クラスを lib/view_models/sleep_view_model.dart に作成（状態プロパティ: selectedDate, sleepChartData, isLoading, errorMessage）
+- [x] T012 [US1] fetchTodaySleepData メソッドを lib/view_models/sleep_view_model.dart に実装（Repository 呼び出しとエラーハンドリングを含む）
+- [x] T013 [US1] _convertToChartData プライベートメソッドを lib/view_models/sleep_view_model.dart に実装（SleepLogResponse を SleepChartData に変換、stages 形式と classic 形式の両方をサポート）
+- [x] T014 [US1] _getStageColor ヘルパーメソッドを lib/view_models/sleep_view_model.dart に実装（stages: deep→blue[900], light→blue[300], rem→purple, wake→orange; classic: asleep→blue, restless→yellow, awake→red）
+- [x] T015 [US1] SleepView StatefulWidget を lib/views/sleep_view.dart に作成（Scaffold、AppBar、Consumer<SleepViewModel> を含む）
+- [x] T016 [US1] initState で fetchTodaySleepData を呼び出すように lib/views/sleep_view.dart を実装
+- [x] T017 [US1] ローディング状態 UI（CircularProgressIndicator）を lib/views/sleep_view.dart に実装
+- [x] T018 [US1] エラー状態 UI（エラーアイコンとメッセージ）を lib/views/sleep_view.dart に実装
+- [x] T019 [US1] データなし状態 UI（「選択した日付の睡眠データがありません」メッセージ）を lib/views/sleep_view.dart に実装
+- [x] T020 [US1] SleepViewModel を MultiProvider に lib/main.dart で登録
+- [x] T021 [US1] 「睡眠データ」への ListTile ナビゲーションを lib/views/component/custom_drawer.dart に追加
 
 **チェックポイント**: この時点で、User Story 1 は完全に機能し、独立してテスト可能です
 
@@ -96,17 +96,17 @@ Flutter プロジェクト構造:
 
 ### User Story 3 の実装
 
-- [ ] T024 [P] [US3] SleepStageChart StatelessWidget を lib/views/component/sleep_stage_chart.dart に作成（BarChart を使用）
-- [ ] T025 [US3] _buildBarChartData メソッドを lib/views/component/sleep_stage_chart.dart に実装（BarChartData 設定を含む）
-- [ ] T026 [US3] _buildBarGroups メソッドを lib/views/component/sleep_stage_chart.dart に実装（各セグメントを BarChartGroupData に変換）
-- [ ] T027 [US3] _getStageValue メソッドを lib/views/component/sleep_stage_chart.dart に実装（ステージ名を Y 軸値に変換）
-- [ ] T028 [US3] _getStageLabel メソッドを lib/views/component/sleep_stage_chart.dart に実装（Y 軸値を日本語ラベルに変換）
-- [ ] T029 [US3] _getLeftTitles メソッドを lib/views/component/sleep_stage_chart.dart に実装（Y 軸ラベル表示）
-- [ ] T030 [US3] _getBottomTitles メソッドを lib/views/component/sleep_stage_chart.dart に実装（X 軸の時刻ラベル、1時間ごと）
-- [ ] T031 [US3] ツールチップ設定を lib/views/component/sleep_stage_chart.dart に実装（ステージ名と継続時間を表示）
-- [ ] T032 [US3] _formatDuration ヘルパーメソッドを lib/views/component/sleep_stage_chart.dart に実装（分を「X時間Y分」形式に変換）
-- [ ] T033 [US3] _buildLegend メソッドを lib/views/component/sleep_stage_chart.dart に実装（凡例表示）
-- [ ] T034 [US3] データあり状態 UI を lib/views/sleep_view.dart に実装（日付表示、SleepStageChart ウィジェットの統合）
+- [x] T024 [P] [US3] SleepStageChart StatelessWidget を lib/views/component/sleep_stage_chart.dart に作成（BarChart を使用）
+- [x] T025 [US3] _buildBarChartData メソッドを lib/views/component/sleep_stage_chart.dart に実装（BarChartData 設定を含む）
+- [x] T026 [US3] _buildBarGroups メソッドを lib/views/component/sleep_stage_chart.dart に実装（各セグメントを BarChartGroupData に変換）
+- [x] T027 [US3] _getStageValue メソッドを lib/views/component/sleep_stage_chart.dart に実装（ステージ名を Y 軸値に変換）
+- [x] T028 [US3] _getStageLabel メソッドを lib/views/component/sleep_stage_chart.dart に実装（Y 軸値を日本語ラベルに変換）
+- [x] T029 [US3] _getLeftTitles メソッドを lib/views/component/sleep_stage_chart.dart に実装（Y 軸ラベル表示）
+- [x] T030 [US3] _getBottomTitles メソッドを lib/views/component/sleep_stage_chart.dart に実装（X 軸の時刻ラベル、1時間ごと）
+- [x] T031 [US3] ツールチップ設定を lib/views/component/sleep_stage_chart.dart に実装（ステージ名と継続時間を表示）
+- [x] T032 [US3] _formatDuration ヘルパーメソッドを lib/views/component/sleep_stage_chart.dart に実装（分を「X時間Y分」形式に変換）
+- [x] T033 [US3] _buildLegend メソッドを lib/views/component/sleep_stage_chart.dart に実装（凡例表示）
+- [x] T034 [US3] データあり状態 UI を lib/views/sleep_view.dart に実装（日付表示、SleepStageChart ウィジェットの統合）
 
 **チェックポイント**: User Story 1 と 3 が完全に動作し、今日の睡眠データがグラフで表示される
 
@@ -120,7 +120,7 @@ Flutter プロジェクト構造:
 
 ### User Story 4 の実装
 
-- [ ] T035 [US4] トータル睡眠時間カード UI を lib/views/sleep_view.dart に実装（Card ウィジェット、アイコン、formattedTotalSleep 表示を含む）
+- [x] T035 [US4] トータル睡眠時間カード UI を lib/views/sleep_view.dart に実装（Card ウィジェット、アイコン、formattedTotalSleep 表示を含む）
 - [ ] T036 [US4] formattedTotalSleep が正しく計算されることを test/view_models/sleep_view_model_test.dart でテスト
 
 **チェックポイント**: トータル睡眠時間がグラフと一緒に表示される
@@ -139,11 +139,11 @@ Flutter プロジェクト構造:
 
 ### User Story 2 の実装
 
-- [ ] T038 [US2] fetchSleepData(DateTime date) メソッドを lib/view_models/sleep_view_model.dart に実装（日付を YYYY-MM-DD 形式に変換、Repository 呼び出し、データ変換を含む）
-- [ ] T039 [US2] カレンダーアイコンボタンを lib/views/sleep_view.dart の AppBar に追加
-- [ ] T040 [US2] _showDatePicker メソッドを lib/views/sleep_view.dart に実装（showDatePicker 呼び出し、lastDate を今日に設定、firstDate を 2000-01-01 に設定、ロケールを 'ja' に設定）
-- [ ] T041 [US2] 日付選択後に viewModel.fetchSleepData を呼び出すように lib/views/sleep_view.dart を実装
-- [ ] T042 [US2] 選択した日付を画面に表示するように lib/views/sleep_view.dart を更新（DateFormat('yyyy年MM月dd日') を使用）
+- [x] T038 [US2] fetchSleepData(DateTime date) メソッドを lib/view_models/sleep_view_model.dart に実装（日付を YYYY-MM-DD 形式に変換、Repository 呼び出し、データ変換を含む）
+- [x] T039 [US2] カレンダーアイコンボタンを lib/views/sleep_view.dart の AppBar に追加
+- [x] T040 [US2] _showDatePicker メソッドを lib/views/sleep_view.dart に実装（showDatePicker 呼び出し、lastDate を今日に設定、firstDate を 2000-01-01 に設定、ロケールを 'ja' に設定）
+- [x] T041 [US2] 日付選択後に viewModel.fetchSleepData を呼び出すように lib/views/sleep_view.dart を実装
+- [x] T042 [US2] 選択した日付を画面に表示するように lib/views/sleep_view.dart を更新（DateFormat('yyyy年MM月dd日') を使用）
 
 **チェックポイント**: すべてのユーザーストーリーが独立して機能する
 
@@ -154,13 +154,13 @@ Flutter プロジェクト構造:
 **目的**: 複数のユーザーストーリーに影響する改善
 
 - [ ] T043 [P] stages 形式と classic 形式の両方のデータ変換を test/view_models/sleep_view_model_test.dart でテスト
-- [ ] T044 [P] アクセシビリティの改善を lib/views/sleep_view.dart に追加（カレンダーアイコンに tooltip: '日付を選択' を追加）
+- [x] T044 [P] アクセシビリティの改善を lib/views/sleep_view.dart に追加（カレンダーアイコンに tooltip: '日付を選択' を追加）
 - [ ] T045 [P] アクセシビリティの改善を lib/views/sleep_view.dart に追加（ローディングインジケータに Semantics を追加）
 - [ ] T046 認証エラーハンドリングを lib/views/sleep_view.dart に追加（認証エラー時にダイアログ表示）
 - [ ] T047 [P] 複数の睡眠セッション処理を lib/view_models/sleep_view_model.dart でテスト（メインセッションを選択）
-- [ ] T048 [P] エッジケースの処理を lib/view_models/sleep_view_model.dart に追加（不完全なデータ、空のレスポンス）
+- [x] T048 [P] エッジケースの処理を lib/view_models/sleep_view_model.dart に追加（不完全なデータ、空のレスポンス）
 - [ ] T049 quickstart.md の検証手順を実行（flutter run、ログイン、睡眠データ画面への遷移、グラフ表示、カレンダー選択をテスト）
-- [ ] T050 [P] コードフォーマットとリントを実行（flutter format lib/ test/、flutter analyze）
+- [x] T050 [P] コードフォーマットとリントを実行（flutter format lib/ test/、flutter analyze）
 
 ---
 
