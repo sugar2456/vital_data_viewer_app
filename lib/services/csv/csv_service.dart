@@ -37,15 +37,21 @@ class CsvService {
         _swimmingRepository = swimmingRepository,
         _csvRepository = csvRepository;
 
+  /// DateTimeをYYYY-MM-DD形式の文字列に変換（タイムゾーンの影響を受けない）
+  String _formatDateString(DateTime date) {
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  }
+
   Future<bool> exportCsvData(
       List<String> dataTypes, DateTime selectedDate) async {
     final results = <List<String>>[];
     final generatedFileNames = <String>[];
+    final dateString = _formatDateString(selectedDate);
+    final timestamp = dateString;
     for (final dataType in dataTypes) {
       switch (dataType) {
         case 'steps':
-          final stepData = await _stepRepository.fetchStep(
-              selectedDate.toIso8601String().split('T')[0], '1min');
+          final stepData = await _stepRepository.fetchStep(dateString, '1min');
           final stepCsvData = StepCsvService.convertCsvData(stepData);
           final stepSummaryCsv =
               StepCsvService.createStepSummaryCsv(stepCsvData.stepCsvSummary);
@@ -53,12 +59,12 @@ class CsvService {
               StepCsvService.createStepDatasetCsv(stepCsvData.stepDatasets);
           results.add(stepSummaryCsv);
           results.add(stepDatasetCsv);
-          generatedFileNames.add('steps_summary.csv');
-          generatedFileNames.add('steps_dataset.csv');
+          generatedFileNames.add('steps_summary_$timestamp.csv');
+          generatedFileNames.add('steps_dataset_$timestamp.csv');
           break;
         case 'heartrate':
           final heartRateData = await _heartRateRepository.fetchHeartRate(
-              selectedDate.toIso8601String().split('T')[0], '1min');
+              dateString, '1min');
           final heartRateCsvData =
               HeartRateCsvService.convertCsvData(heartRateData);
           final heartRateSummaryCsv =
@@ -69,12 +75,12 @@ class CsvService {
                   heartRateCsvData.heartRateDatasets);
           results.add(heartRateSummaryCsv);
           results.add(heartRateDatasetCsv);
-          generatedFileNames.add('heartrate_summary.csv');
-          generatedFileNames.add('heartrate_dataset.csv');
+          generatedFileNames.add('heartrate_summary_$timestamp.csv');
+          generatedFileNames.add('heartrate_dataset_$timestamp.csv');
           break;
         case 'calories':
           final caloriesData = await _caloriesRepository.fetchCalories(
-              selectedDate.toIso8601String().split('T')[0], '1min');
+              dateString, '1min');
           final caloriesCsvData =
               CaloriesCsvService.convertCsvData(caloriesData);
           final caloriesSummaryCsv =
@@ -85,12 +91,12 @@ class CsvService {
                   caloriesCsvData.caloriesDatasets);
           results.add(caloriesSummaryCsv);
           results.add(caloriesDatasetCsv);
-          generatedFileNames.add('calories_summary.csv');
-          generatedFileNames.add('calories_dataset.csv');
+          generatedFileNames.add('calories_summary_$timestamp.csv');
+          generatedFileNames.add('calories_dataset_$timestamp.csv');
           break;
         case 'swimming':
           final swimmingData = await _swimmingRepository.fetchSwimming(
-              selectedDate.toIso8601String().split('T')[0], '1min');
+              dateString, '1min');
           final swimmingCsvData =
               SwimmingCsvService.convertCsvData(swimmingData);
           final swimmingSummaryCsv =
@@ -101,11 +107,11 @@ class CsvService {
                   swimmingCsvData.swimmingDatasets);
           results.add(swimmingSummaryCsv);
           results.add(swimmingDatasetCsv);
-          generatedFileNames.add('swimming_summary.csv');
-          generatedFileNames.add('swimming_dataset.csv');
+          generatedFileNames.add('swimming_summary_$timestamp.csv');
+          generatedFileNames.add('swimming_dataset_$timestamp.csv');
           break;
         case 'sleep':
-          final sleepData = await _sleepRepository.fetchSleepLog();
+          final sleepData = await _sleepRepository.fetchSleepLogByDate(dateString);
           final sleepCsvData = SleepCsvService.convertCsvData(sleepData);
           final sleepSummaryCsv = SleepCsvService.createSleepSummaryCsv(
               sleepCsvData.sleepCsvSummary);
@@ -113,8 +119,8 @@ class CsvService {
               SleepCsvService.createSleepDatasetCsv(sleepCsvData.sleepDatasets);
           results.add(sleepSummaryCsv);
           results.add(sleepDatasetCsv);
-          generatedFileNames.add('sleep_summary.csv');
-          generatedFileNames.add('sleep_dataset.csv');
+          generatedFileNames.add('sleep_summary_$timestamp.csv');
+          generatedFileNames.add('sleep_dataset_$timestamp.csv');
           break;
       }
     }
