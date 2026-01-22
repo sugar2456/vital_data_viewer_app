@@ -79,6 +79,43 @@ class CustomDrawer extends StatelessWidget {
             title: const Text('CSV'),
             onTap: () => Navigator.pushNamed(context, '/csv'),
           ),
+          const Divider(),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Text(
+              '週間データ',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.directions_walk),
+            title: const Text('週間歩数'),
+            onTap: () => Navigator.pushNamed(context, '/weekly_step'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.bedtime),
+            title: const Text('週間睡眠'),
+            onTap: () => Navigator.pushNamed(context, '/weekly_sleep'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.favorite),
+            title: const Text('週間心拍数'),
+            onTap: () => Navigator.pushNamed(context, '/weekly_heart_rate'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.local_fire_department),
+            title: const Text('週間カロリー'),
+            onTap: () => Navigator.pushNamed(context, '/weekly_calories'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.pool),
+            title: const Text('週間水泳'),
+            onTap: () => Navigator.pushNamed(context, '/weekly_swimming'),
+          ),
           // ListTile(
           //   leading: const Icon(Icons.settings),
           //   title: const Text('設定'),

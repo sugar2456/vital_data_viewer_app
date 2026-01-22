@@ -1,4 +1,5 @@
 import 'package:vital_data_viewer_app/models/response/swimming_response.dart';
+import 'package:vital_data_viewer_app/models/response/swimming_range_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/swimming_repository_interface.dart';
 import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart';
 
@@ -18,5 +19,14 @@ class SwimmingRepositoryImpl extends BaseRequestClass
         '/1/user/-/activities/swimming-strokes/date/$date/1d/$detailLevel.json');
     final responseBody = await super.get(uri, headers);
     return SwimmingResponse.fromJson(responseBody);
+  }
+
+  @override
+  Future<SwimmingRangeResponse> fetchSwimmingByDateRange(
+      String startDate, String endDate) async {
+    final uri = Uri.https('api.fitbit.com',
+        '/1/user/-/activities/swimming-strokes/date/$startDate/$endDate.json');
+    final responseBody = await super.get(uri, headers);
+    return SwimmingRangeResponse.fromJson(responseBody);
   }
 }

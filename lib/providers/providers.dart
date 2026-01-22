@@ -21,6 +21,11 @@ import 'package:vital_data_viewer_app/view_models/home_view_model.dart';
 import 'package:vital_data_viewer_app/view_models/sleep_view_model.dart';
 import 'package:vital_data_viewer_app/view_models/steps_view_model.dart';
 import 'package:vital_data_viewer_app/view_models/swimming_view_model.dart';
+import 'package:vital_data_viewer_app/view_models/weekly/weekly_steps_view_model.dart';
+import 'package:vital_data_viewer_app/view_models/weekly/weekly_sleep_view_model.dart';
+import 'package:vital_data_viewer_app/view_models/weekly/weekly_heart_rate_view_model.dart';
+import 'package:vital_data_viewer_app/view_models/weekly/weekly_calories_view_model.dart';
+import 'package:vital_data_viewer_app/view_models/weekly/weekly_swimming_view_model.dart';
 import 'package:http/http.dart' as http;
 
 List<SingleChildWidget> getProviders() {
@@ -135,6 +140,32 @@ List<SingleChildWidget> getProviders() {
     ChangeNotifierProvider(
       create: (context) => CsvViewModel(
         csvService: context.read<CsvService>(),
+      ),
+    ),
+    // 週間データ用 ViewModel
+    ChangeNotifierProvider(
+      create: (context) => WeeklyStepsViewModel(
+        context.read<StepResponseImpl>(),
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => WeeklySleepViewModel(
+        context.read<SleepRepositoryImpl>(),
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => WeeklyHeartRateViewModel(
+        context.read<HeartRateRepositoryImpl>(),
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => WeeklyCaloriesViewModel(
+        context.read<CaloriesRepositoryImpl>(),
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => WeeklySwimmingViewModel(
+        context.read<SwimmingRepositoryImpl>(),
       ),
     ),
   ];
