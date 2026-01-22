@@ -7,6 +7,11 @@ import 'package:vital_data_viewer_app/views/heart_rate_view.dart';
 import 'package:vital_data_viewer_app/views/home_view.dart';
 import 'package:vital_data_viewer_app/views/step_view.dart';
 import 'package:vital_data_viewer_app/views/swimming_strokes_view.dart';
+import 'package:vital_data_viewer_app/views/weekly/weekly_step_view.dart';
+import 'package:vital_data_viewer_app/views/weekly/weekly_sleep_view.dart';
+import 'package:vital_data_viewer_app/views/weekly/weekly_heart_rate_view.dart';
+import 'package:vital_data_viewer_app/views/weekly/weekly_calories_view.dart';
+import 'package:vital_data_viewer_app/views/weekly/weekly_swimming_view.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:provider/provider.dart';
 import 'views/login_view.dart';
@@ -66,6 +71,11 @@ class MyApp extends StatelessWidget {
         '/calories': (BuildContext context) => const CaloriesView(),
         '/swimming': (BuildContext context) => const SwimmingStrokesView(),
         '/csv': (BuildContext context) => const CsvView(),
+        '/weekly_step': (BuildContext context) => const WeeklyStepView(),
+        '/weekly_sleep': (BuildContext context) => const WeeklySleepView(),
+        '/weekly_heart_rate': (BuildContext context) => const WeeklyHeartRateView(),
+        '/weekly_calories': (BuildContext context) => const WeeklyCaloriesView(),
+        '/weekly_swimming': (BuildContext context) => const WeeklySwimmingView(),
       },
     );
   }

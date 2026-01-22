@@ -1,4 +1,5 @@
 import 'package:vital_data_viewer_app/models/response/step_response.dart';
+import 'package:vital_data_viewer_app/models/response/steps_range_response.dart';
 import 'package:vital_data_viewer_app/repositories/interfaces/step_repository_interface.dart';
 import 'package:vital_data_viewer_app/repositories/impls/base_request_class.dart';
 
@@ -14,7 +15,7 @@ class StepResponseImpl extends BaseRequestClass
   Future<StepResponse> fetchStep(String date, String min) async {
     final uri = Uri.https(
         'api.fitbit.com', '/1/user/-/activities/steps/date/$date/1d/$min.json');
-    
+
     final responseBody = await super.get(uri, headers);
     return StepResponse.fromJson(responseBody);
   }
@@ -36,5 +37,14 @@ class StepResponseImpl extends BaseRequestClass
         '/1/user/-/activities/steps/date/$startDate/$endDate/$min.json');
     final responseBody = await super.get(uri, headers);
     return StepResponse.fromJson(responseBody);
+  }
+
+  @override
+  Future<StepsRangeResponse> fetchStepsByDateRange(
+      String startDate, String endDate) async {
+    final uri = Uri.https('api.fitbit.com',
+        '/1/user/-/activities/steps/date/$startDate/$endDate.json');
+    final responseBody = await super.get(uri, headers);
+    return StepsRangeResponse.fromJson(responseBody);
   }
 }
