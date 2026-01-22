@@ -19,9 +19,8 @@
 
 **Purpose**: プロジェクト初期化と基本構造
 
-- [ ] T001 Create directory structure `lib/models/daily_summary/`
-- [ ] T002 [P] Create directory structure `lib/view_models/weekly/`
-- [ ] T003 [P] Create directory structure `lib/views/weekly/`
+- [ ] T001 Create directory structure `lib/view_models/weekly/`
+- [ ] T002 [P] Create directory structure `lib/views/weekly/`
 
 ---
 
@@ -31,33 +30,33 @@
 
 **⚠️ CRITICAL**: このフェーズが完了するまでユーザーストーリーの作業は開始できません
 
-### 2.1 日別サマリーモデル作成
+### 2.1 APIレスポンスモデル作成
 
-- [ ] T004 [P] Create DailyStepSummary model in `lib/models/daily_summary/daily_step_summary.dart`
-- [ ] T005 [P] Create DailySleepSummary model in `lib/models/daily_summary/daily_sleep_summary.dart`
-- [ ] T006 [P] Create DailyHeartRateSummary model in `lib/models/daily_summary/daily_heart_rate_summary.dart`
-- [ ] T007 [P] Create DailyCaloriesSummary model in `lib/models/daily_summary/daily_calories_summary.dart`
-- [ ] T008 [P] Create DailySwimmingSummary model in `lib/models/daily_summary/daily_swimming_summary.dart`
+- [ ] T003 [P] Create StepsRangeResponse model in `lib/models/response/steps_range_response.dart`
+- [ ] T004 [P] Create CaloriesRangeResponse model in `lib/models/response/calories_range_response.dart`
+- [ ] T005 [P] Create SleepRangeResponse model in `lib/models/response/sleep_range_response.dart`
+- [ ] T006 [P] Create HeartRateRangeResponse model in `lib/models/response/heart_rate_range_response.dart`
+- [ ] T007 [P] Create SwimmingRangeResponse model in `lib/models/response/swimming_range_response.dart`
 
-### 2.2 リポジトリインターフェース拡張
+### 2.2 Repositoryインターフェース拡張
 
-- [ ] T009 [P] Add `fetchStepsByDateRange()` method to `lib/repositories/interfaces/step_repository_interface.dart`
-- [ ] T010 [P] Add `fetchSleepByDateRange()` method to `lib/repositories/interfaces/sleep_repository_interface.dart`
-- [ ] T011 [P] Add `fetchHeartRateByDateRange()` method to `lib/repositories/interfaces/heart_rate_repository_interface.dart`
-- [ ] T012 [P] Add `fetchCaloriesByDateRange()` method to `lib/repositories/interfaces/calories_repository_interface.dart`
-- [ ] T013 [P] Add `fetchSwimmingByDateRange()` method to `lib/repositories/interfaces/swimming_repository_interface.dart`
+- [ ] T008 [P] Add `fetchStepsByDateRange()` method to `lib/repositories/interfaces/step_repository_interface.dart`
+- [ ] T009 [P] Add `fetchSleepByDateRange()` method to `lib/repositories/interfaces/sleep_repository_interface.dart`
+- [ ] T010 [P] Add `fetchHeartRateByDateRange()` method to `lib/repositories/interfaces/heart_rate_repository_interface.dart`
+- [ ] T011 [P] Add `fetchCaloriesByDateRange()` method to `lib/repositories/interfaces/calories_repository_interface.dart`
+- [ ] T012 [P] Add `fetchSwimmingByDateRange()` method to `lib/repositories/interfaces/swimming_repository_interface.dart`
 
-### 2.3 リポジトリ実装拡張
+### 2.3 Repository実装拡張
 
-- [ ] T014 Implement `fetchStepsByDateRange()` in `lib/repositories/impls/step_repository_impl.dart` (depends on T004, T009)
-- [ ] T015 Implement `fetchSleepByDateRange()` in `lib/repositories/impls/sleep_repository_impl.dart` (depends on T005, T010)
-- [ ] T016 Implement `fetchHeartRateByDateRange()` in `lib/repositories/impls/heart_rate_repository_impl.dart` (depends on T006, T011)
-- [ ] T017 Implement `fetchCaloriesByDateRange()` in `lib/repositories/impls/calories_repository_impl.dart` (depends on T007, T012)
-- [ ] T018 Implement `fetchSwimmingByDateRange()` in `lib/repositories/impls/swimming_repository_impl.dart` (depends on T008, T013)
+- [ ] T013 Implement `fetchStepsByDateRange()` in `lib/repositories/impls/step_repository_impl.dart` (depends on T003, T008)
+- [ ] T014 Implement `fetchSleepByDateRange()` in `lib/repositories/impls/sleep_repository_impl.dart` (depends on T005, T009)
+- [ ] T015 Implement `fetchHeartRateByDateRange()` in `lib/repositories/impls/heart_rate_repository_impl.dart` (depends on T006, T010)
+- [ ] T016 Implement `fetchCaloriesByDateRange()` in `lib/repositories/impls/calories_repository_impl.dart` (depends on T004, T011)
+- [ ] T017 Implement `fetchSwimmingByDateRange()` in `lib/repositories/impls/swimming_repository_impl.dart` (depends on T007, T012)
 
 ### 2.4 共通UIコンポーネント
 
-- [ ] T019 Create WeeklyBarChart widget in `lib/views/component/weekly_bar_chart.dart` (fl_chart BarChart使用)
+- [ ] T018 Create WeeklyBarChart widget in `lib/views/component/weekly_bar_chart.dart` (fl_chart BarChart使用)
 
 **Checkpoint**: 基盤完了 - ユーザーストーリー実装開始可能
 
@@ -71,11 +70,11 @@
 
 ### Implementation for User Story 1
 
-- [ ] T020 [US1] Create WeeklyStepsViewModel in `lib/view_models/weekly/weekly_steps_view_model.dart`
-- [ ] T021 [US1] Create WeeklyStepView in `lib/views/weekly/weekly_step_view.dart`
-- [ ] T022 [US1] Register WeeklyStepsViewModel provider in `lib/providers/provider_setup.dart`
-- [ ] T023 [US1] Add route for weekly step view in `lib/main.dart`
-- [ ] T024 [US1] Add "週間歩数" menu item to `lib/views/component/custom_drawer.dart`
+- [ ] T019 [US1] Create WeeklyStepsViewModel in `lib/view_models/weekly/weekly_steps_view_model.dart`
+- [ ] T020 [US1] Create WeeklyStepView in `lib/views/weekly/weekly_step_view.dart`
+- [ ] T021 [US1] Register WeeklyStepsViewModel provider in `lib/providers/provider_setup.dart`
+- [ ] T022 [US1] Add route for weekly step view in `lib/main.dart`
+- [ ] T023 [US1] Add "週間歩数" menu item to `lib/views/component/custom_drawer.dart`
 
 **Checkpoint**: User Story 1（週間歩数）が完全に機能し、独立してテスト可能
 
@@ -89,12 +88,12 @@
 
 ### Implementation for User Story 2
 
-- [ ] T025 [US2] Create WeeklyStackedBarChart widget for sleep stages in `lib/views/component/weekly_stacked_bar_chart.dart`
-- [ ] T026 [US2] Create WeeklySleepViewModel in `lib/view_models/weekly/weekly_sleep_view_model.dart`
-- [ ] T027 [US2] Create WeeklySleepView in `lib/views/weekly/weekly_sleep_view.dart` (積み上げ棒グラフ使用)
-- [ ] T028 [US2] Register WeeklySleepViewModel provider in `lib/providers/provider_setup.dart`
-- [ ] T029 [US2] Add route for weekly sleep view in `lib/main.dart`
-- [ ] T030 [US2] Add "週間睡眠" menu item to `lib/views/component/custom_drawer.dart`
+- [ ] T024 [US2] Create WeeklyStackedBarChart widget for sleep stages in `lib/views/component/weekly_stacked_bar_chart.dart`
+- [ ] T025 [US2] Create WeeklySleepViewModel in `lib/view_models/weekly/weekly_sleep_view_model.dart`
+- [ ] T026 [US2] Create WeeklySleepView in `lib/views/weekly/weekly_sleep_view.dart` (積み上げ棒グラフ使用)
+- [ ] T027 [US2] Register WeeklySleepViewModel provider in `lib/providers/provider_setup.dart`
+- [ ] T028 [US2] Add route for weekly sleep view in `lib/main.dart`
+- [ ] T029 [US2] Add "週間睡眠" menu item to `lib/views/component/custom_drawer.dart`
 
 **Checkpoint**: User Story 1 AND 2 がどちらも独立して機能する
 
@@ -104,15 +103,15 @@
 
 **Goal**: メニューから週間心拍数画面に遷移し、直近7日間の心拍数データを棒グラフで表示する
 
-**Independent Test**: 心拍数画面で過去7日間のデータが表示され、各日の平均心拍数、最高心拍数、最低心拍数が確認できる
+**Independent Test**: 心拍数画面で過去7日間のデータが表示され、各日の安静時心拍数が確認できる
 
 ### Implementation for User Story 3
 
-- [ ] T031 [US3] Create WeeklyHeartRateViewModel in `lib/view_models/weekly/weekly_heart_rate_view_model.dart`
-- [ ] T032 [US3] Create WeeklyHeartRateView in `lib/views/weekly/weekly_heart_rate_view.dart`
-- [ ] T033 [US3] Register WeeklyHeartRateViewModel provider in `lib/providers/provider_setup.dart`
-- [ ] T034 [US3] Add route for weekly heart rate view in `lib/main.dart`
-- [ ] T035 [US3] Add "週間心拍数" menu item to `lib/views/component/custom_drawer.dart`
+- [ ] T030 [US3] Create WeeklyHeartRateViewModel in `lib/view_models/weekly/weekly_heart_rate_view_model.dart`
+- [ ] T031 [US3] Create WeeklyHeartRateView in `lib/views/weekly/weekly_heart_rate_view.dart`
+- [ ] T032 [US3] Register WeeklyHeartRateViewModel provider in `lib/providers/provider_setup.dart`
+- [ ] T033 [US3] Add route for weekly heart rate view in `lib/main.dart`
+- [ ] T034 [US3] Add "週間心拍数" menu item to `lib/views/component/custom_drawer.dart`
 
 **Checkpoint**: User Story 1, 2, 3 がすべて独立して機能する
 
@@ -126,11 +125,11 @@
 
 ### Implementation for User Story 4
 
-- [ ] T036 [US4] Create WeeklyCaloriesViewModel in `lib/view_models/weekly/weekly_calories_view_model.dart`
-- [ ] T037 [US4] Create WeeklyCaloriesView in `lib/views/weekly/weekly_calories_view.dart`
-- [ ] T038 [US4] Register WeeklyCaloriesViewModel provider in `lib/providers/provider_setup.dart`
-- [ ] T039 [US4] Add route for weekly calories view in `lib/main.dart`
-- [ ] T040 [US4] Add "週間カロリー" menu item to `lib/views/component/custom_drawer.dart`
+- [ ] T035 [US4] Create WeeklyCaloriesViewModel in `lib/view_models/weekly/weekly_calories_view_model.dart`
+- [ ] T036 [US4] Create WeeklyCaloriesView in `lib/views/weekly/weekly_calories_view.dart`
+- [ ] T037 [US4] Register WeeklyCaloriesViewModel provider in `lib/providers/provider_setup.dart`
+- [ ] T038 [US4] Add route for weekly calories view in `lib/main.dart`
+- [ ] T039 [US4] Add "週間カロリー" menu item to `lib/views/component/custom_drawer.dart`
 
 **Checkpoint**: User Story 1, 2, 3, 4 がすべて独立して機能する
 
@@ -144,11 +143,11 @@
 
 ### Implementation for User Story 5
 
-- [ ] T041 [US5] Create WeeklySwimmingViewModel in `lib/view_models/weekly/weekly_swimming_view_model.dart`
-- [ ] T042 [US5] Create WeeklySwimmingView in `lib/views/weekly/weekly_swimming_view.dart`
-- [ ] T043 [US5] Register WeeklySwimmingViewModel provider in `lib/providers/provider_setup.dart`
-- [ ] T044 [US5] Add route for weekly swimming view in `lib/main.dart`
-- [ ] T045 [US5] Add "週間水泳" menu item to `lib/views/component/custom_drawer.dart`
+- [ ] T040 [US5] Create WeeklySwimmingViewModel in `lib/view_models/weekly/weekly_swimming_view_model.dart`
+- [ ] T041 [US5] Create WeeklySwimmingView in `lib/views/weekly/weekly_swimming_view.dart`
+- [ ] T042 [US5] Register WeeklySwimmingViewModel provider in `lib/providers/provider_setup.dart`
+- [ ] T043 [US5] Add route for weekly swimming view in `lib/main.dart`
+- [ ] T044 [US5] Add "週間水泳" menu item to `lib/views/component/custom_drawer.dart`
 
 **Checkpoint**: すべてのユーザーストーリーが独立して機能する
 
@@ -158,11 +157,11 @@
 
 **Purpose**: 複数のユーザーストーリーに影響する改善
 
-- [ ] T046 Verify all weekly views display "データなし" for days without data
-- [ ] T047 Verify loading state is displayed during data fetch
-- [ ] T048 Verify error handling and retry option works correctly
-- [ ] T049 Verify weekly data loads within 5 seconds (performance requirement)
-- [ ] T050 Run quickstart.md acceptance criteria checklist validation
+- [ ] T045 Verify all weekly views display "データなし" for days without data
+- [ ] T046 Verify loading state is displayed during data fetch
+- [ ] T047 Verify error handling and retry option works correctly
+- [ ] T048 Verify weekly data loads within 5 seconds (performance requirement)
+- [ ] T049 Run quickstart.md acceptance criteria checklist validation
 
 ---
 
@@ -194,8 +193,8 @@
 
 ### Parallel Opportunities
 
-- Phase 2の日別サマリーモデル (T004-T008) は並列実行可能
-- Phase 2のリポジトリインターフェース拡張 (T009-T013) は並列実行可能
+- Phase 2のAPIレスポンスモデル (T003-T007) は並列実行可能
+- Phase 2のリポジトリインターフェース拡張 (T008-T012) は並列実行可能
 - Foundational phase完了後、すべてのユーザーストーリーを並列開始可能
 
 ---
@@ -203,12 +202,12 @@
 ## Parallel Example: Phase 2 Models
 
 ```bash
-# Launch all daily summary models together:
-Task: "Create DailyStepSummary model in lib/models/daily_summary/daily_step_summary.dart"
-Task: "Create DailySleepSummary model in lib/models/daily_summary/daily_sleep_summary.dart"
-Task: "Create DailyHeartRateSummary model in lib/models/daily_summary/daily_heart_rate_summary.dart"
-Task: "Create DailyCaloriesSummary model in lib/models/daily_summary/daily_calories_summary.dart"
-Task: "Create DailySwimmingSummary model in lib/models/daily_summary/daily_swimming_summary.dart"
+# Launch all API response models together:
+Task: "Create StepsRangeResponse model in lib/models/response/steps_range_response.dart"
+Task: "Create CaloriesRangeResponse model in lib/models/response/calories_range_response.dart"
+Task: "Create SleepRangeResponse model in lib/models/response/sleep_range_response.dart"
+Task: "Create HeartRateRangeResponse model in lib/models/response/heart_rate_range_response.dart"
+Task: "Create SwimmingRangeResponse model in lib/models/response/swimming_range_response.dart"
 ```
 
 ---
@@ -243,3 +242,4 @@ Task: "Create DailySwimmingSummary model in lib/models/daily_summary/daily_swimm
 - タスクまたは論理的なグループ後にコミット
 - 任意のチェックポイントで停止し、ストーリーを独立して検証
 - 避けるべき: 曖昧なタスク、同一ファイルの競合、独立性を壊すストーリー間依存関係
+- **アーキテクチャ**: RepositoryはFitbit APIレスポンス型をそのまま返し、ViewModelでデータを加工
